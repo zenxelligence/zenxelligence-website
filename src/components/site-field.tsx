@@ -8,31 +8,27 @@ export function SiteField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvasEl = canvasRef.current;
-    if (!canvasEl) return;
+    const el = canvasRef.current;
+    if (!el) return;
 
-    const context = canvasEl.getContext("2d", { alpha: true });
-    if (!context) return;
+    const g = el.getContext("2d", { alpha: true });
+    if (!g) return;
 
-    // Bound after guards — nested functions do not keep TS null narrowing.
-    const canvas: HTMLCanvasElement = canvasEl;
-    const ctx: CanvasRenderingContext2D = context;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
     const pointer = { x: 0.72, y: 0.42, tx: 0.72, ty: 0.42 };
     let nodes: Node[] = [];
     let frame = 0;
     let shown = false;
 
-    function resize() {
+    function resize(surface: HTMLCanvasElement, gfx: CanvasRenderingContext2D) {
       const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const w = window.innerWidth;
       const h = window.innerHeight;
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      surface.width = Math.floor(w * dpr);
+      surface.height = Math.floor(h * dpr);
+      surface.style.width = `${w}px`;
+      surface.style.height = `${h}px`;
+      gfx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
       const count = Math.round(Math.min(90, Math.max(36, (w * h) / 18000)));
       nodes = Array.from({ length: count }, () => ({
@@ -48,21 +44,21 @@ export function SiteField() {
       pointer.ty = e.clientY / window.innerHeight;
     }
 
-    function tick() {
+    function tick(surface: HTMLCanvasElement, gfx: CanvasRenderingContext2D) {
       const w = window.innerWidth;
       const h = window.innerHeight;
       pointer.x += (pointer.tx - pointer.x) * 0.04;
       pointer.y += (pointer.ty - pointer.y) * 0.04;
 
-      ctx.clearRect(0, 0, w, h);
+      gfx.clearRect(0, 0, w, h);
 
       const gx = pointer.x * w;
       const gy = pointer.y * h;
-      const wash = ctx.createRadialGradient(gx, gy, 40, gx, gy, 420);
+      const wash = gfx.createRadialGradient(gx, gy, 40, gx, gy, 420);
       wash.addColorStop(0, "rgba(61, 220, 132, 0.07)");
       wash.addColorStop(1, "rgba(61, 220, 132, 0)");
-      ctx.fillStyle = wash;
-      ctx.fillRect(0, 0, w, h);
+      gfx.fillStyle = wash;
+      gfx.fillRect(0, 0, w, h);
 
       if (!reduced) {
         for (const n of nodes) {
@@ -72,49 +68,51 @@ export function SiteField() {
           if (n.y < 0 || n.y > h) n.vy *= -1;
         }
 
-        ctx.lineWidth = 1;
+        gfx.lineWidth = 1;
         for (let i = 0; i < nodes.length; i++) {
           for (let j = i + 1; j < nodes.length; j++) {
             const dx = nodes[i].x - nodes[j].x;
             const dy = nodes[i].y - nodes[j].y;
             const d = Math.hypot(dx, dy);
             if (d < 110) {
-              ctx.strokeStyle = `rgba(61, 220, 132, ${((1 - d / 110) * 0.12).toFixed(3)})`;
-              ctx.beginPath();
-              ctx.moveTo(nodes[i].x, nodes[i].y);
-              ctx.lineTo(nodes[j].x, nodes[j].y);
-              ctx.stroke();
+              gfx.strokeStyle = `rgba(61, 220, 132, ${((1 - d / 110) * 0.12).toFixed(3)})`;
+              gfx.beginPath();
+              gfx.moveTo(nodes[i].x, nodes[i].y);
+              gfx.lineTo(nodes[j].x, nodes[j].y);
+              gfx.stroke();
             }
           }
         }
 
         for (const n of nodes) {
-          ctx.fillStyle = "rgba(242, 242, 239, 0.28)";
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, 1.1, 0, Math.PI * 2);
-          ctx.fill();
+          gfx.fillStyle = "rgba(242, 242, 239, 0.28)";
+          gfx.beginPath();
+          gfx.arc(n.x, n.y, 1.1, 0, Math.PI * 2);
+          gfx.fill();
         }
       }
 
       if (!shown) {
-        canvas.style.opacity = "1";
+        surface.style.opacity = "1";
         shown = true;
       }
 
-      frame = window.requestAnimationFrame(tick);
+      frame = window.requestAnimationFrame(() => tick(surface, gfx));
     }
 
-    resize();
+    const onResize = () => resize(el, g);
+
+    resize(el, g);
     if (!reduced) {
       window.addEventListener("pointermove", onMove, { passive: true });
     }
-    window.addEventListener("resize", resize);
-    frame = window.requestAnimationFrame(tick);
+    window.addEventListener("resize", onResize);
+    frame = window.requestAnimationFrame(() => tick(el, g));
 
     return () => {
       window.cancelAnimationFrame(frame);
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", onResize);
     };
   }, []);
 
