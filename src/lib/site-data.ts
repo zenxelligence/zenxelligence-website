@@ -7,7 +7,7 @@ export type TileItem = {
 };
 
 export type Block =
-  | { type: "label"; label: string }
+  | { type: "label"; label: string; id?: string }
   | { type: "prose"; text: string }
   | { type: "quote"; text: string }
   | { type: "note"; text: string }
@@ -35,9 +35,47 @@ export type PageContent = {
 export const SITE = {
   name: "Zen xElligence",
   tagline: "End to end. Web to VLSI.",
+  framework: "ZX A³ Innovation™",
   email: "hello@zenxelligence.com",
   url: "https://zenxelligence.com",
+  handle: "zenxelligence",
+  social: {
+    linkedin: "https://www.linkedin.com/company/zenxelligence",
+    instagram: "https://www.instagram.com/zenxelligence",
+    // Replace with https://wa.me/91XXXXXXXXXX when the Business number is set.
+    whatsapp: "https://wa.me/zenxelligence",
+  },
 };
+
+export const SOCIAL = [
+  { id: "linkedin" as const, label: "LinkedIn", href: SITE.social.linkedin },
+  { id: "instagram" as const, label: "Instagram", href: SITE.social.instagram },
+  { id: "whatsapp" as const, label: "WhatsApp", href: SITE.social.whatsapp },
+];
+
+export const A3_PILLARS = [
+  {
+    key: "autonomous",
+    letter: "A¹",
+    name: "Autonomous",
+    practice: "Autonomous Intelligence",
+    fields: "AI/ML, Data, Cloud",
+  },
+  {
+    key: "adaptive",
+    letter: "A²",
+    name: "Adaptive",
+    practice: "Adaptive Silicon",
+    fields: "VLSI",
+  },
+  {
+    key: "architected",
+    letter: "A³",
+    name: "Architected",
+    practice: "Architected Determinism · Architect Training",
+    fields: "Electronics / Embedded · Education",
+  },
+] as const;
 
 export const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "Services", href: "/services" },
@@ -59,45 +97,42 @@ export const FOOTER_COLUMNS: {
     heading: "COMPANY",
     items: [
       { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Partners", href: "/partners" },
       { label: "Contact", href: "/contact" },
     ],
   },
   {
     heading: "SERVICES",
     items: [
-      { label: "Consulting", href: "/services/consulting" },
-      { label: "Implementation", href: "/services/implementation" },
-      { label: "Managed Services", href: "/services/managed-services" },
-      { label: "Support", href: "/services/support" },
+      { label: "Web apps & APIs", href: "/services" },
+      { label: "Android/iOS Apps", href: "/services" },
+      { label: "AI Agent Automation", href: "/products" },
+      { label: "IoT & electronics", href: "/services" },
+      { label: "End-to-end VLSI", href: "/services" },
     ],
   },
   {
     heading: "PRODUCTS",
     items: [
-      { label: "Pulse", href: "/products/pulse" },
-      { label: "Pulse Status Page ↗", href: "/machine-lens" },
+      { label: "What we ship", href: "/products" },
+      { label: "Start a build", href: "/contact" },
     ],
   },
   {
     heading: "RESOURCES",
     items: [
-      { label: "Blog / Field Notes", href: "/resources" },
       { label: "Case Studies", href: "/case-studies" },
       { label: "FAQ", href: "/faq" },
-      { label: "llms.txt", href: "/llms.txt", mono: true },
     ],
   },
   {
     heading: "LEGAL",
     items: [
-      { label: "Privacy Policy", href: "/" },
-      { label: "Terms of Service", href: "/" },
-      { label: "Cookie Policy", href: "/" },
-      { label: "Accessibility Statement", href: "/" },
-      { label: "Security", href: "/" },
-      { label: "Editorial Standards", href: "/" },
+      { label: "Privacy", href: "/legal#privacy" },
+      { label: "Terms", href: "/legal#terms" },
+      { label: "Cookies", href: "/legal#cookies" },
+      { label: "Accessibility", href: "/legal#accessibility" },
+      { label: "Security", href: "/legal#security" },
+      { label: "Editorial", href: "/legal#editorial" },
     ],
   },
 ];
@@ -109,49 +144,7 @@ export type CaseFile = {
   blocks: { SYMPTOM: string; FINDING: string; FIX: string; RESULT: string };
 };
 
-export const CASE_FILES: CaseFile[] = [
-  {
-    slug: "014",
-    title: "Case File 014 — Manufacturing ERP Vendor Selection",
-    tag: "manufacturing · verified",
-    blocks: {
-      SYMPTOM:
-        "Client running three disconnected systems for inventory,\npurchasing, and shop-floor scheduling. Manual reconciliation\ncosting ~22 staff-hours/week.",
-      FINDING:
-        "No single system in evaluation met shop-floor latency\nrequirements (<200ms scan-to-update) out of the box.",
-      FIX: "Recommended NetSuite + custom middleware layer over a\nfull ERP replacement. Scoped and built the middleware.",
-      RESULT:
-        "Reconciliation time: 22 hrs/week → 1.5 hrs/week.\nScan-to-update latency: 340ms avg → 90ms avg.",
-    },
-  },
-  {
-    slug: "031",
-    title: "Case File 031 — Logistics Real-Time Routing System",
-    tag: "logistics · verified",
-    blocks: {
-      SYMPTOM:
-        "Dispatch software recalculating routes every 15 minutes,\ncausing drivers to receive stale directions during traffic\nevents.",
-      FINDING:
-        "Legacy geocoding API rate-limited at a threshold the client\nwas hitting during every morning dispatch window.",
-      FIX: "Rebuilt routing service on a new geocoding provider with\nrequest batching; added Pulse monitoring on the dispatch\npipeline itself.",
-      RESULT:
-        "Route recalculation interval: 15 min → 90 sec.\nLate-delivery rate: 8.4% → 2.1% (Q3 to Q4, same client volume).",
-    },
-  },
-  {
-    slug: "039",
-    title: "Case File 039 — Financial Services Reporting Pipeline (anonymized)",
-    tag: "financial services · anonymized",
-    blocks: {
-      SYMPTOM:
-        "Month-end close taking 9 business days; finance team\nmanually exporting from four systems into spreadsheets.",
-      FINDING:
-        "No system-of-record for intercompany transactions; every\nreconciliation was rebuilt from scratch monthly.",
-      FIX: "Built a custom reporting pipeline with a single\nintercompany ledger view, automated nightly sync.",
-      RESULT: "Month-end close: 9 days → 3 days.\nManual export steps eliminated: 14 → 0.",
-    },
-  },
-];
+export const CASE_FILES: CaseFile[] = [];
 
 export type BlogPost = {
   slug: string;
@@ -161,44 +154,7 @@ export type BlogPost = {
   body: string[];
 };
 
-export const BLOG_POSTS: BlogPost[] = [
-  {
-    slug: "why-we-stopped-recommending-full-erp-replacements",
-    title: "Why we stopped recommending full ERP replacements",
-    description: "A decision framework with a cost/latency comparison table.",
-    date: "2026-06-02",
-    body: [
-      "For most of the last decade, our default answer to “our ERP can’t keep up” was to scope a replacement. That default was wrong more often than it was right.",
-      "A full ERP replacement resets institutional knowledge, retrains every user, and re-exposes every integration your business already depends on. In three of our last five vendor-selection engagements, the client’s actual problem was a single bottleneck — usually a synchronous integration point — not the platform itself.",
-      "Our current framework scores three variables before recommending a replacement: the cost of a targeted middleware fix, the latency budget the business actually needs, and the blast radius of a full cutover on staff who already know the current system. Replacement wins only when the platform itself, not an integration, is the constraint.",
-      "Case File 014 is the clearest example: a manufacturing client evaluating ERP vendors turned out to need a middleware layer, not a new ERP. Reconciliation time dropped from 22 hours a week to 1.5.",
-    ],
-  },
-  {
-    slug: "the-middleware-pattern-we-use-for-legacy-plc-integration",
-    title: "The middleware pattern we use for legacy PLC integration",
-    description: "Includes a reference architecture diagram and API contract example.",
-    date: "2026-05-14",
-    body: [
-      "Programmable logic controllers on a shop floor rarely speak a language any modern system understands natively, and rewriting the controller layer is usually off the table — it runs the machines.",
-      "Our standard pattern puts a thin middleware service between the PLC network and the system of record: a poller that normalizes register reads into typed events, a queue that absorbs bursts during shift changes, and a contract layer that the ERP or MES integrates against instead of the PLC protocol directly.",
-      "The API contract is deliberately boring: typed JSON events over HTTP, idempotent by a monotonic sequence number per device. Boring is the point — it's the layer most likely to still be running unmodified in five years.",
-      "This is the same pattern behind Case File 031's routing system, adapted from dispatch telemetry to shop-floor scan events.",
-    ],
-  },
-  {
-    slug: "how-pulse-calculates-inp-without-a-synthetic-browser",
-    title: "How Pulse calculates INP without a synthetic browser",
-    description: "Technical walkthrough with formulas.",
-    date: "2026-04-22",
-    body: [
-      "Interaction to Next Paint (INP) is a real-user metric by definition — it measures how long an actual visitor waits after clicking, tapping, or typing before the browser paints a response. Synthetic testing tools can approximate it, but they can't measure it.",
-      "Pulse's client library subscribes to the browser's own PerformanceObserver for the `event` entry type, buffering event durations as they occur. We track the worst interaction per page view rather than an average, because a single slow interaction is what a user actually remembers.",
-      "The formula we report is the same one the Web Vitals spec defines: for pages with fewer than 50 interactions, INP is the single slowest event duration; above that, we drop outliers using the same percentile-based approach as Chrome's own implementation, sourced from the `web-vitals` JavaScript library rather than a reimplementation.",
-      "This page's own INP reading, in the widget above, comes from that exact code path — not a placeholder.",
-    ],
-  },
-];
+export const BLOG_POSTS: BlogPost[] = [];
 
 export type SearchIndexItem = { kind: string; label: string; path: string };
 
@@ -206,71 +162,58 @@ export const SEARCH_INDEX: SearchIndexItem[] = [
   { kind: "page", label: "Home", path: "/" },
   { kind: "page", label: "About", path: "/about" },
   { kind: "page", label: "Services", path: "/services" },
-  { kind: "service", label: "Consulting", path: "/services/consulting" },
-  { kind: "service", label: "Implementation", path: "/services/implementation" },
-  { kind: "service", label: "Managed Services", path: "/services/managed-services" },
-  { kind: "service", label: "Support", path: "/services/support" },
+  { kind: "service", label: "Web apps & APIs", path: "/services" },
+  { kind: "service", label: "Android/iOS Apps", path: "/services" },
+  { kind: "service", label: "AI Agent Automation", path: "/products" },
+  { kind: "service", label: "IoT & electronics", path: "/services" },
+  { kind: "service", label: "End-to-end VLSI", path: "/services" },
   { kind: "page", label: "Products", path: "/products" },
-  { kind: "product", label: "Pulse", path: "/products/pulse" },
-  { kind: "page", label: "Industries", path: "/industries" },
+  { kind: "page", label: "Industries — ZX A³ Innovation™", path: "/industries" },
   { kind: "page", label: "Case Studies", path: "/case-studies" },
-  {
-    kind: "case",
-    label: "Case File 014 — Manufacturing ERP Vendor Selection",
-    path: "/case-studies/014",
-  },
-  {
-    kind: "case",
-    label: "Case File 031 — Logistics Real-Time Routing",
-    path: "/case-studies/031",
-  },
-  {
-    kind: "case",
-    label: "Case File 039 — Financial Reporting Pipeline",
-    path: "/case-studies/039",
-  },
   { kind: "page", label: "Pricing", path: "/pricing" },
-  { kind: "page", label: "Testimonials / Clients", path: "/clients" },
-  { kind: "page", label: "Partners / Technology Alliances", path: "/partners" },
   { kind: "page", label: "Resources / Field Notes", path: "/resources" },
   { kind: "page", label: "FAQ", path: "/faq" },
-  { kind: "page", label: "The Machine Lens", path: "/machine-lens" },
+  { kind: "page", label: "Legal", path: "/legal" },
   { kind: "page", label: "Contact", path: "/contact" },
   { kind: "page", label: "Careers", path: "/careers" },
-  { kind: "file", label: "llms.txt", path: "/llms.txt" },
 ];
 
+/** Live pages still rendered (OG + metadata). Redirected paths are not listed. */
 export const ROUTE_PAGE_MAP: Record<string, string> = {
   about: "about",
   services: "services",
-  "services/consulting": "consulting",
-  "services/implementation": "implementation",
-  "services/managed-services": "managed-services",
-  "services/support": "support",
   products: "products",
-  "products/pulse": "pulse",
   industries: "industries",
   "case-studies": "case-studies",
   pricing: "pricing",
-  clients: "clients",
-  partners: "partners",
   resources: "resources",
   faq: "faq",
-  "machine-lens": "machine-lens",
   contact: "contact",
   careers: "careers",
+  legal: "legal",
 };
 
-export const JSON_LD = {
+export const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": "https://zenxelligence.com/#organization",
   name: "Zen xElligence",
   url: "https://zenxelligence.com",
+  email: SITE.email,
   description:
-    "End-to-end product studio: web applications and APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — from first brief to handover.",
+    "Zen xElligence is a two-engineer product studio that builds end-to-end web applications and APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
   sameAs: [
-    "https://www.linkedin.com/company/zen-xelligence",
+    SITE.social.linkedin,
+    SITE.social.instagram,
     "https://github.com/zen-xelligence",
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: SITE.email,
+      availableLanguage: ["English"],
+    },
   ],
   makesOffer: [
     { "@type": "Offer", itemOffered: { "@type": "Service", name: "Web Application and API Development" } },
@@ -281,6 +224,60 @@ export const JSON_LD = {
   ],
 };
 
+export const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://zenxelligence.com/#website",
+  name: "Zen xElligence",
+  url: "https://zenxelligence.com",
+  description: ORGANIZATION_JSON_LD.description,
+  publisher: { "@id": "https://zenxelligence.com/#organization" },
+};
+
+/** @deprecated use ORGANIZATION_JSON_LD — kept for machine-lens / markdown mirrors */
+export const JSON_LD = ORGANIZATION_JSON_LD;
+
+export const FAQ_ITEMS = [
+  {
+    q: "Who are you?",
+    a: "Two engineers, same standing. The people who quote the work are the people who do the work.",
+  },
+  {
+    q: "What does Zen xElligence build?",
+    a: "End-to-end web apps and APIs, AI agent automation, Android/iOS apps (Flutter, React Native, or native), IoT and electronics, and VLSI — brief to handover.",
+  },
+  {
+    q: "What is ZX A³ Innovation™?",
+    a: "Our industry frame: Autonomous Intelligence (AI/ML, data, cloud), Adaptive Silicon (VLSI), and Architected Determinism plus Architect Training (electronics, embedded, education).",
+  },
+  {
+    q: "Do I need to buy all five surfaces?",
+    a: "No. One Android app or one VLSI flow is a complete engagement. Five is the menu.",
+  },
+  {
+    q: "Is there a product I subscribe to?",
+    a: "No. You own what we ship. Hosting, if we stand it up, runs in your account.",
+  },
+  {
+    q: "How do you price?",
+    a: "Written scope first, then a number. Fixed-bid when the edge is clear. Time-and-materials when it isn’t. We reply within one business day.",
+  },
+  {
+    q: "Where are the case studies?",
+    a: "A file goes up when the client says yes. We will not publish a made-up logo wall.",
+  },
+] as const;
+
+export const FAQ_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQ_ITEMS.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+
 // ---- Home page specific data ----
 
 export const HOME_COPY = {
@@ -289,7 +286,7 @@ export const HOME_COPY = {
     "AI agent automation.",
     "IoT and VLSI. End to end.",
   ],
-  lede: "One team takes each build from brief to handover. You don’t need to know the tools.",
+  lede: "Zen xElligence is a two-engineer studio. One team takes each build from brief to handover. You don’t need to know the tools.",
   thesisTitle: "You shouldn’t need five vendors to finish one product.",
   thesisBody:
     "Web applications, Android/iOS apps, AI agent automation, IoT electronics, and VLSI — each one runs spec to handover with the same people. We don’t stop at a slide deck, a prototype, or a netlist.",
@@ -305,33 +302,46 @@ export const HOME_OFFERS = [
 ];
 
 export const HOME_PLATES = [
-  { id: "plate-opening", no: "01", role: "Opening", nav: "Start", pose: "ZX-1 · FULL PRODUCT" },
-  { id: "plate-repose", no: "02", role: "Repose", nav: "Offer", pose: "ZX-1 · FIVE SURFACES" },
-  { id: "plate-web", no: "03", role: "Material study", nav: "Web apps", pose: "ZX-1 · WEB" },
-  { id: "plate-agents", no: "04", role: "Movement study", nav: "AI Agent Automation", pose: "ZX-1 · AI AGENT" },
-  { id: "plate-android", no: "05", role: "Finish", nav: "Android/iOS Apps", pose: "ZX-1 · ANDROID/IOS" },
-  { id: "plate-iot", no: "06", role: "Electronics study", nav: "IoT", pose: "ZX-1 · IOT" },
-  { id: "plate-vlsi", no: "07", role: "Silicon study", nav: "VLSI", pose: "ZX-1 · VLSI" },
-  { id: "plate-finish", no: "08", role: "Finish selection", nav: "How we work", pose: "ZX-1 · FINISH" },
-  { id: "plate-spec", no: "09", role: "Specifications", nav: "Specs", pose: "ZX-1 · SPEC" },
-  { id: "plate-index", no: "10", role: "Plate index", nav: "Contact", pose: "ZX-1 · INDEX" },
+  { id: "plate-opening", no: "01", role: "Opening", nav: "Start", pose: "ZX-1 · FULL PRODUCT", href: "#plate-opening" },
+  { id: "plate-repose", no: "02", role: "Repose", nav: "Offer", pose: "ZX-1 · FIVE SURFACES", href: "#plate-repose" },
+  { id: "plate-web", no: "03", role: "Material study", nav: "Web apps", pose: "ZX-1 · WEB", href: "#plate-web" },
+  { id: "plate-agents", no: "04", role: "Movement study", nav: "AI Agent Automation", pose: "ZX-1 · AI AGENT", href: "#plate-agents" },
+  { id: "plate-android", no: "05", role: "Finish", nav: "Android/iOS Apps", pose: "ZX-1 · ANDROID/IOS", href: "#plate-android" },
+  { id: "plate-iot", no: "06", role: "Electronics study", nav: "IoT", pose: "ZX-1 · IOT", href: "#plate-iot" },
+  { id: "plate-vlsi", no: "07", role: "Silicon study", nav: "VLSI", pose: "ZX-1 · VLSI", href: "#plate-vlsi" },
+  { id: "plate-finish", no: "08", role: "Finish selection", nav: "How we work", pose: "ZX-1 · FINISH", href: "#plate-finish" },
+  { id: "plate-spec", no: "09", role: "Specifications", nav: "Specs", pose: "ZX-1 · SPEC", href: "#plate-spec" },
+  { id: "plate-index", no: "10", role: "Plate index", nav: "Contact", pose: "ZX-1 · INDEX", href: "/contact" },
 ] as const;
 
 export const HOME_SPECS: [string, string, string][] = [
-  ["Web apps & APIs", "MERN, FastAPI", "Live application, auth, and API docs"],
+  ["Web apps & APIs", "Next.js, React, Node, FastAPI, Django", "Live application, auth, and API docs"],
   ["AI Agent Automation", "LangChain, LangGraph, CrewAI, AutoGen", "Working workflows with run traces"],
-  ["Android/iOS Apps", "Native Android and iOS", "App on the same backend as the web product"],
+  ["Android/iOS Apps", "Flutter, React Native, native Android/iOS", "App on the same backend as the web product"],
   ["IoT & electronics", "Sensors, firmware, electronics", "Hardware talking to the product"],
   ["End-to-end VLSI", "Spec, RTL, verification, implementation", "Signed-off design, ready to hand over"],
 ];
 
 export const HOME_STACK = [
-  { lane: "Web apps & APIs", tools: "MERN · FastAPI" },
+  { lane: "Web apps & APIs", tools: "Next.js · React · Node · FastAPI · Django" },
   { lane: "AI Agent Automation", tools: "LangChain · LangGraph · CrewAI · AutoGen" },
-  { lane: "Android/iOS Apps", tools: "Native Android · iOS" },
+  { lane: "Android/iOS Apps", tools: "Flutter · React Native · native" },
   { lane: "IoT & electronics", tools: "Sensors · firmware · electronics" },
   { lane: "End-to-end VLSI", tools: "Spec · RTL · verification · sign-off" },
 ];
+
+export const STUDIO_STACK = [
+  { lane: "Languages", tools: "Python · JavaScript · TypeScript · HTML · CSS · SQL" },
+  { lane: "Frontend", tools: "React · Next.js · Tailwind CSS" },
+  { lane: "Mobile", tools: "Flutter · React Native · Native Android · iOS" },
+  { lane: "Backend", tools: "Node.js · Express · FastAPI · Django / DRF" },
+  { lane: "Databases", tools: "MongoDB · PostgreSQL · MySQL · Redis" },
+  { lane: "Data Engineering", tools: "Apache Airflow · PySpark · Apache Spark · Kafka · ETL/ELT" },
+  { lane: "AI / LLM", tools: "LlamaIndex · LangChain · LangGraph · CrewAI · AutoGen · RAG · OpenAI API · Hugging Face · Vector databases" },
+  { lane: "DevOps / Cloud", tools: "Git · GitHub · Docker · Kubernetes · AWS · Azure · CI/CD" },
+] as const;
+
+export const STUDIO_STACK_ROWS: string[][] = STUDIO_STACK.map((row) => [row.lane, row.tools]);
 
 export const HOME_DOORWAYS = [
   {
@@ -339,7 +349,7 @@ export const HOME_DOORWAYS = [
     title: "Web applications & APIs",
     body: "End-to-end web products: design, build, auth, data, and a live API — not a brochure site.",
     tag1: "end to end",
-    tag2: "MERN · FastAPI",
+    tag2: "Next.js · FastAPI · Django",
     cta: "See web apps →",
     href: "/services",
   },
@@ -348,16 +358,16 @@ export const HOME_DOORWAYS = [
     title: "AI Agent Automation",
     body: "End-to-end agent systems: we design the workflow, wire the tools, and leave you automation that runs — not a chatbot demo.",
     tag1: "end to end",
-    tag2: "LangGraph · CrewAI",
+    tag2: "LangChain · LangGraph · CrewAI",
     cta: "See AI agent automation →",
     href: "/products",
   },
   {
     index: "03",
     title: "Android/iOS Apps",
-    body: "End-to-end native Android and iOS: same product backend as the web app. One system, not two.",
+    body: "End-to-end Android and iOS: Flutter, React Native, or native — same product backend as the web app. One system, not two.",
     tag1: "end to end",
-    tag2: "Android · iOS",
+    tag2: "Flutter · React Native",
     cta: "See Android/iOS apps →",
     href: "/services",
   },
@@ -391,8 +401,8 @@ export const HOME_STATS = [
 export const HOME_CAPABILITIES: TileItem[] = [
   {
     index: "01",
-    title: "MERN products",
-    line: "Mongo, Express, React, Node — full web applications that go to production.",
+    title: "Web products",
+    line: "React, Next.js, Node, FastAPI, Django — full web applications that go to production.",
     meta: "Services →",
     href: "/services",
   },
@@ -406,21 +416,21 @@ export const HOME_CAPABILITIES: TileItem[] = [
   {
     index: "03",
     title: "AI agent graphs",
-    line: "LangChain and LangGraph workflows with tools, memory, and human checkpoints.",
+    line: "LangChain, LangGraph, CrewAI, and AutoGen workflows with tools, memory, and human checkpoints.",
     meta: "Products →",
     href: "/products",
   },
   {
     index: "04",
-    title: "Multi-agent crews",
-    line: "CrewAI and AutoGen teams that split research, coding, and review across roles.",
+    title: "Data and model work",
+    line: "Airflow, Spark, Kafka, and Hugging Face when the product needs pipelines or models, not only a UI.",
     meta: "Products →",
     href: "/products",
   },
   {
     index: "05",
     title: "Android/iOS + IoT",
-    line: "Native Android and iOS apps and electronics that close the loop with the same product backend.",
+    line: "Flutter, React Native, or native Android/iOS apps and electronics that close the loop with the same product backend.",
     meta: "Services →",
     href: "/services",
   },
@@ -446,79 +456,91 @@ const t = (index: string, title: string, line: string, meta: string, href?: stri
 export const PAGES: Record<string, PageContent> = {
   about: {
     kicker: "ABOUT",
-    title:
-      "Founded by two engineers who were tired of watching agencies bill for junior work at senior rates.",
+    title: "Two engineers. That’s the studio.",
+    subhead:
+      "We take the brief. We write the scope. We build it. We hand it over. There is no second bench.",
     blocks: [
-      { type: "label", label: "STORY" },
+      {
+        type: "quote",
+        text: "Two peers. Same standing. Both on the brief. Both on the build.",
+      },
+      { type: "label", label: "WHO WE ARE" },
       {
         type: "prose",
-        text: "Zen xElligence started in 2011 as a two-person systems integration shop in Columbus, Ohio, doing ERP migrations for mid-market manufacturers. By 2015 the founders noticed a pattern across every engagement: the internal dashboards clients used to track system health were either nonexistent or built once and abandoned. In 2019, Zen xElligence spun its internal monitoring tool into a standalone product — Pulse — and now runs it as a second business line alongside services.",
+        text: "Zen xElligence is two engineers. We work under ZX A³ Innovation™: Autonomous Intelligence (AI/ML, data, cloud), Adaptive Silicon (VLSI), and Architected Determinism plus Architect Training (electronics, embedded, education). Web apps, APIs, and Android/iOS ship with us too. We did not grow a 40-person agency around a product we don’t sell.",
       },
+      { type: "label", label: "THE TWO OF US" },
       {
-        type: "table",
-        head: ["YEAR", "MILESTONE"],
-        rows: [
-          ["2011", "Founded, 2 people"],
-          ["2015", "First managed-services contract"],
-          ["2019", "Pulse launched internally"],
-          ["2022", "Pulse opened to external customers"],
-          ["2026", "40 employees, 120 active clients, 340 Pulse workspaces"],
-        ],
-        monoCols: [0],
-      },
-      { type: "label", label: "LEADERSHIP" },
-      {
-        type: "table",
-        head: ["ROLE", "REMIT", "BACKGROUND"],
-        rows: [
-          [
-            "Founder / CEO",
-            "Sets technical direction, still writes architecture reviews personally",
-            "22 years in enterprise systems, ex-Accenture",
-          ],
-          [
-            "Co-founder / CTO",
-            "Owns Pulse product roadmap",
-            "Former SRE lead, built the original internal telemetry stack",
-          ],
-          [
-            "VP, Delivery",
-            "Runs all client implementation work",
-            "15 years running fixed-bid engagements",
-          ],
-          [
-            "VP, Managed Services",
-            "Owns the 24/7 operations desk",
-            "Former NOC manager, three ITIL certifications",
-          ],
+        type: "tiles",
+        items: [
+          t(
+            "01",
+            "Us",
+            "On the call, the build, and the handover. There is no other bench.",
+            "same standing",
+            "/contact",
+          ),
+          t(
+            "02",
+            "Us",
+            "Same age. Same seat. Same brief. Same repo.",
+            "same standing",
+            "/contact",
+          ),
         ],
       },
-      { type: "label", label: "CERTIFICATIONS / PARTNERSHIPS" },
+      { type: "label", label: "HOW THAT WORKS" },
+      {
+        type: "bullets",
+        items: [
+          "The people who quote the work are the people who do the work.",
+          "If the scope moves, the same two are in the room that moves it.",
+          "We will not staff a project with names you never met, or a rank you have to guess.",
+          "When a surface is outside what two people should carry, we say so before we take the brief — we do not hide a subcontract under our logo.",
+        ],
+      },
+      { type: "label", label: "WHAT WE BUILD" },
       {
         type: "pills",
         items: [
-          "AWS Advanced Tier Partner",
-          "Microsoft Solutions Partner — Modern Work",
-          "ISO 27001 Certified",
-          "SOC 2 Type II",
-          "Salesforce Consulting Partner",
+          "Web apps & APIs",
+          "Android/iOS",
+          "AI Agent Automation",
+          "IoT & electronics",
+          "End-to-end VLSI",
+          "Architect Training",
         ],
       },
-      { type: "label", label: "WHY US" },
-      { type: "quote", text: "Senior sells. Junior delivers. We don’t do that." },
+      { type: "label", label: "WE WORK IN" },
       {
-        type: "prose",
-        text: "Most agencies put a principal in the sales call and a team of associates on the actual build. The person who scoped your project isn’t the person who ships it. At Zen xElligence, the engineer who scopes your system is on the delivery team. If the scope changes mid-build, the person who made the original call is in the room to make the next one.",
+        type: "table",
+        head: ["LANE", "STACK"],
+        rows: STUDIO_STACK_ROWS,
+        monoCols: [1],
       },
       {
-        type: "stats",
+        type: "note",
+        text: "You do not pick the tools. Android/iOS, IoT, and VLSI stay on the surfaces above — this is the software, data, and cloud stack we use when the build needs it.",
+      },
+      { type: "label", label: "WHAT WE ARE NOT" },
+      {
+        type: "table",
+        head: ["NOT", "INSTEAD"],
+        rows: [
+          ["An agency with a senior on the call and a junior on the build", "Two engineers, same standing, brief to handover"],
+          ["A SaaS company with Pulse seats", "You own the system we leave you"],
+          ["A partner logo wall", "Tools we use when they fit — no invented certifications"],
+        ],
+      },
+      {
+        type: "note",
+        text: "Names and photos go here when we put them on the page. Until then: two engineers, hello@zenxelligence.com.",
+      },
+      {
+        type: "tiles",
         items: [
-          {
-            value: "0",
-            label: "client engagements handed off to a different lead engineer mid-project, 2023–2026",
-          },
-          { value: "100%", label: "of SOWs signed by the engineer who scoped them" },
-          { value: "4.8 / 5", label: "average post-engagement client rating (47 responses)" },
+          t("→", "See the offer", "Five surfaces under A³.", "services →", "/services"),
+          t("→", "Start a build", "You will hear from us, not a coordinator.", "contact →", "/contact"),
         ],
       },
     ],
@@ -526,17 +548,109 @@ export const PAGES: Record<string, PageContent> = {
 
   services: {
     kicker: "SERVICES",
-    title: "Four services. One team. No handoffs.",
-    subhead: "Consulting through support — the same engineers stay assigned end to end.",
+    title: "Five surfaces. One team. Brief to handover.",
+    subhead:
+      "Web apps & APIs, Android/iOS apps, AI agent automation, IoT, and VLSI. The people who scope it are the people who finish it.",
     blocks: [
-      { type: "label", label: "SERVICES OVERVIEW" },
+      {
+        type: "quote",
+        text: "You shouldn’t need five vendors to finish one product.",
+      },
+      { type: "label", label: "WHAT WE BUILD" },
       {
         type: "tiles",
         items: [
-          t("01", "Consulting", "Architecture reviews, systems audits, vendor and platform selection.", "detail →", "/services/consulting"),
-          t("02", "Implementation", "ERP, CRM, and custom platform builds — fixed-scope, fixed-price.", "detail →", "/services/implementation"),
-          t("03", "Managed Services", "24/7 monitoring, patching, backup verification, incident response.", "detail →", "/services/managed-services"),
-          t("04", "Support", "Tiered SLA support, including systems Zen xElligence didn’t originally build.", "detail →", "/services/support"),
+          t(
+            "01",
+            "Web apps & APIs",
+            "Live applications: design, build, auth, data, and a documented API. Not a brochure site.",
+            "Next.js · FastAPI · Django",
+            "/contact",
+          ),
+          t(
+            "02",
+            "Android/iOS Apps",
+            "Flutter, React Native, or native apps on the same backend as the web product. One system, not two codebases that drift.",
+            "Flutter · React Native",
+            "/contact",
+          ),
+          t(
+            "03",
+            "AI Agent Automation",
+            "Workflows that run with tools, memory, and traces. Not a chatbot demo that dies after the pitch.",
+            "LangChain · LangGraph · CrewAI · AutoGen",
+            "/products",
+          ),
+          t(
+            "04",
+            "IoT & electronics",
+            "Sensors, firmware, and boards wired into the product — not a kit that dies in a drawer.",
+            "Firmware · electronics",
+            "/contact",
+          ),
+          t(
+            "05",
+            "End-to-end VLSI",
+            "Spec and RTL through verification, implementation, and sign-off. We don’t pass you mid-flow.",
+            "RTL · verification · sign-off",
+            "/contact",
+          ),
+        ],
+      },
+      { type: "label", label: "WHAT YOU LEAVE WITH" },
+      {
+        type: "table",
+        head: ["SURFACE", "BUILT WITH", "LEAVES WITH"],
+        rows: [
+          ["Web apps & APIs", "Next.js, React, Node, FastAPI, Django", "Live application, auth, and API docs"],
+          ["Android/iOS Apps", "Flutter, React Native, native Android/iOS", "App on the same backend as the web product"],
+          ["AI Agent Automation", "LangChain, LangGraph, CrewAI, AutoGen", "Working workflows with run traces"],
+          ["IoT & electronics", "Sensors, firmware, electronics", "Hardware talking to the product"],
+          ["End-to-end VLSI", "Spec, RTL, verification, implementation", "Signed-off design, ready to hand over"],
+        ],
+        monoCols: [1],
+      },
+      { type: "label", label: "HOW AN ENGAGEMENT RUNS" },
+      {
+        type: "bullets",
+        items: [
+          "Written scope, timeline, and cost before a line ships.",
+          "The same team stays through handover. We do not swap houses mid-build.",
+          "You leave with a runbook — APIs, agents, and silicon are not a black box.",
+          "When more than one surface is in play, they talk to the same product.",
+        ],
+      },
+      { type: "label", label: "WE WORK IN" },
+      {
+        type: "table",
+        head: ["LANE", "STACK"],
+        rows: STUDIO_STACK_ROWS,
+        monoCols: [1],
+      },
+      {
+        type: "note",
+        text: "You do not need to pick the tools. Data pipelines and cloud sit with Autonomous when the product needs them. Android/iOS, IoT, and VLSI stay on the surfaces above.",
+      },
+      { type: "label", label: "FAQ" },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Do I need to know the stack?",
+            a: "No. Tell us what has to exist at handover. We choose tools that fit the build.",
+          },
+          {
+            q: "Do you do data pipelines and cloud?",
+            a: "Yes. Airflow, Spark, Kafka, Docker, Kubernetes, AWS, and Azure when the product needs them — not as a separate house.",
+          },
+          {
+            q: "Can you do only one surface?",
+            a: "Yes. One Android app or one VLSI flow is a complete engagement. Five is the menu, not a bundle you have to buy.",
+          },
+          {
+            q: "Do you hand the build to another firm halfway?",
+            a: "No. Spec to handover stays with the team that scoped it.",
+          },
         ],
       },
     ],
@@ -658,19 +772,100 @@ export const PAGES: Record<string, PageContent> = {
 
   products: {
     kicker: "PRODUCTS",
-    title: "We built Pulse to watch our own work. Now it watches yours.",
+    title: "You own the system. We don’t rent you a seat.",
+    subhead:
+      "This is a studio, not a SaaS catalog. Product here means what ships: the app, the workflow, the board, the chip.",
     blocks: [
-      { type: "label", label: "PRODUCTS OVERVIEW" },
+      {
+        type: "prose",
+        text: "Services is how we work. Products is what you take home. There is no hosted dashboard you subscribe to. When the engagement ends, the code, the traces, and the design files are yours.",
+      },
+      { type: "label", label: "WHAT SHIPS" },
       {
         type: "tiles",
         items: [
           t(
             "01",
-            "Pulse",
-            "Uptime, latency, and workflow telemetry for internal systems — self-serve, no consulting engagement required.",
-            "explore Pulse →",
-            "/products/pulse",
+            "Live web application",
+            "Auth, data, and a documented API running in an environment you control.",
+            "yours at handover",
+            "/services",
           ),
+          t(
+            "02",
+            "Mobile apps",
+            "Flutter, React Native, or native Android/iOS against that same API. One product, two clients.",
+            "yours at handover",
+            "/services",
+          ),
+          t(
+            "03",
+            "Agent workflows",
+            "LangChain, LangGraph, CrewAI, and AutoGen systems with tools, memory, and run traces you can replay.",
+            "yours at handover",
+            "/contact",
+          ),
+          t(
+            "04",
+            "Connected hardware",
+            "Firmware and electronics that talk to the same product the website uses.",
+            "yours at handover",
+            "/services",
+          ),
+          t(
+            "05",
+            "Signed-off VLSI",
+            "Spec, RTL, verification, implementation, and a handover pack — not a netlist in an email.",
+            "yours at handover",
+            "/services",
+          ),
+        ],
+      },
+      { type: "label", label: "HANDOVER" },
+      {
+        type: "table",
+        head: ["ARTIFACT", "INCLUDED", "YOURS WHEN"],
+        rows: [
+          ["Application + API", "Source, env map, API docs", "Production is up"],
+          ["Mobile clients", "Store-ready builds, same backend", "Apps talk to the live API"],
+          ["Agent system", "Graphs, tool wiring, run traces", "A real workflow completes"],
+          ["IoT pack", "Firmware, schematic notes, link to the product", "Device reports in"],
+          ["VLSI pack", "RTL, verification, implementation notes", "Sign-off, then handover"],
+        ],
+      },
+      {
+        type: "code",
+        label: "HANDOVER MANIFEST — EXAMPLE",
+        text: `# zenxelligence handover
+owner: you
+surfaces:
+  - web:     live app + OpenAPI
+  - mobile:  Flutter / React Native / native
+  - agents:  graphs + traces
+  - iot:     firmware + link
+  - vlsi:    RTL → sign-off
+we_keep: nothing you paid to have built`,
+      },
+      {
+        type: "note",
+        text: "No Pulse. No seat license. If you need hosting, we set it up as part of the build — it still runs in your account.",
+      },
+      { type: "label", label: "FAQ" },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Is this software I subscribe to?",
+            a: "No. We design and build the system. You own it.",
+          },
+          {
+            q: "Who hosts it?",
+            a: "You. We can stand up the first environment. Credentials stay in your name.",
+          },
+          {
+            q: "Do I get the source?",
+            a: "Yes. Source, docs, and a runbook are part of handover — not an extra SKU.",
+          },
         ],
       },
     ],
@@ -728,101 +923,249 @@ export const PAGES: Record<string, PageContent> = {
   },
 
   industries: {
-    kicker: "INDUSTRIES / SOLUTIONS",
-    title: "Different regulatory load. Same discipline.",
+    kicker: "INDUSTRIES · ZX A³ INNOVATION™",
+    title: "ZX A³ Innovation™",
+    subhead: "Autonomous. Adaptive. Architected. Three practices. One studio.",
     blocks: [
       {
-        type: "table",
-        head: ["INDUSTRY", "COMMON ENGAGEMENT", "NAMED CONSTRAINT WE DESIGN AROUND"],
-        rows: [
-          ["Manufacturing", "ERP implementation, shop-floor system integration", "Legacy PLC/SCADA compatibility"],
-          [
-            "Healthcare (admin systems, non-clinical)",
-            "CRM, patient-scheduling backend integration",
-            "HIPAA-aligned data handling",
-          ],
-          [
-            "Financial services (back-office)",
-            "Custom platform builds, reporting pipelines",
-            "SOC 2 / audit trail requirements",
-          ],
-          [
-            "Logistics & distribution",
-            "Real-time inventory and routing systems",
-            "High-availability requirements, 24/7 uptime SLAs",
-          ],
-          ["Professional services firms", "CRM + billing system integration", "Multi-entity, multi-currency reporting"],
-        ],
+        type: "quote",
+        text: "A³ is how we group the work — not a list of verticals we invented to look bigger.",
       },
-      { type: "note", text: "Each industry row links to a filtered view of Case Studies tagged by vertical." },
+      { type: "label", label: "THE THREE A’S" },
       {
         type: "tiles",
-        items: [t("→", "Case Studies", "47 case files, filterable by vertical.", "open case studies →", "/case-studies")],
+        items: [
+          t(
+            "A¹",
+            "Autonomous",
+            "Autonomous Intelligence — systems that sense, decide, and run. AI/ML, data pipelines, and cloud.",
+            "AI/ML · Data · Cloud",
+            "/products",
+          ),
+          t(
+            "A²",
+            "Adaptive",
+            "Adaptive Silicon — chips that fit the product, not a leftover netlist. Spec through sign-off.",
+            "VLSI",
+            "/services",
+          ),
+          t(
+            "A³",
+            "Architected",
+            "Architected Determinism for electronics and embedded. Architect Training for the people who have to own it.",
+            "Embedded · Education",
+            "/services",
+          ),
+        ],
+      },
+      { type: "label", label: "PRACTICE MAP" },
+      {
+        type: "table",
+        head: ["PILLAR", "PRACTICE", "WHAT WE BUILD"],
+        rows: [
+          ["Autonomous", "Autonomous Intelligence", "AI/ML, data pipelines, cloud, agent workflows"],
+          ["Adaptive", "Adaptive Silicon", "End-to-end VLSI — spec, RTL, verification, sign-off"],
+          ["Architected", "Architected Determinism", "Electronics and embedded — firmware, boards, real-time systems"],
+          ["Architected", "Architect Training", "Education for the team that has to run and extend the build"],
+        ],
+      },
+      { type: "label", label: "WE WORK IN" },
+      {
+        type: "table",
+        head: ["LANE", "STACK"],
+        rows: STUDIO_STACK_ROWS,
+        monoCols: [1],
+      },
+      {
+        type: "prose",
+        text: "Web apps, APIs, and Android/iOS still ship under Services. They sit with Autonomous when the product is cloud-backed intelligence — they are not a fourth A.",
+      },
+      {
+        type: "note",
+        text: "ZX A³ Innovation™ is the industry frame. We do not add healthcare, fintech, or manufacturing rows unless that is the actual brief.",
+      },
+      {
+        type: "tiles",
+        items: [
+          t("→", "See the offer", "Five surfaces under the three A’s.", "services →", "/services"),
+          t("→", "Start a build", "Scope, date, and a reply within one business day.", "contact →", "/contact"),
+        ],
       },
     ],
   },
 
   "case-studies": {
     kicker: "CASE STUDIES",
-    title: "47 case files. Real numbers. Client names shown when the client said yes.",
+    title: "A file goes up when the client says yes.",
+    subhead:
+      "No invented logos. No borrowed metrics. This page is the format — Symptom, Finding, Fix, Result — waiting for work we can name.",
     blocks: [
-      { type: "label", label: "NAMED FLAGSHIP CLIENTS" },
       {
-        type: "logos",
+        type: "quote",
+        text: "A case study is a document you can check. It is not a mood board.",
+      },
+      { type: "label", label: "HOW A FILE IS WRITTEN" },
+      {
+        type: "table",
+        head: ["BLOCK", "WHAT IT HOLDS", "WHAT IT NEVER HOLDS"],
+        rows: [
+          ["Symptom", "The state before we started, in their words", "A problem we invented to look busy"],
+          ["Finding", "What was actually wrong, after we looked", "A vendor we “selected” for a brand we don’t run"],
+          ["Fix", "What we built, on which surface", "A Pulse dashboard or an ERP we never shipped"],
+          ["Result", "What changed, only if we can show it", "A percentage with no source"],
+        ],
+      },
+      { type: "label", label: "OPEN SLOTS — ZX A³ INNOVATION™" },
+      {
+        type: "tiles",
         items: [
-          "Ridgeline Manufacturing",
-          "Corbett Logistics",
-          "Harlow Health Administrative Group",
-          "Fen & Vale Financial Partners",
-          "Meadowbrook Distribution",
+          t(
+            "A¹",
+            "Autonomous",
+            "AI/ML, data, cloud, agent workflows. First named file TBD.",
+            "slot open",
+            "/industries",
+          ),
+          t(
+            "A²",
+            "Adaptive",
+            "End-to-end VLSI. First named file TBD.",
+            "slot open",
+            "/industries",
+          ),
+          t(
+            "A³",
+            "Architected",
+            "Electronics, embedded, and training. First named file TBD.",
+            "slot open",
+            "/industries",
+          ),
+        ],
+      },
+      { type: "label", label: "FILES" },
+      { type: "cases" },
+      {
+        type: "code",
+        label: "FILE TEMPLATE",
+        text: `CASE FILE  —  unpublished
+pillar:    Autonomous | Adaptive | Architected
+surface:   web | mobile | agents | iot | vlsi
+client:    named only with written permission
+
+SYMPTOM    what was broken
+FINDING    what we found
+FIX        what we built
+RESULT     what changed — sourced, or omitted`,
+      },
+      { type: "label", label: "FAQ" },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Why is this empty?",
+            a: "Because we will not publish a made-up client. When a build can be named, it gets a file in this format.",
+          },
+          {
+            q: "Can a prospect still check you?",
+            a: "Write. We can arrange a private reference when both sides agree. That is not the same as a public case.",
+          },
+          {
+            q: "I already built with you. Can we add a file?",
+            a: "Yes. Send hello@zenxelligence.com. We draft Symptom / Finding / Fix / Result. You approve the name, or we keep it anonymous.",
+          },
         ],
       },
       {
-        type: "note",
-        text: "Fictional names used for this content package — replace with real client names and logos, with permission, before publishing.",
-      },
-      { type: "label", label: "CASE FILES" },
-      { type: "cases" },
-      {
-        type: "note",
-        text: "Each card: tabbed monospace blocks — Symptom / Finding / Fix / Result — plus a Verify link to a redacted source doc or client reference contact.",
+        type: "tiles",
+        items: [
+          t("→", "See the offer", "Five surfaces under A³.", "services →", "/services"),
+          t("→", "Start a build", "The next file starts as a brief.", "contact →", "/contact"),
+        ],
       },
     ],
   },
 
   pricing: {
     kicker: "PRICING",
-    title: "Packages where packages make sense. Quotes where they don’t.",
+    title: "A number after a written scope. Not a price grid for a product we don’t sell.",
+    subhead:
+      "Every build is quoted. You get a plan, a first date, and a cost before a line ships. We reply within one business day.",
     blocks: [
-      { type: "label", label: "SERVICES PRICING" },
       {
-        type: "prose",
-        text: "Consulting, implementation, and managed services are scoped per engagement. Every SOW is fixed-bid or time-and-materials, agreed in writing before work starts. Request a quote — most come back within 5 business days.",
+        type: "quote",
+        text: "If a studio can put four SaaS tiers on this page, they are selling seats. We sell a handover.",
       },
-      { type: "label", label: "MANAGED SERVICES SLA TIERS" },
+      { type: "label", label: "HOW A QUOTE IS MADE" },
+      {
+        type: "bullets",
+        items: [
+          "You send the brief — what must exist at handover, on which surface.",
+          "We answer within one business day with questions, a first date, and a path to a number.",
+          "Scope, timeline, and cost are written down before work starts.",
+          "Fixed-bid when the edge is clear. Time-and-materials when it isn’t. You pick after you see both.",
+        ],
+      },
+      { type: "label", label: "WHAT WE QUOTE" },
       {
         type: "table",
-        head: ["TIER", "MONTHLY (PER SYSTEM)", "RESPONSE TIME (P1)"],
+        head: ["PILLAR", "SURFACE", "YOU PAY FOR"],
         rows: [
-          ["Standard", "Custom quote", "4 hours"],
-          ["Priority", "Custom quote", "1 hour"],
-          ["Mission-Critical", "Custom quote", "15 minutes"],
+          ["Autonomous", "AI/ML, data, cloud, agent workflows", "A running system and traces you own"],
+          ["Autonomous", "Web apps & APIs, Android/iOS", "A live product on a backend you control"],
+          ["Adaptive", "End-to-end VLSI", "Spec through sign-off, then the handover pack"],
+          ["Architected", "Electronics / embedded", "Firmware and boards wired into the product"],
+          ["Architected", "Architect Training", "Time with the team that has to keep it"],
         ],
-        monoCols: [1, 2],
       },
-      { type: "label", label: "PULSE PRICING — SELF-SERVE" },
+      { type: "label", label: "WHAT MOVES THE NUMBER" },
       {
         type: "table",
-        head: ["PLAN", "PRICE", "INCLUDED"],
+        head: ["LEVER", "LOWER", "HIGHER"],
         rows: [
-          ["Starter", "$0/mo", "3 monitors, 5-min check interval, email alerts"],
-          ["Team", "$49/mo", "25 monitors, 30-sec interval, Slack + PagerDuty, 1 status page"],
-          ["Business", "$199/mo", "100 monitors, 30-sec interval, API access, 5 status pages, workflow telemetry"],
-          ["Enterprise", "Custom quote", "Unlimited monitors, SSO, dedicated support, white-label status pages"],
+          ["Surfaces", "One surface, one handover", "Several surfaces that must stay one product"],
+          ["Constraint", "Green field, your stack", "Live systems, hard silicon dates"],
+          ["Ownership", "We hand over and step off", "Training, a second environment, a longer stay"],
         ],
-        monoCols: [1],
       },
-      { type: "note", text: "14-day free trial on Team and Business. No credit card required." },
+      { type: "label", label: "WHAT THIS PAGE WILL NOT LIST" },
+      {
+        type: "pills",
+        items: [
+          "No monthly seats",
+          "No Pulse plans",
+          "No SLA grid for a NOC we don’t run",
+          "No starter / team / business SKU",
+        ],
+      },
+      {
+        type: "note",
+        text: "Hosting, if you want it set up, is part of the build. It still runs in your account. That is not a subscription to us.",
+      },
+      { type: "label", label: "FAQ" },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Why isn’t there a price?",
+            a: "Because a VLSI sign-off and a single API are not the same job. A public grid would be a guess. We won’t publish one.",
+          },
+          {
+            q: "How fast do I get a number?",
+            a: "A first reply within one business day. A written cost after we have enough of the brief to stand behind it.",
+          },
+          {
+            q: "Do you take a small first slice?",
+            a: "Yes. A paid scope or a thin first surface is a normal start. We don’t need the whole A³ map on day one.",
+          },
+        ],
+      },
+      {
+        type: "tiles",
+        items: [
+          t("→", "Start a build", "Brief in. Plan, date, and a path to a number.", "contact →", "/contact"),
+          t("→", "See the offer", "Five surfaces. Three A’s.", "services →", "/services"),
+        ],
+      },
     ],
   },
 
@@ -886,60 +1229,84 @@ export const PAGES: Record<string, PageContent> = {
 
   resources: {
     kicker: "RESOURCES / FIELD NOTES",
-    title: "Field notes, not marketing copy.",
-    subhead: "Technical writing from the engineers who do the work. RSS available.",
+    title: "Field notes when we have something real to publish.",
+    subhead:
+      "Technical writing from the engineers who do the work. This list is empty until a note is ready — no leftover marketing posts.",
     blocks: [
+      {
+        type: "quote",
+        text: "A field note is a document you can check. It is not a content calendar.",
+      },
       { type: "label", label: "RECENT" },
       {
-        type: "tiles",
-        items: [
-          t("01", "Why we stopped recommending full ERP replacements", "A decision framework with a cost/latency comparison table.", "read →", "/resources/why-we-stopped-recommending-full-erp-replacements"),
-          t("02", "The middleware pattern we use for legacy PLC integration", "Includes a reference architecture diagram and API contract example.", "read →", "/resources/the-middleware-pattern-we-use-for-legacy-plc-integration"),
-          t("03", "How Pulse calculates INP without a synthetic browser", "Technical walkthrough with formulas.", "read →", "/resources/how-pulse-calculates-inp-without-a-synthetic-browser"),
-          t("04", "SOC 2 Type II, one year later: what actually changed", "Whitepaper, downloadable PDF.", "read →"),
-          t("05", "A field guide to month-end close automation", "Step-by-step with a before/after pipeline diagram.", "read →"),
-        ],
+        type: "note",
+        text: "No posts yet. When we publish, entries appear here and in the RSS feed. We will not keep ERP or Pulse articles that do not describe this studio.",
       },
       {
         type: "code",
         label: "FEEDS",
-        text: "RSS   zenxelligence.com/resources/feed.xml\nMD    zenxelligence.com/resources/{slug}.md   (content negotiation)",
+        text: "RSS   zenxelligence.com/resources/feed.xml\nllms  zenxelligence.com/llms.txt",
+      },
+      {
+        type: "tiles",
+        items: [
+          t("→", "FAQ", "Short answers before the first note.", "faq →", "/faq"),
+          t("→", "Start a build", "A brief beats a blog post.", "contact →", "/contact"),
+        ],
       },
     ],
   },
 
   faq: {
     kicker: "FAQ",
-    title: "Questions we get before the first call.",
+    title: "Questions before the first note.",
+    subhead: "Two engineers. ZX A³ Innovation™. Five surfaces. No SaaS seats.",
     blocks: [
       {
         type: "faq",
-        items: [
-          {
-            q: "Do you work with companies smaller than enterprise?",
-            a: "Most clients are mid-market (50–2,000 employees). Smaller companies typically start with Pulse rather than a services engagement.",
-          },
-          {
-            q: "What’s the difference between fixed-bid and time-and-materials?",
-            a: "Fixed-bid is a set price for a defined scope, used when requirements are clear. T&M is billed hourly against a budget ceiling, used for exploratory or evolving work. Every SOW states which model applies before work starts.",
-          },
-          {
-            q: "Can we use Pulse without a services contract?",
-            a: "Yes. Pulse is self-serve; the Starter and Team plans require no sales conversation.",
-          },
-          {
-            q: "Do you support systems you didn’t build?",
-            a: "Yes, through the Support service — after a paid 1-week discovery period.",
-          },
-          {
-            q: "How do you handle scope changes mid-project?",
-            a: "The engineer who scoped the project is on the delivery team, so scope changes are assessed and quoted by the same person who wrote the original SOW — not a project manager relaying it.",
-          },
-          {
-            q: "What’s your data retention policy for Pulse?",
-            a: "90 days on Starter/Team, 13 months on Business/Enterprise. Full details in the Pulse Data Processing Agreement.",
-          },
-        ],
+        items: FAQ_ITEMS.map((item) => ({ q: item.q, a: item.a })),
+      },
+    ],
+  },
+
+  legal: {
+    kicker: "LEGAL",
+    title: "Short, and only what we actually do.",
+    subhead: "Two-engineer studio. No invented certifications. Ask if a clause needs to be tighter before a contract.",
+    blocks: [
+      { type: "label", label: "PRIVACY", id: "privacy" },
+      {
+        type: "prose",
+        text: "If you write to us or use the contact form, we read the name, email, and brief you send so we can reply. We do not sell that. We do not run an ad network. We do not operate a Pulse workspace or any other product that stores your users’ data as a service.",
+      },
+      {
+        type: "note",
+        text: "Mail: hello@zenxelligence.com. Ask us to delete a thread and we will, unless a live contract says we must keep it.",
+      },
+      { type: "label", label: "TERMS", id: "terms" },
+      {
+        type: "prose",
+        text: "This site describes the studio. A build starts only after a written scope you accept. What we make for you is yours at handover, except tools we did not write. We do not grant a seat in a hosted SaaS. If work is outside what two people should carry, we say so before we take the brief.",
+      },
+      { type: "label", label: "COOKIES", id: "cookies" },
+      {
+        type: "prose",
+        text: "We do not set marketing cookies. The site may use what the host needs to stay up. There is no cookie wall because we are not tracking you across the web.",
+      },
+      { type: "label", label: "ACCESSIBILITY", id: "accessibility" },
+      {
+        type: "prose",
+        text: "We aim for a readable dark layout, keyboard focus, and a skip link to main content. If something blocks you, write hello@zenxelligence.com and we will fix what we can.",
+      },
+      { type: "label", label: "SECURITY", id: "security" },
+      {
+        type: "prose",
+        text: "We do not claim SOC 2 or ISO on this page. Client work lives in environments you control unless a contract says otherwise. If you find a hole on zenxelligence.com, mail us before you publish it.",
+      },
+      { type: "label", label: "EDITORIAL", id: "editorial" },
+      {
+        type: "prose",
+        text: "Case studies use Symptom / Finding / Fix / Result, and only with permission. We do not invent clients, counts, or vendor partnerships. ZX A³ Innovation™ is our frame, not a list of verticals we made up.",
       },
     ],
   },
@@ -948,16 +1315,10 @@ export const PAGES: Record<string, PageContent> = {
     kicker: "THE MACHINE LENS",
     title: "This page is built to be read by machines too.",
     subhead:
-      "JSON-LD on every route. A real llms.txt. Markdown mirrors. An MCP server, if you want to query us programmatically.",
+      "JSON-LD on every route. Markdown mirrors. An MCP server, if you want to query us programmatically.",
     blocks: [
       { type: "label", label: "JSON-LD ORGANIZATION / SERVICE SCHEMA" },
       { type: "code", label: "rendered inline on every route", text: JSON.stringify(JSON_LD, null, 2) },
-      { type: "label", label: "LLMS.TXT — SERVED AT /LLMS.TXT" },
-      {
-        type: "code",
-        label: "/llms.txt",
-        text: "# Zen xElligence\n\n> IT services and product company. Custom development, systems\n> integration, and managed services for mid-market companies, plus\n> Pulse, a self-serve operations-intelligence SaaS platform.\n\n## Services\n- Consulting: /services/consulting\n- Implementation: /services/implementation\n- Managed Services: /services/managed-services\n- Support: /services/support\n\n## Products\n- Pulse: /products/pulse\n\n## Reference\n- Case Studies: /case-studies\n- Pricing: /pricing\n- FAQ: /faq\n\n## Contact\n- Get a quote: /contact\n- General inquiries: hello@zenxelligence.com",
-      },
       { type: "label", label: "MARKDOWN MIRROR — CONTENT NEGOTIATION" },
       {
         type: "code",
@@ -996,7 +1357,7 @@ export const PAGES: Record<string, PageContent> = {
       { type: "form" },
       {
         type: "prose",
-        text: "hello@zenxelligence.com — stated response-time commitment: within 1 business day.",
+        text: "hello@zenxelligence.com — or LinkedIn, Instagram, WhatsApp at @zenxelligence. We reply within 1 business day.",
       },
       { type: "note", text: "No phone tree, no calendar-link-only flow — a human reads every submission before routing it." },
     ],
@@ -1004,28 +1365,74 @@ export const PAGES: Record<string, PageContent> = {
 
   careers: {
     kicker: "CAREERS",
-    title: "We hire the person who’ll still be on the call in month eight.",
+    title: "No open role until we can name the work.",
     subhead:
-      "Zen xElligence doesn’t run a bench model. If we hire you onto a role, you’re staffed on real client work inside your first month.",
+      "This studio is two engineers. A third seat is not a poster. When we need someone, the role, the surface, and the seat will be on this page.",
     blocks: [
-      { type: "label", label: "OPEN POSITIONS" },
+      {
+        type: "quote",
+        text: "We will not list a job we do not have.",
+      },
+      { type: "label", label: "OPEN ROLES" },
+      {
+        type: "note",
+        text: "None listed. This list is empty on purpose — same rule as case studies. No Pulse seats. No NetSuite requisitions. No city we don’t sit in.",
+      },
       {
         type: "table",
-        head: ["ROLE", "TEAM", "LOCATION"],
-        rows: [
-          ["Senior Implementation Engineer (NetSuite)", "Implementation", "Remote (US)"],
-          ["Site Reliability Engineer", "Managed Services / Pulse", "Remote (US)"],
-          ["Backend Engineer, Pulse", "Product", "Columbus, OH or Remote"],
-          ["Solutions Architect", "Consulting", "Remote (US)"],
-        ],
+        head: ["ROLE", "SURFACE", "STATUS"],
+        rows: [["—", "—", "No opening"]],
+        monoCols: [2],
       },
-      { type: "label", label: "WHY WORK HERE" },
+      { type: "label", label: "IF WE HIRE" },
+      {
+        type: "prose",
+        text: "The person sits with us. Same standing. On the brief, the build, and the handover. There is no senior on the call and junior on the repo. There is no bench waiting for a sale.",
+      },
       {
         type: "bullets",
         items: [
-          'Engineers scope their own work; no separate "sales engineering" layer misrepresenting scope',
-          "No bench — every hire is staffed within 30 days",
-          "Pulse is dogfooded internally; engineers ship features they use themselves the same week",
+          "The work is one or more of the five surfaces: web apps & APIs, Android/iOS, AI agent automation, IoT, VLSI.",
+          "You use the stack that fits the build. You do not sell a platform we don’t ship.",
+          "If the load is more than two people should carry, we say so before we take the brief — a hire is that same honesty, not a hidden subcontract.",
+        ],
+      },
+      { type: "label", label: "WRITE IN" },
+      {
+        type: "prose",
+        text: "If the surfaces are yours and you want to be in the room when a seat opens: hello@zenxelligence.com. Send what you build, which surface, and a link to work. We reply within 1 business day.",
+      },
+      {
+        type: "note",
+        text: "A note in the inbox is not an opening. We will not invent one to keep the thread warm.",
+      },
+      { type: "label", label: "FAQ" },
+      {
+        type: "faq",
+        items: [
+          {
+            q: "Are you hiring?",
+            a: "Not unless a role is named on this page.",
+          },
+          {
+            q: "Do you run internships or a graduate scheme?",
+            a: "No. We do not run a programme we cannot staff as peers.",
+          },
+          {
+            q: "Can I send a CV anyway?",
+            a: "Yes — hello@zenxelligence.com. Say the surface. Link the work. Skip the cover-letter theatre.",
+          },
+          {
+            q: "Is this remote?",
+            a: "When a role is listed, the seat will be on the row. We will not guess a city for an opening that isn’t there.",
+          },
+        ],
+      },
+      {
+        type: "tiles",
+        items: [
+          t("→", "About the studio", "Two engineers. Same standing.", "about →", "/about"),
+          t("→", "Start a build", "A brief, not an application.", "contact →", "/contact"),
         ],
       },
     ],

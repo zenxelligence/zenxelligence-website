@@ -1,22 +1,55 @@
 # Zen xElligence
 
-> End-to-end product studio. Web applications and APIs, AI agent
-> automation, Android/iOS apps, IoT electronics, and VLSI.
+> Two-engineer product studio. End-to-end web apps & APIs, AI agent automation, Android/iOS (Flutter, React Native, native), IoT & electronics, and VLSI — brief to handover. You own what ships. No SaaS seats.
 
-## Services
-- Web applications & APIs: /services
-- AI Agent Automation: /products
-- Android/iOS Apps: /services
-- IoT & electronics: /services
-- End-to-end VLSI: /services
-- Consulting: /services/consulting
-- Implementation: /services/implementation
+Site: https://zenxelligence.com
+Email: hello@zenxelligence.com
+Handle: @zenxelligence
 
-## Reference
-- Case Studies: /case-studies
-- Pricing: /pricing
-- FAQ: /faq
+## Offer
 
-## Contact
-- Start a build: /contact
-- General inquiries: hello@zenxelligence.com
+- Web apps & APIs — Next.js, React, Node, FastAPI, Django
+- Android/iOS Apps — Flutter, React Native, native
+- AI Agent Automation — LangChain, LangGraph, CrewAI, AutoGen, LlamaIndex, RAG
+- IoT & electronics — sensors, firmware, boards wired to the product
+- End-to-end VLSI — spec, RTL, verification, implementation, sign-off
+
+## Industry frame
+
+ZX A³ Innovation™
+- Autonomous — Autonomous Intelligence (AI/ML, data, cloud, agents)
+- Adaptive — Adaptive Silicon (VLSI)
+- Architected — Architected Determinism · Architect Training (electronics, embedded, education)
+
+## Stack we work in
+
+Languages: Python, JavaScript, TypeScript, HTML, CSS, SQL
+Frontend: React, Next.js, Tailwind CSS
+Mobile: Flutter, React Native, Native Android, iOS
+Backend: Node.js, Express, FastAPI, Django / DRF
+Databases: MongoDB, PostgreSQL, MySQL, Redis
+Data: Apache Airflow, PySpark, Apache Spark, Kafka, ETL/ELT
+AI/LLM: LlamaIndex, LangChain, LangGraph, CrewAI, AutoGen, RAG, OpenAI API, Hugging Face, vector databases
+DevOps/Cloud: Git, GitHub, Docker, Kubernetes, AWS, Azure, CI/CD
+
+## Key pages
+
+- [Home](https://zenxelligence.com/)
+- [Services](https://zenxelligence.com/services)
+- [Products / what you own](https://zenxelligence.com/products)
+- [Industries / A³](https://zenxelligence.com/industries)
+- [Pricing](https://zenxelligence.com/pricing)
+- [FAQ](https://zenxelligence.com/faq)
+- [About](https://zenxelligence.com/about)
+- [Case studies](https://zenxelligence.com/case-studies)
+- [Contact](https://zenxelligence.com/contact)
+- [Careers](https://zenxelligence.com/careers)
+- [Legal](https://zenxelligence.com/legal)
+
+## Facts for citation
+
+- Studio size: two engineers, same standing
+- Pricing: written scope first, then a number; reply within 1 business day
+- Ownership: client owns the system at handover; hosting runs in the client account
+- Case studies: published only when the client approves; empty list means none public yet
+- Not sold: monthly SaaS seats, Pulse, invented partner badges

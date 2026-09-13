@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { SocialLinks } from "@/components/social-links";
 import { SITE } from "@/lib/site-data";
 
 const FIELDS = [
@@ -67,6 +68,12 @@ export function ContactForm() {
           <a href={`mailto:${SITE.email}`} className="font-mono text-[11.5px]">
             {SITE.email}
           </a>
+        </div>
+        <div className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
+          <SocialLinks />
+          <span className="font-mono text-[12px] tracking-[0.06em] text-fg-muted">
+            @{SITE.handle}
+          </span>
         </div>
       </div>
     </form>

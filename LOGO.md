@@ -133,7 +133,7 @@ Name files: `zx-mark-accent.svg`, `zx-horizontal-dark.svg`, `zx-horizontal-light
 ## Where it will live
 
 - Site header (left, 16–20px mark + wordmark)  
-- Footer, OG images, `llms.txt` / email sign-off  
+- Footer, OG images, email sign-off  
 - `/favicon.ico`, Apple touch, PWA tile  
 - Slide decks, invoices, GitHub / LinkedIn  
 - Optional: silkscreen / chip-style one-color

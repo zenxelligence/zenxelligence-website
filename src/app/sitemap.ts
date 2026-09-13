@@ -1,13 +1,27 @@
 import type { MetadataRoute } from "next";
-import { BLOG_POSTS, CASE_FILES, ROUTE_PAGE_MAP, SITE } from "@/lib/site-data";
+import { SITE } from "@/lib/site-data";
+
+/** Canonical indexable routes only — no redirects, no template leftovers. */
+const INDEXABLE = [
+  "",
+  "about",
+  "services",
+  "products",
+  "industries",
+  "case-studies",
+  "pricing",
+  "resources",
+  "faq",
+  "contact",
+  "careers",
+  "legal",
+] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticPaths = ["", ...Object.keys(ROUTE_PAGE_MAP)];
-  const casePaths = CASE_FILES.map((c) => `case-studies/${c.slug}`);
-  const postPaths = BLOG_POSTS.map((p) => `resources/${p.slug}`);
-
-  return [...staticPaths, ...casePaths, ...postPaths].map((path) => ({
-    url: `${SITE.url}/${path}`.replace(/\/$/, "") || SITE.url,
+  return INDEXABLE.map((path) => ({
+    url: path ? `${SITE.url}/${path}` : SITE.url,
     lastModified: new Date(),
+    changeFrequency: path === "" || path === "services" ? "weekly" : "monthly",
+    priority: path === "" ? 1 : path === "services" || path === "contact" ? 0.9 : 0.7,
   }));
 }

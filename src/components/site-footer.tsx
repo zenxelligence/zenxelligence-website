@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { FOOTER_COLUMNS } from "@/lib/site-data";
+import type { ReactNode } from "react";
+import { SocialLinks } from "@/components/social-links";
+import { FOOTER_COLUMNS, SITE } from "@/lib/site-data";
 
 function shortSha(sha?: string) {
   if (!sha) return "local";
@@ -8,24 +10,12 @@ function shortSha(sha?: string) {
 
 export function SiteFooter() {
   const commit = shortSha(process.env.VERCEL_GIT_COMMIT_SHA);
-  const deployedAt = process.env.VERCEL_GIT_COMMIT_SHA
-    ? new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC"
-    : "dev build";
+  const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-22 border-t border-border">
+    <footer className="mt-22 border-t border-border bg-bg">
       <div className="mx-auto max-w-[1280px] px-4 pb-14 pt-9 sm:px-6.5">
-        <a
-          href="https://example.com/columbus-business-first"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-2.5 border border-border px-3.5 py-2 font-mono text-[11px] text-fg hover:border-accent"
-        >
-          <span className="text-accent">Featured</span>
-          <span>Columbus Business First, &ldquo;Tech Companies to Watch,&rdquo; 2025 →</span>
-        </a>
-
-        <div className="mt-8 grid grid-cols-2 gap-8 border-t border-border py-9 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-8 py-9 sm:grid-cols-3 lg:grid-cols-5">
           {FOOTER_COLUMNS.map((col) => (
             <div key={col.heading}>
               <div className="font-mono text-[10.5px] tracking-[0.08em] text-fg-muted">
@@ -34,12 +24,9 @@ export function SiteFooter() {
               <ul className="mt-4 grid gap-2.5">
                 {col.items.map((item) => (
                   <li key={item.label}>
-                    <Link
-                      href={item.href}
-                      className={cnFooterLink(item.mono)}
-                    >
+                    <FooterNavLink href={item.href} mono={item.mono}>
                       {item.label}
-                    </Link>
+                    </FooterNavLink>
                   </li>
                 ))}
               </ul>
@@ -47,25 +34,65 @@ export function SiteFooter() {
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4.5 border-t border-border pt-6.5 font-mono text-[11px] text-fg-muted">
-          <span className="border border-border px-3 py-2 leading-relaxed">
-            commit {commit} · deployed {deployedAt}
-            <br />
-            push = ship
-          </span>
-          <span>© {new Date().getFullYear()} Zen xElligence. Built by the team that maintains it.</span>
-        </div>
+        <div className="grid gap-8 border-t border-border pt-7 md:grid-cols-[1fr_auto_1fr] md:items-end">
+          <div className="grid gap-2">
+            <p className="m-0 font-mono text-[12px] tracking-[0.06em] text-fg">
+              © {year} {SITE.name}
+            </p>
+            <p className="m-0 font-mono text-[11px] tracking-[0.06em] text-fg-muted">
+              {SITE.framework} · Two engineers
+            </p>
+          </div>
 
-        <p className="mt-5.5 max-w-[900px] font-mono text-[10.5px] leading-relaxed text-fg-muted">
-          All names, employee counts, client logos, and figures on this site are illustrative
-          placeholders sized to feel real — replace with verified data before publishing. The Web
-          Vitals readout, JSON-LD and /llms.txt are genuine.
-        </p>
+          <div className="grid justify-items-start gap-2.5 md:justify-items-center">
+            <div className="font-mono text-[10.5px] tracking-[0.08em] text-fg-muted">
+              CONNECT
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <SocialLinks />
+              <span className="font-mono text-[12px] tracking-[0.06em] text-fg-muted">
+                @{SITE.handle}
+              </span>
+            </div>
+          </div>
+
+          <div className="grid justify-items-start gap-2 md:justify-items-end">
+            <a
+              href={`mailto:${SITE.email}`}
+              className="font-mono text-[12px] tracking-[0.04em]"
+            >
+              {SITE.email}
+            </a>
+            <span className="font-mono text-[10.5px] tracking-[0.08em] text-fg-muted">
+              commit {commit}
+            </span>
+          </div>
+        </div>
       </div>
     </footer>
   );
 }
 
-function cnFooterLink(mono?: boolean) {
-  return `block text-left text-[13.5px] text-fg hover:text-accent ${mono ? "font-mono" : "font-sans"}`;
+function FooterNavLink({
+  href,
+  mono,
+  children,
+}: {
+  href: string;
+  mono?: boolean;
+  children: ReactNode;
+}) {
+  const className = `block text-left text-[13.5px] text-fg hover:text-accent ${mono ? "font-mono" : "font-sans"}`;
+  if (href.includes("#")) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
 }

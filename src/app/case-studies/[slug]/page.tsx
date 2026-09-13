@@ -28,7 +28,7 @@ export default async function CaseStudyPage({
   if (!caseFile) notFound();
 
   return (
-    <section className="pt-18 pb-6">
+    <section className="pt-8 pb-6">
       <div className="font-mono text-[11px] tracking-[0.06em] text-fg-muted">CASE STUDIES</div>
       <h1 className="mt-5 max-w-[1000px] text-[clamp(32px,4.6vw,58px)] leading-[1.04] font-semibold tracking-[-0.034em]">
         {caseFile.title}

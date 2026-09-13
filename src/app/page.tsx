@@ -7,6 +7,7 @@ import { StatStrip } from "@/components/stat-strip";
 import { LiveMetricsWidget } from "@/components/live-metrics-widget";
 import { EditorialPlate } from "@/components/editorial-plate";
 import { PlateIndex } from "@/components/plate-index";
+import { homeMetadata } from "@/lib/page-metadata";
 import {
   HOME_COPY,
   HOME_DOORWAYS,
@@ -14,9 +15,12 @@ import {
   HOME_PLATES,
   HOME_SPECS,
   HOME_STACK,
+  STUDIO_STACK,
   HOME_STATS,
   SITE,
 } from "@/lib/site-data";
+
+export const metadata = homeMetadata();
 
 export default function Home() {
   const [opening, repose, web, agents, android, iot, vlsi, finish, spec, index] = HOME_PLATES;
@@ -54,7 +58,7 @@ export default function Home() {
               {HOME_OFFERS.map((offer) => (
                 <Link
                   key={offer.label}
-                  href={`#${offerAnchor(offer.label)}`}
+                  href={offer.href}
                   className="border border-border px-3 py-1.5 font-mono text-[11.5px] text-fg hover:border-accent hover:text-accent"
                 >
                   {offer.label}
@@ -97,7 +101,7 @@ export default function Home() {
         <p className="max-w-[680px] text-lg leading-relaxed text-fg-muted">{HOME_COPY.thesisBody}</p>
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {HOME_DOORWAYS.map((d) => (
-            <NumberedDoorwayCard key={d.title} {...d} href={`#${offerAnchor(d.title)}`} />
+            <NumberedDoorwayCard key={d.title} {...d} />
           ))}
         </div>
       </EditorialPlate>
@@ -161,6 +165,27 @@ export default function Home() {
             </tbody>
           </table>
         </div>
+        <p className="mt-12 font-mono text-[11px] tracking-[0.08em] text-fg-muted">WE WORK IN</p>
+        <div className="mt-4 overflow-x-auto border-t border-border">
+          <table className="w-full min-w-[640px] text-left">
+            <thead>
+              <tr className="font-mono text-[11px] tracking-[0.08em] text-fg-muted">
+                <th className="py-4 pr-6 font-medium">LANE</th>
+                <th className="py-4 font-medium">STACK</th>
+              </tr>
+            </thead>
+            <tbody>
+              {STUDIO_STACK.map((row) => (
+                <tr key={row.lane} className="border-t border-border">
+                  <td className="py-4.5 pr-6 text-[17px] font-semibold tracking-[-0.015em]">
+                    {row.lane}
+                  </td>
+                  <td className="py-4.5 font-mono text-[13px] text-fg-muted">{row.tools}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </EditorialPlate>
 
       <EditorialPlate
@@ -174,14 +199,25 @@ export default function Home() {
         <ol className="grid max-w-[720px] grid-cols-1 gap-0 sm:grid-cols-2">
           {HOME_PLATES.map((plate) => (
             <li key={plate.id} className="border-b border-border">
-              <a
-                href={`#${plate.id}`}
-                className="flex items-baseline justify-between gap-4 py-3.5 text-fg hover:text-accent"
-              >
-                <span className="font-mono text-[11px] text-fg-muted">{plate.no}</span>
-                <span className="flex-1 text-[15px]">{plate.nav}</span>
-                <span className="font-mono text-[10.5px] text-fg-muted">{plate.pose}</span>
-              </a>
+              {plate.href.startsWith("/") ? (
+                <Link
+                  href={plate.href}
+                  className="flex items-baseline justify-between gap-4 py-3.5 text-fg hover:text-accent"
+                >
+                  <span className="font-mono text-[11px] text-fg-muted">{plate.no}</span>
+                  <span className="flex-1 text-[15px]">{plate.nav}</span>
+                  <span className="font-mono text-[10.5px] text-fg-muted">{plate.pose}</span>
+                </Link>
+              ) : (
+                <a
+                  href={plate.href}
+                  className="flex items-baseline justify-between gap-4 py-3.5 text-fg hover:text-accent"
+                >
+                  <span className="font-mono text-[11px] text-fg-muted">{plate.no}</span>
+                  <span className="flex-1 text-[15px]">{plate.nav}</span>
+                  <span className="font-mono text-[10.5px] text-fg-muted">{plate.pose}</span>
+                </a>
+              )}
             </li>
           ))}
         </ol>
@@ -199,16 +235,6 @@ export default function Home() {
       </EditorialPlate>
     </div>
   );
-}
-
-function offerAnchor(label: string) {
-  if (label.includes("Web") || label.includes("API")) return "plate-web";
-  if (label.includes("agent") || label.includes("workflow") || label.includes("AI")) {
-    return "plate-agents";
-  }
-  if (label.includes("Android") || label.includes("iOS")) return "plate-android";
-  if (label.includes("VLSI")) return "plate-vlsi";
-  return "plate-iot";
 }
 
 function StudyPlate({

@@ -30,7 +30,7 @@
   html {
     color-scheme: dark;
     scroll-behavior: smooth;
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 0;
   }
 
   @media (prefers-reduced-motion: reduce) {

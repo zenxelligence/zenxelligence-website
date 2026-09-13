@@ -8,6 +8,7 @@ import {
   HOME_STACK,
   HOME_STATS,
   SITE,
+  STUDIO_STACK,
 } from "@/lib/site-data";
 
 function blockToMarkdown(block: Block): string {
@@ -125,6 +126,9 @@ export function homeToMarkdown(): string {
     "",
     "## Stack",
     ...HOME_STACK.map((s) => `- **${s.lane}** — ${s.tools}`),
+    "",
+    "## We work in",
+    ...STUDIO_STACK.map((s) => `- **${s.lane}** — ${s.tools}`),
     "",
     "## Finish selection",
     ...HOME_STATS.map((s) => `- **${s.value}** — ${s.label}`),

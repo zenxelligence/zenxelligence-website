@@ -13,7 +13,11 @@ export function PageBlocks({ blocks }: { blocks: Block[] }) {
   return (
     <>
       {blocks.map((block, i) => (
-        <FadeInSection key={i} className="mt-13">
+        <FadeInSection
+          key={i}
+          id={block.type === "label" ? block.id : undefined}
+          className="mt-13"
+        >
           <BlockRenderer block={block} />
         </FadeInSection>
       ))}
@@ -54,9 +58,15 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "tiles":
       return (
-        <div className="grid grid-cols-1 border-t border-border sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className={
+            block.items.length <= 2
+              ? "grid grid-cols-1 border-t border-border sm:grid-cols-2"
+              : "grid grid-cols-1 border-t border-border sm:grid-cols-2 xl:grid-cols-3"
+          }
+        >
           {block.items.map((item) => (
-            <CapabilityTile key={item.title} {...item} />
+            <CapabilityTile key={`${item.index}-${item.title}-${item.meta}`} {...item} />
           ))}
         </div>
       );
@@ -187,6 +197,14 @@ function BlockRenderer({ block }: { block: Block }) {
       return <ContactForm />;
 
     case "cases":
+      if (CASE_FILES.length === 0) {
+        return (
+          <p className="m-0 max-w-[760px] border border-border px-5 py-6 font-mono text-[12.5px] leading-relaxed text-fg-muted">
+            No public files yet. The first one will use the template below. Until then this list stays empty on
+            purpose.
+          </p>
+        );
+      }
       return (
         <div className="grid gap-7">
           {CASE_FILES.map((c) => (
@@ -207,7 +225,7 @@ export function BottomCta() {
         href="/contact"
         className="bg-accent px-5 py-3.25 font-mono text-xs text-bg hover:bg-fg"
       >
-        Get a quote →
+        Start a build →
       </Link>
       <Link
         href="/"

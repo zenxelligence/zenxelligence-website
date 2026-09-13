@@ -26,7 +26,7 @@ export function LiveStatusBadge({ label }: { label: string }) {
 
   return (
     <a
-      href="/machine-lens"
+      href="/llms.txt"
       className="inline-flex items-center gap-2 border border-border px-2.5 py-1.5 font-mono text-xs text-fg hover:border-accent"
     >
       <span className="animate-vs-pulse h-1.5 w-1.5 rounded-full bg-accent" />

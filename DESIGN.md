@@ -14,10 +14,19 @@ Source of truth for color, type, layout, motion, and UI. Tokens live in `src/app
 | Mark | Temporary `Zx` (JetBrains Mono, accent). Final mark: see `LOGO.md` |
 | Wordmark | `ZEN xELLIGENCE` (Archivo semibold, 13px, tracking `0.14em`) |
 | Tagline | End to end. Web to VLSI. |
+| Framework | ZX A³ Innovation™ |
 | Email | hello@zenxelligence.com |
 | Site | https://zenxelligence.com |
 
-Five domains, always in this order: **Web apps & APIs · Android/iOS Apps · AI Agent Automation · IoT · VLSI**.
+**ZX A³ Innovation™** is the industry frame (see `/industries`):
+
+| Pillar | Practice | Fields |
+|---|---|---|
+| Autonomous | Autonomous Intelligence | AI/ML, Data, Cloud |
+| Adaptive | Adaptive Silicon | VLSI |
+| Architected | Architected Determinism · Architect Training | Electronics / Embedded · Education |
+
+Five build surfaces, always in this order: **Web apps & APIs · Android/iOS Apps · AI Agent Automation · IoT · VLSI**. Web and mobile sit under Services; they fold into Autonomous when the product is cloud-backed intelligence.
 
 Do not invent Pulse, ERP, managed-services copy, fake KPIs, or EDA vendor names.
 

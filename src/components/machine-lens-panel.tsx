@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { JSON_LD } from "@/lib/site-data";
+import { ORGANIZATION_JSON_LD } from "@/lib/site-data";
 
 export function MachineLensPanel() {
   const [open, setOpen] = useState(false);
@@ -24,20 +24,15 @@ export function MachineLensPanel() {
           </a>
         </div>
         <div>
-          <a href="/llms.txt" target="_blank" rel="noreferrer">
-            /llms.txt — served
-          </a>
+          <a href="/llms.txt">llms.txt — offer map for answer engines</a>
         </div>
         <div>
-          <a href="/machine-lens">status.zenxelligence.com/api/v1/summary</a>
-        </div>
-        <div>
-          <a href="/machine-lens">Accept: text/markdown — page mirror</a>
+          <a href="/faq">FAQ — citation-ready answers</a>
         </div>
       </div>
       {open && (
         <pre className="mt-5.5 max-h-[280px] overflow-x-auto border border-border bg-bg p-4 font-mono text-xs leading-loose text-fg">
-          {JSON.stringify(JSON_LD, null, 2)}
+          {JSON.stringify(ORGANIZATION_JSON_LD, null, 2)}
         </pre>
       )}
     </div>

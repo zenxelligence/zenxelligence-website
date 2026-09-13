@@ -6,12 +6,15 @@ import type { ReactNode } from "react";
 export function FadeInSection({
   children,
   className,
+  id,
 }: {
   children: ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
     <motion.div
+      id={id}
       className={className}
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}

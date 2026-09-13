@@ -36,10 +36,10 @@ export function EditorialPlate({
       data-plate={id}
       className={
         screen
-          ? "flex min-h-[calc(100dvh-4.25rem)] scroll-mt-22 flex-col justify-center py-8"
+          ? "flex min-h-[calc(100dvh-4.25rem)] flex-col justify-center py-8"
           : bare
-            ? "scroll-mt-22 pb-10 pt-6 md:pb-12 md:pt-8"
-            : "scroll-mt-22 border-t border-border py-20 md:py-28"
+            ? "pb-10 pt-6 md:pb-12 md:pt-8"
+            : "border-t border-border py-20 md:py-28"
       }
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}

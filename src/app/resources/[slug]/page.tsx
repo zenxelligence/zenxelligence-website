@@ -29,7 +29,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <section className="pt-18 pb-6">
+    <section className="pt-8 pb-6">
       <div className="font-mono text-[11px] tracking-[0.06em] text-fg-muted">
         RESOURCES / FIELD NOTES
       </div>

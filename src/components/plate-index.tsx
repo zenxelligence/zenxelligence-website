@@ -1,11 +1,14 @@
 "use client";
 
+import Link from "next/link";
 import { HOME_PLATES } from "@/lib/site-data";
+import { scrollToTarget } from "@/lib/scroll-to";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function PlateIndex() {
   const [active, setActive] = useState(HOME_PLATES[0].id);
+  const lockedUntil = useRef(0);
 
   useEffect(() => {
     const nodes = HOME_PLATES.map((p) => document.getElementById(p.id)).filter(
@@ -15,6 +18,7 @@ export function PlateIndex() {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (Date.now() < lockedUntil.current) return;
         const visible = entries
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
@@ -28,7 +32,10 @@ export function PlateIndex() {
   }, []);
 
   function go(id: string) {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActive(id);
+    lockedUntil.current = Date.now() + 900;
+    scrollToTarget(id);
+    window.history.replaceState(null, "", `#${id}`);
   }
 
   const onHero = active === "plate-opening";
@@ -44,10 +51,10 @@ export function PlateIndex() {
       <ul className="fixed right-3 top-1/2 z-80 hidden -translate-y-1/2 flex-col gap-1.5 lg:flex">
         {HOME_PLATES.map((plate) => (
           <li key={plate.id} className={onHero ? undefined : "pointer-events-auto"}>
-            <button
-              type="button"
-              onClick={() => go(plate.id)}
-              aria-current={active === plate.id ? "true" : undefined}
+            <IndexControl
+              plate={plate}
+              active={active === plate.id}
+              onHash={() => go(plate.id)}
               className={cn(
                 "flex w-full items-center gap-2.5 px-1 py-1 text-left font-mono text-[10px] tracking-[0.08em] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                 active === plate.id ? "text-accent" : "text-fg-muted hover:text-fg",
@@ -60,7 +67,7 @@ export function PlateIndex() {
                 )}
               />
               {plate.no} {plate.nav}
-            </button>
+            </IndexControl>
           </li>
         ))}
       </ul>
@@ -73,21 +80,59 @@ export function PlateIndex() {
       >
         {HOME_PLATES.map((plate) => (
           <li key={plate.id} className="pointer-events-auto">
-            <button
-              type="button"
-              onClick={() => go(plate.id)}
-              aria-label={plate.nav}
-              aria-current={active === plate.id ? "true" : undefined}
+            <IndexControl
+              plate={plate}
+              active={active === plate.id}
+              onHash={() => go(plate.id)}
               className={cn(
                 "min-w-8 px-1.5 py-1 font-mono text-[10px] tracking-wide",
                 active === plate.id ? "text-accent" : "text-fg-muted",
               )}
             >
               {plate.no}
-            </button>
+            </IndexControl>
           </li>
         ))}
       </ul>
     </nav>
+  );
+}
+
+function IndexControl({
+  plate,
+  active,
+  onHash,
+  className,
+  children,
+}: {
+  plate: (typeof HOME_PLATES)[number];
+  active: boolean;
+  onHash: () => void;
+  className: string;
+  children: ReactNode;
+}) {
+  if (plate.href.startsWith("/")) {
+    return (
+      <Link
+        href={plate.href}
+        aria-label={plate.nav}
+        aria-current={active ? "true" : undefined}
+        className={className}
+      >
+        {children}
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onHash}
+      aria-label={plate.nav}
+      aria-current={active ? "true" : undefined}
+      className={className}
+    >
+      {children}
+    </button>
   );
 }
