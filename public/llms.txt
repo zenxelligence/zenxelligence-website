@@ -1,0 +1,22 @@
+# Zen xElligence
+
+> End-to-end product studio. Web applications and APIs, AI agent
+> automation, Android/iOS apps, IoT electronics, and VLSI.
+
+## Services
+- Web applications & APIs: /services
+- AI Agent Automation: /products
+- Android/iOS Apps: /services
+- IoT & electronics: /services
+- End-to-end VLSI: /services
+- Consulting: /services/consulting
+- Implementation: /services/implementation
+
+## Reference
+- Case Studies: /case-studies
+- Pricing: /pricing
+- FAQ: /faq
+
+## Contact
+- Start a build: /contact
+- General inquiries: hello@zenxelligence.com

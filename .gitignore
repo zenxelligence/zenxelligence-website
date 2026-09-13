@@ -1,0 +1,70 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# next.js
+.next/
+out/
+.turbo/
+
+# production
+build/
+dist/
+
+# env — keep a committed example if you add one
+.env
+.env.*
+!.env.example
+
+# vercel / local deploy
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# logs & caches
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+.eslintcache
+.cache/
+coverage/
+
+# secrets & certs
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+
+# os
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+$RECYCLE.BIN/
+
+# editors
+.idea/
+*.swp
+*.swo
+*~
+
+# cursor local (keep shared rules)
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+
+# scratch
+*.local
+.tmp-*.png
+.tmp-*.jpg
