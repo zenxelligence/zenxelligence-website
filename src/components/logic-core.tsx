@@ -256,6 +256,8 @@ function DomainNode({
         <cylinderGeometry args={[0.009, 0.009, 1, 6]} />
         <meshBasicMaterial color={ACCENT} transparent opacity={0.78} />
       </mesh>
+      {/* THREE.Line — not SVG; React types map `line` to SVGLineElement */}
+      {/* @ts-expect-error R3F line vs SVG line */}
       <line geometry={leader}>
         <lineBasicMaterial color={ACCENT} transparent opacity={0.55} />
       </line>

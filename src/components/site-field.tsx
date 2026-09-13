@@ -8,12 +8,16 @@ export function SiteField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    const canvasEl = canvasRef.current;
+    if (!canvasEl) return;
 
+    const context = canvasEl.getContext("2d", { alpha: true });
+    if (!context) return;
+
+    // Bound after guards — nested functions do not keep TS null narrowing.
+    const canvas: HTMLCanvasElement = canvasEl;
+    const ctx: CanvasRenderingContext2D = context;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const ctx = canvas.getContext("2d", { alpha: true });
-    if (!ctx) return;
 
     const pointer = { x: 0.72, y: 0.42, tx: 0.72, ty: 0.42 };
     let nodes: Node[] = [];

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export function PlateIndex() {
-  const [active, setActive] = useState(HOME_PLATES[0].id);
+  const [active, setActive] = useState<string>(HOME_PLATES[0].id);
   const lockedUntil = useRef(0);
 
   useEffect(() => {
