@@ -20,7 +20,7 @@ export function SiteHeader() {
       <LampToggle />
       <div className="site-container header-bar">
         <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-          <BrandLockup height={30} />
+          <BrandLockup height={28} />
         </Link>
         <nav className="desktop-nav" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
@@ -57,7 +57,7 @@ export function SiteHeader() {
         </div>
         <nav id="mobile-nav" className="mobile-menu" hidden={!open} inert={!open} aria-label="Mobile">
           <Link href="/" className="logo-lockup" aria-label="Zen xElligence" onClick={() => setOpenPath(null)}>
-            <BrandLockup height={28} />
+            <BrandLockup height={24} />
           </Link>
           <Link href="/contact" className="button button-primary">
             Start a build

@@ -11,7 +11,7 @@ export default function NotFound() {
   return (
     <section className="page-inner">
       <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-        <BrandMark height={40} />
+        <BrandMark height={56} />
       </Link>
       <p className="eyebrow mt-8">404</p>
       <h1 className="page-title">Page not found</h1>

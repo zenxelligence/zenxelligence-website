@@ -157,7 +157,6 @@
   h2,
   h3,
   .display,
-  .logo-word,
   .stat-value {
     font-family: var(--font-display);
     color: var(--text);
@@ -247,8 +246,16 @@
 
   .brand-slot svg {
     display: block;
-    height: 30px;
     width: auto;
+    height: auto;
+  }
+
+  .header-bar > .logo-lockup .brand-slot svg {
+    height: 28px;
+  }
+
+  .mobile-menu .brand-slot svg {
+    height: 24px;
   }
 
   .site-footer .brand-slot svg {
@@ -256,20 +263,11 @@
   }
 
   .page-inner .brand-slot svg {
-    height: 40px;
+    height: 56px;
   }
 
   .hero-figcap .brand-slot svg {
     height: 16px;
-  }
-
-  .logo-word {
-    font-weight: 700;
-    font-size: 30px;
-    line-height: 1;
-    letter-spacing: -1.5px;
-    color: var(--text);
-    white-space: nowrap;
   }
 
   .site-header {
@@ -2321,10 +2319,6 @@
   .desktop-nav {
     gap: 18px;
   }
-
-  .logo-word {
-    font-size: 24px;
-  }
 }
 
 @media (max-width: 1150px) {
@@ -2348,14 +2342,6 @@
 
   .site-header {
     height: 84px;
-  }
-
-  .logo-word {
-    font-size: 27px;
-  }
-
-  .mobile-menu .logo-word {
-    font-size: 22px;
   }
 
   .desktop-nav,
@@ -2612,6 +2598,10 @@
 }
 
 @media (max-width: 1023px) {
+  .header-bar > .logo-lockup .brand-slot svg {
+    height: 24px;
+  }
+
   .desktop-nav {
     display: none;
   }
