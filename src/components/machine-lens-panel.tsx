@@ -7,11 +7,11 @@ export function MachineLensPanel() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="flex flex-col bg-bg-raised p-6.5">
-      <div className="font-mono text-[11px] tracking-[0.04em] text-fg-muted">
+    <div className="panel flex flex-col">
+      <div className="text-[12px] tracking-[1px] text-fg-muted uppercase">
         STRUCTURED DATA — schema.org/Organization
       </div>
-      <div className="mt-5.5 grid gap-2.75 font-mono text-xs">
+      <div className="mt-5.5 grid gap-2.75 text-sm">
         <div>
           <a
             href="#"
@@ -31,7 +31,7 @@ export function MachineLensPanel() {
         </div>
       </div>
       {open && (
-        <pre className="mt-5.5 max-h-[280px] overflow-x-auto border border-border bg-bg p-4 font-mono text-xs leading-loose text-fg">
+        <pre className="mt-5.5 max-h-[280px] overflow-x-auto rounded-[14px] border border-border bg-bg p-4 text-xs leading-loose text-fg">
           {JSON.stringify(ORGANIZATION_JSON_LD, null, 2)}
         </pre>
       )}

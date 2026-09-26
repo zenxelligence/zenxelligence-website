@@ -37,7 +37,7 @@ export const SITE = {
   tagline: "End to end. Web to VLSI.",
   framework: "ZX A³ Innovation™",
   email: "hello@zenxelligence.com",
-  url: "https://zenxelligence.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.zenxelligence.com",
   handle: "zenxelligence",
   social: {
     linkedin: "https://www.linkedin.com/company/zenxelligence",
@@ -79,12 +79,9 @@ export const A3_PILLARS = [
 
 export const NAV_ITEMS: { label: string; href: string }[] = [
   { label: "Services", href: "/services" },
-  { label: "Products", href: "/products" },
-  { label: "Industries", href: "/industries" },
-  { label: "Case Studies", href: "/case-studies" },
   { label: "Pricing", href: "/pricing" },
   { label: "About", href: "/about" },
-  { label: "Careers", href: "/careers" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const AUDIENCE_TAGS = ["For founders.", "For product teams.", "For hardware teams."];
@@ -98,16 +95,20 @@ export const FOOTER_COLUMNS: {
     items: [
       { label: "About", href: "/about" },
       { label: "Contact", href: "/contact" },
+      { label: "Pricing", href: "/pricing" },
+      { label: "Careers", href: "/careers" },
+      { label: "What you get", href: "/products" },
+      { label: "Our approach", href: "/industries" },
     ],
   },
   {
     heading: "SERVICES",
     items: [
-      { label: "Web apps & APIs", href: "/services" },
-      { label: "Android/iOS Apps", href: "/services" },
-      { label: "AI Agent Automation", href: "/products" },
-      { label: "IoT & electronics", href: "/services" },
-      { label: "End-to-end VLSI", href: "/services" },
+      { label: "Web app development", href: "/services/web-apps" },
+      { label: "Mobile app development", href: "/services/mobile-apps" },
+      { label: "AI agent development", href: "/services/ai-agents" },
+      { label: "IoT development", href: "/services/iot" },
+      { label: "VLSI development", href: "/services/vlsi" },
     ],
   },
   {
@@ -196,17 +197,14 @@ export const ROUTE_PAGE_MAP: Record<string, string> = {
 export const ORGANIZATION_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "@id": "https://zenxelligence.com/#organization",
+  "@id": `${SITE.url}/#organization`,
   name: "Zen xElligence",
-  url: "https://zenxelligence.com",
+  url: SITE.url,
   email: SITE.email,
   description:
     "Zen xElligence is a two-engineer product studio that builds end-to-end web applications and APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
-  sameAs: [
-    SITE.social.linkedin,
-    SITE.social.instagram,
-    "https://github.com/zen-xelligence",
-  ],
+  numberOfEmployees: { "@type": "QuantitativeValue", value: 2 },
+  sameAs: [SITE.social.linkedin, SITE.social.instagram, SITE.social.whatsapp],
   contactPoint: [
     {
       "@type": "ContactPoint",
@@ -227,11 +225,11 @@ export const ORGANIZATION_JSON_LD = {
 export const WEBSITE_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  "@id": "https://zenxelligence.com/#website",
+  "@id": `${SITE.url}/#website`,
   name: "Zen xElligence",
-  url: "https://zenxelligence.com",
+  url: SITE.url,
   description: ORGANIZATION_JSON_LD.description,
-  publisher: { "@id": "https://zenxelligence.com/#organization" },
+  publisher: { "@id": `${SITE.url}/#organization` },
 };
 
 /** @deprecated use ORGANIZATION_JSON_LD — kept for machine-lens / markdown mirrors */
@@ -294,24 +292,22 @@ export const HOME_COPY = {
 };
 
 export const HOME_OFFERS = [
-  { label: "Web apps & APIs", href: "/services" },
-  { label: "Android/iOS Apps", href: "/services" },
-  { label: "AI Agent Automation", href: "/products" },
-  { label: "IoT & electronics", href: "/services" },
-  { label: "End-to-end VLSI", href: "/services" },
+  { label: "Web apps & APIs", href: "/services/web-apps" },
+  { label: "Android/iOS Apps", href: "/services/mobile-apps" },
+  { label: "AI Agent Automation", href: "/services/ai-agents" },
+  { label: "IoT & electronics", href: "/services/iot" },
+  { label: "End-to-end VLSI", href: "/services/vlsi" },
 ];
 
 export const HOME_PLATES = [
-  { id: "plate-opening", no: "01", role: "Opening", nav: "Start", pose: "ZX-1 · FULL PRODUCT", href: "#plate-opening" },
-  { id: "plate-repose", no: "02", role: "Repose", nav: "Offer", pose: "ZX-1 · FIVE SURFACES", href: "#plate-repose" },
-  { id: "plate-web", no: "03", role: "Material study", nav: "Web apps", pose: "ZX-1 · WEB", href: "#plate-web" },
-  { id: "plate-agents", no: "04", role: "Movement study", nav: "AI Agent Automation", pose: "ZX-1 · AI AGENT", href: "#plate-agents" },
-  { id: "plate-android", no: "05", role: "Finish", nav: "Android/iOS Apps", pose: "ZX-1 · ANDROID/IOS", href: "#plate-android" },
-  { id: "plate-iot", no: "06", role: "Electronics study", nav: "IoT", pose: "ZX-1 · IOT", href: "#plate-iot" },
-  { id: "plate-vlsi", no: "07", role: "Silicon study", nav: "VLSI", pose: "ZX-1 · VLSI", href: "#plate-vlsi" },
-  { id: "plate-finish", no: "08", role: "Finish selection", nav: "How we work", pose: "ZX-1 · FINISH", href: "#plate-finish" },
-  { id: "plate-spec", no: "09", role: "Specifications", nav: "Specs", pose: "ZX-1 · SPEC", href: "#plate-spec" },
-  { id: "plate-index", no: "10", role: "Plate index", nav: "Contact", pose: "ZX-1 · INDEX", href: "/contact" },
+  { id: "services", no: "01", role: "What we ship", nav: "Services", pose: "", href: "#services" },
+  { id: "web", no: "02", role: "Web apps", nav: "Web apps", pose: "", href: "#web" },
+  { id: "ai-agents", no: "03", role: "AI agents", nav: "AI Agent Automation", pose: "", href: "#ai-agents" },
+  { id: "mobile", no: "04", role: "Mobile", nav: "Android/iOS Apps", pose: "", href: "#mobile" },
+  { id: "iot", no: "05", role: "IoT", nav: "IoT", pose: "", href: "#iot" },
+  { id: "vlsi", no: "06", role: "VLSI", nav: "VLSI", pose: "", href: "#vlsi" },
+  { id: "process", no: "07", role: "How we work", nav: "How we work", pose: "", href: "#process" },
+  { id: "stack", no: "08", role: "Stack", nav: "Stack", pose: "", href: "#stack" },
 ] as const;
 
 export const HOME_SPECS: [string, string, string][] = [
@@ -348,46 +344,46 @@ export const HOME_DOORWAYS = [
     index: "01",
     title: "Web applications & APIs",
     body: "End-to-end web products: design, build, auth, data, and a live API — not a brochure site.",
-    tag1: "end to end",
+    tag1: "Web apps",
     tag2: "Next.js · FastAPI · Django",
-    cta: "See web apps →",
-    href: "/services",
+    cta: "Web app development →",
+    href: "/services/web-apps",
   },
   {
     index: "02",
     title: "AI Agent Automation",
     body: "End-to-end agent systems: we design the workflow, wire the tools, and leave you automation that runs — not a chatbot demo.",
-    tag1: "end to end",
+    tag1: "AI agents",
     tag2: "LangChain · LangGraph · CrewAI",
-    cta: "See AI agent automation →",
-    href: "/products",
+    cta: "AI agent development →",
+    href: "/services/ai-agents",
   },
   {
     index: "03",
     title: "Android/iOS Apps",
     body: "End-to-end Android and iOS: Flutter, React Native, or native — same product backend as the web app. One system, not two.",
-    tag1: "end to end",
+    tag1: "Mobile",
     tag2: "Flutter · React Native",
-    cta: "See Android/iOS apps →",
-    href: "/services",
+    cta: "Mobile app development →",
+    href: "/services/mobile-apps",
   },
   {
     index: "04",
     title: "IoT & electronics",
     body: "End-to-end connected hardware: sensors, firmware, and electronics wired into the product — not a kit that dies in a drawer.",
-    tag1: "end to end",
+    tag1: "IoT",
     tag2: "firmware",
-    cta: "See IoT →",
-    href: "/services",
+    cta: "IoT development →",
+    href: "/services/iot",
   },
   {
     index: "05",
     title: "End-to-end VLSI",
     body: "Full-chip flow: specification and RTL through verification, implementation, and sign-off. We don’t pass you to another house halfway.",
-    tag1: "end to end",
+    tag1: "VLSI",
     tag2: "RTL · sign-off",
-    cta: "See VLSI →",
-    href: "/services",
+    cta: "VLSI development →",
+    href: "/services/vlsi",
   },
 ];
 
@@ -565,35 +561,35 @@ export const PAGES: Record<string, PageContent> = {
             "Web apps & APIs",
             "Live applications: design, build, auth, data, and a documented API. Not a brochure site.",
             "Next.js · FastAPI · Django",
-            "/contact",
+            "/services/web-apps",
           ),
           t(
             "02",
             "Android/iOS Apps",
             "Flutter, React Native, or native apps on the same backend as the web product. One system, not two codebases that drift.",
             "Flutter · React Native",
-            "/contact",
+            "/services/mobile-apps",
           ),
           t(
             "03",
             "AI Agent Automation",
             "Workflows that run with tools, memory, and traces. Not a chatbot demo that dies after the pitch.",
             "LangChain · LangGraph · CrewAI · AutoGen",
-            "/products",
+            "/services/ai-agents",
           ),
           t(
             "04",
             "IoT & electronics",
             "Sensors, firmware, and boards wired into the product — not a kit that dies in a drawer.",
             "Firmware · electronics",
-            "/contact",
+            "/services/iot",
           ),
           t(
             "05",
             "End-to-end VLSI",
             "Spec and RTL through verification, implementation, and sign-off. We don’t pass you mid-flow.",
             "RTL · verification · sign-off",
-            "/contact",
+            "/services/vlsi",
           ),
         ],
       },
@@ -620,7 +616,7 @@ export const PAGES: Record<string, PageContent> = {
           "When more than one surface is in play, they talk to the same product.",
         ],
       },
-      { type: "label", label: "WE WORK IN" },
+      { type: "label", label: "WE WORK IN", id: "stack" },
       {
         type: "table",
         head: ["LANE", "STACK"],

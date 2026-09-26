@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import type { ReactNode } from "react";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SkipLink } from "@/components/skip-link";
-import { SiteField } from "@/components/site-field";
 import { HashJump } from "@/components/hash-jump";
+import { SectionReveal } from "@/components/section-reveal";
+import { CtaPanel } from "@/components/cta-panel";
 import { ORGANIZATION_JSON_LD, SITE, WEBSITE_JSON_LD } from "@/lib/site-data";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -71,10 +73,10 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrainsMono.variable} h-full`}>
-      <body className="grain flex min-h-full flex-col bg-bg text-fg antialiased">
+    <html lang="en" className={`${inter.variable} ${interTight.variable} h-full`}>
+      <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
@@ -83,14 +85,15 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
         />
-        <SiteField />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <SectionReveal />
           <HashJump />
           <SkipLink />
           <SiteHeader />
-          <main id="main" className="mx-auto w-full max-w-[1280px] flex-1 px-4 sm:px-6.5">
+          <main id="main" className="site-container flex-1">
             {children}
           </main>
+          <CtaPanel />
           <SiteFooter />
         </div>
       </body>

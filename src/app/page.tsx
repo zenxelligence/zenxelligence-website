@@ -1,12 +1,13 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { HeroStack } from "@/components/hero-stack";
-import { LogicCore } from "@/components/logic-core";
+import { HeroOrbit } from "@/components/hero-orbit";
+import { ServiceVisual, type ServiceVisualKind } from "@/components/service-visual";
 import { NumberedDoorwayCard } from "@/components/numbered-doorway-card";
 import { StatStrip } from "@/components/stat-strip";
+import { FaqAccordion } from "@/components/faq-accordion";
 import { LiveMetricsWidget } from "@/components/live-metrics-widget";
 import { EditorialPlate } from "@/components/editorial-plate";
-import { PlateIndex } from "@/components/plate-index";
+import { ArrowIcon } from "@/components/arrow-icon";
 import { homeMetadata } from "@/lib/page-metadata";
 import {
   HOME_COPY,
@@ -15,118 +16,116 @@ import {
   HOME_PLATES,
   HOME_SPECS,
   HOME_STACK,
-  STUDIO_STACK,
   HOME_STATS,
+  FAQ_ITEMS,
   SITE,
 } from "@/lib/site-data";
 
 export const metadata = homeMetadata();
 
 export default function Home() {
-  const [opening, repose, web, agents, android, iot, vlsi, finish, spec, index] = HOME_PLATES;
+  const [services, web, agents, mobile, iot, vlsi, process, stack] = HOME_PLATES;
 
   return (
     <div className="pb-16 lg:pb-0">
-      <PlateIndex />
-
-      <EditorialPlate
-        id={opening.id}
-        no={opening.no}
-        role={opening.role}
-        pose={opening.pose}
-        plateIndex={0}
-        bare
-        screen
-      >
-        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1.1fr)_minmax(260px,0.9fr)]">
+      <EditorialPlate id="top" role="" bare screen>
+        <div className="hero-grid">
           <div>
-            <div className="inline-flex items-center gap-2 border border-border px-2.5 py-1.5 font-mono text-xs text-fg">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              <span>Now booking new product builds</span>
+            <div className="hero-copy">
+              <div className="status-pill">
+                <span className="dot" />
+                <span>Now booking new product builds</span>
+              </div>
+              <h1 className="hero-title">
+                <span className="block">Web and Android/iOS apps.</span>
+                <span className="block">AI agent automation.</span>
+                <span className="block">
+                  IoT and VLSI.{" "}
+                  <span className="nowrap">
+                    End to <span className="accent">end</span><span className="accent">.</span>
+                  </span>
+                </span>
+              </h1>
+              <p className="hero-sub">{HOME_COPY.lede}</p>
+              <div className="chip-row">
+                {HOME_OFFERS.map((offer) => (
+                  <Link key={offer.label} href={offer.href} className="chip">
+                    {offer.label}
+                  </Link>
+                ))}
+              </div>
             </div>
-
-            <HeroStack
-              className="mt-5 m-0 text-[clamp(26px,4.6vw,54px)] leading-[1.05] font-semibold tracking-[-0.038em] [&_span]:whitespace-nowrap"
-              lines={HOME_COPY.headline.map((text) => ({ text }))}
-            />
-
-            <p className="mt-5 max-w-[560px] text-[17px] leading-relaxed text-fg-muted">
-              {HOME_COPY.lede}
-            </p>
-
-            <div className="mt-5 flex flex-wrap gap-2">
-              {HOME_OFFERS.map((offer) => (
-                <Link
-                  key={offer.label}
-                  href={offer.href}
-                  className="border border-border px-3 py-1.5 font-mono text-[11.5px] text-fg hover:border-accent hover:text-accent"
-                >
-                  {offer.label}
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-6 flex flex-wrap items-center gap-3">
-              <Link
-                href="/contact"
-                className="bg-accent px-6 py-3 font-mono text-[12.5px] text-bg hover:bg-fg hover:text-bg"
-              >
-                Start a build →
+            <div className="hero-actions">
+              <Link href="/contact" className="button button-primary">
+                Start a build
+                <ArrowIcon />
               </Link>
-              <a
-                href={`#${repose.id}`}
-                className="font-mono text-[12px] text-fg-muted hover:text-accent"
-              >
+              <a href={`#${services.id}`} className="button button-quiet">
+                <span className="quiet-icon">
+                  <ArrowIcon />
+                </span>
                 See what we ship
               </a>
             </div>
-            <p className="mt-3 font-mono text-[11.5px] text-fg-muted">
-              {SITE.email} · we reply within 1 business day
-            </p>
           </div>
-
-          <LogicCore />
+          <HeroOrbit />
+        </div>
+        <div className="hero-meta">
+          <span>
+            {SITE.email} · we reply within 1 business day
+          </span>
+          <a href={`#${services.id}`}>See what we ship ↓</a>
         </div>
       </EditorialPlate>
 
+      <section className="plate" aria-label="Studio">
+        <StatStrip
+          stats={[
+            { value: "2 engineers", label: "One team from brief to handover." },
+            { value: "5 disciplines", label: "Web, mobile, AI agents, IoT, and VLSI." },
+            { value: "1 business day", label: "Reply time on a new build." },
+            { value: "Brief to handover", label: "The same people scope it and finish it." },
+          ]}
+        />
+      </section>
+
       <EditorialPlate
-        id={repose.id}
-        no={repose.no}
-        role={repose.role}
-        pose={repose.pose}
-        plateIndex={1}
+        id={services.id}
+        role={services.role}
         title={HOME_COPY.thesisTitle}
         quiet
       >
-        <p className="max-w-[680px] text-lg leading-relaxed text-fg-muted">{HOME_COPY.thesisBody}</p>
-        <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <p className="prose">{HOME_COPY.thesisBody}</p>
+        <div className="doorway-grid mt-10">
           {HOME_DOORWAYS.map((d) => (
             <NumberedDoorwayCard key={d.title} {...d} />
           ))}
         </div>
       </EditorialPlate>
 
-      <StudyPlate plate={web} plateIndex={2} item={HOME_DOORWAYS[0]} stack={HOME_STACK[0].tools} />
+      <StudyPlate
+        plate={web}
+        plateIndex={2}
+        item={HOME_DOORWAYS[0]}
+        stack={HOME_STACK[0].tools}
+        extra={<LiveMetricsWidget showRawLink={false} />}
+      />
       <StudyPlate
         plate={agents}
         plateIndex={3}
         item={HOME_DOORWAYS[1]}
         stack={HOME_STACK[1].tools}
-        extra={<LiveMetricsWidget showRawLink={false} />}
       />
-      <StudyPlate plate={android} plateIndex={4} item={HOME_DOORWAYS[2]} stack={HOME_STACK[2].tools} />
+      <StudyPlate plate={mobile} plateIndex={4} item={HOME_DOORWAYS[2]} stack={HOME_STACK[2].tools} />
       <StudyPlate plate={iot} plateIndex={5} item={HOME_DOORWAYS[3]} stack={HOME_STACK[3].tools} />
       <StudyPlate plate={vlsi} plateIndex={6} item={HOME_DOORWAYS[4]} stack={HOME_STACK[4].tools} />
 
       <EditorialPlate
-        id={finish.id}
-        no={finish.no}
-        role={finish.role}
-        pose={finish.pose}
-        plateIndex={7}
+        id={process.id}
+        role={process.role}
         title="Every service is end to end. We stay through handover."
       >
-        <p className="max-w-[640px] text-lg leading-relaxed text-fg-muted">
+        <p className="prose">
           Web apps, Android/iOS apps, AI agent automation, IoT, or VLSI — the team that scoped it is the team that finishes it.
           We do not swap houses mid-build.
         </p>
@@ -136,106 +135,46 @@ export default function Home() {
       </EditorialPlate>
 
       <EditorialPlate
-        id={spec.id}
-        no={spec.no}
-        role={spec.role}
-        pose={spec.pose}
-        plateIndex={8}
+        id={stack.id}
+        role={stack.role}
         title="The specification."
       >
-        <div className="overflow-x-auto border-t border-border">
-          <table className="w-full min-w-[640px] text-left">
+        <div className="overflow-x-auto">
+          <table className="data-table">
             <thead>
-              <tr className="font-mono text-[11px] tracking-[0.08em] text-fg-muted">
-                <th className="py-4 pr-6 font-medium">SURFACE</th>
-                <th className="py-4 pr-6 font-medium">BUILT WITH</th>
-                <th className="py-4 font-medium">LEAVES WITH</th>
+              <tr>
+                <th>SURFACE</th>
+                <th>BUILT WITH</th>
+                <th>LEAVES WITH</th>
               </tr>
             </thead>
             <tbody>
               {HOME_SPECS.map(([surface, built, leaves]) => (
-                <tr key={surface} className="border-t border-border">
-                  <td className="py-4.5 pr-6 text-[17px] font-semibold tracking-[-0.015em]">
-                    {surface}
-                  </td>
-                  <td className="py-4.5 pr-6 font-mono text-[13px] text-fg-muted">{built}</td>
-                  <td className="py-4.5 text-[15px] text-fg-muted">{leaves}</td>
+                <tr key={surface}>
+                  <td>{surface}</td>
+                  <td>{built}</td>
+                  <td>{leaves}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <p className="mt-12 font-mono text-[11px] tracking-[0.08em] text-fg-muted">WE WORK IN</p>
-        <div className="mt-4 overflow-x-auto border-t border-border">
-          <table className="w-full min-w-[640px] text-left">
-            <thead>
-              <tr className="font-mono text-[11px] tracking-[0.08em] text-fg-muted">
-                <th className="py-4 pr-6 font-medium">LANE</th>
-                <th className="py-4 font-medium">STACK</th>
-              </tr>
-            </thead>
-            <tbody>
-              {STUDIO_STACK.map((row) => (
-                <tr key={row.lane} className="border-t border-border">
-                  <td className="py-4.5 pr-6 text-[17px] font-semibold tracking-[-0.015em]">
-                    {row.lane}
-                  </td>
-                  <td className="py-4.5 font-mono text-[13px] text-fg-muted">{row.tools}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <p className="mt-12">
+          <Link href="/services#stack" className="card-link">
+            See the full stack
+            <ArrowIcon />
+          </Link>
+        </p>
       </EditorialPlate>
 
-      <EditorialPlate
-        id={index.id}
-        no={index.no}
-        role={index.role}
-        pose={index.pose}
-        plateIndex={9}
-        title={HOME_COPY.closeTitle}
-      >
-        <ol className="grid max-w-[720px] grid-cols-1 gap-0 sm:grid-cols-2">
-          {HOME_PLATES.map((plate) => (
-            <li key={plate.id} className="border-b border-border">
-              {plate.href.startsWith("/") ? (
-                <Link
-                  href={plate.href}
-                  className="flex items-baseline justify-between gap-4 py-3.5 text-fg hover:text-accent"
-                >
-                  <span className="font-mono text-[11px] text-fg-muted">{plate.no}</span>
-                  <span className="flex-1 text-[15px]">{plate.nav}</span>
-                  <span className="font-mono text-[10.5px] text-fg-muted">{plate.pose}</span>
-                </Link>
-              ) : (
-                <a
-                  href={plate.href}
-                  className="flex items-baseline justify-between gap-4 py-3.5 text-fg hover:text-accent"
-                >
-                  <span className="font-mono text-[11px] text-fg-muted">{plate.no}</span>
-                  <span className="flex-1 text-[15px]">{plate.nav}</span>
-                  <span className="font-mono text-[10.5px] text-fg-muted">{plate.pose}</span>
-                </a>
-              )}
-            </li>
-          ))}
-        </ol>
-        <div className="mt-10 flex flex-wrap items-center gap-3.5">
-          <Link
-            href="/contact"
-            className="bg-accent px-6 py-3.75 font-mono text-[12.5px] text-bg hover:bg-fg hover:text-bg"
-          >
-            Start a build →
-          </Link>
-          <span className="font-mono text-[11.5px] text-fg-muted">
-            {SITE.email} · we reply within 1 business day
-          </span>
-        </div>
+      <EditorialPlate id="questions" role="Questions" title="Questions buyers ask first.">
+        <FaqAccordion items={FAQ_ITEMS.slice(0, 5)} />
       </EditorialPlate>
     </div>
   );
 }
+
+const STUDY_KINDS: ServiceVisualKind[] = ["web", "agents", "mobile", "iot", "vlsi"];
 
 function StudyPlate({
   plate,
@@ -250,6 +189,7 @@ function StudyPlate({
   stack: string;
   extra?: ReactNode;
 }) {
+  const flip = plateIndex % 2 === 1;
   return (
     <EditorialPlate
       id={plate.id}
@@ -259,17 +199,19 @@ function StudyPlate({
       plateIndex={plateIndex}
       title={item.title}
     >
-      <p className="max-w-[640px] text-lg leading-relaxed text-fg-muted">{item.body}</p>
-      <p className="mt-5 font-mono text-[12px] tracking-[0.06em] text-accent">{stack}</p>
-      <div className="mt-8">
-        <Link
-          href="/contact"
-          className="inline-block border border-accent px-5 py-2.5 font-mono text-[12px] text-accent hover:bg-accent hover:text-bg"
-        >
-          Start this build →
-        </Link>
+      <div className={flip ? "study-split is-flip" : "study-split"}>
+        <div className="study-copy">
+          <p className="prose">{item.body}</p>
+          <div className="mt-8">
+            <Link href="/contact" className="button button-outline">
+              Start this build
+              <ArrowIcon />
+            </Link>
+          </div>
+          {extra ? <div className="mt-10">{extra}</div> : null}
+        </div>
+        <ServiceVisual kind={STUDY_KINDS[plateIndex - 2]} stack={stack} />
       </div>
-      {extra ? <div className="mt-10 max-w-[560px]">{extra}</div> : null}
     </EditorialPlate>
   );
 }

@@ -40,23 +40,23 @@ export async function GET(
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0b0c0e",
-          color: "#f2f2ef",
+          background: "#0b0b0b",
+          color: "#fafafa",
           padding: "72px",
           fontFamily: "sans-serif",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ color: "#3ddc84", fontSize: 32 }}>Zx</span>
+          <span style={{ color: "#ff7a1a", fontSize: 32 }}>●</span>
           <span style={{ fontSize: 20, letterSpacing: 4, fontWeight: 600 }}>ZEN xELLIGENCE</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 980 }}>
           <div style={{ fontSize: 60, fontWeight: 600, lineHeight: 1.05, letterSpacing: -2 }}>
             {title}
           </div>
-          <div style={{ fontSize: 26, color: "#8a8d91", lineHeight: 1.4 }}>{subtitle}</div>
+          <div style={{ fontSize: 26, color: "#a8a8a8", lineHeight: 1.4 }}>{subtitle}</div>
         </div>
-        <div style={{ display: "flex", fontSize: 18, color: "#8a8d91" }}>
+        <div style={{ display: "flex", fontSize: 18, color: "#9c948a" }}>
           zenxelligence.com
         </div>
       </div>

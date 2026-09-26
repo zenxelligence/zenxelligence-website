@@ -33,16 +33,17 @@ export function LiveMetricsWidget({ showRawLink = true }: { showRawLink?: boolea
   });
 
   useEffect(() => {
+    const live = { reportAllChanges: true } as const;
     onTTFB((m) => setVitals((v) => ({ ...v, ttfb: formatMetric("ttfb", m) })));
-    onLCP((m) => setVitals((v) => ({ ...v, lcp: formatMetric("lcp", m) })));
-    onINP((m) => setVitals((v) => ({ ...v, inp: formatMetric("inp", m) })));
-    onCLS((m) => setVitals((v) => ({ ...v, cls: formatMetric("cls", m) })));
+    onLCP((m) => setVitals((v) => ({ ...v, lcp: formatMetric("lcp", m) })), live);
+    onINP((m) => setVitals((v) => ({ ...v, inp: formatMetric("inp", m) })), live);
+    onCLS((m) => setVitals((v) => ({ ...v, cls: formatMetric("cls", m) })), live);
   }, []);
 
   return (
-    <div className="bg-bg-raised p-6.5">
-      <div className="flex items-center gap-2 font-mono text-[11px] tracking-[0.04em] text-fg-muted">
-        <span className="animate-vs-pulse h-1.5 w-1.5 rounded-full bg-accent" />
+    <div className="panel">
+      <div className="flex items-center gap-2 text-[12px] tracking-[1px] text-fg-muted uppercase">
+        <span className="pulse-dot" />
         <span>THIS SESSION — CORE WEB VITALS</span>
       </div>
       <div className="mt-5.5 grid gap-0.5">
@@ -53,18 +54,19 @@ export function LiveMetricsWidget({ showRawLink = true }: { showRawLink?: boolea
               key={key}
               className="flex items-baseline justify-between gap-4 border-b border-border py-2.5"
             >
-              <span className="font-mono text-xs text-fg-muted">{label}</span>
+              <span className="text-xs text-fg-muted">{label}</span>
               <span
-                className="font-mono text-sm"
+                className="text-sm"
                 style={{ color: value ? "var(--accent)" : "var(--fg-muted)" }}
               >
-                {value ?? "awaiting input…"}
+                {value ?? (key === "inp" ? "Interact to measure" : "—")}
               </span>
             </div>
           );
         })}
       </div>
-      <p className="mt-5 font-mono text-[11px] leading-relaxed text-fg-muted">
+      <p className="note mt-4">LCP, INP and CLS update as you interact with the page.</p>
+      <p className="note mt-3">
         These are your numbers, on this page, right now. We measure our own site the same way we
         measure yours.
         {showRawLink && (

@@ -30,8 +30,8 @@ export function CommandPalette() {
     <>
       <button
         onClick={() => setOpen(true)}
-        aria-label="Open command palette"
-        className="ml-2.5 border border-border px-2.5 py-1.5 font-mono text-[11px] text-fg-muted hover:border-accent hover:text-accent"
+        aria-label="Search (⌘K)"
+        className="button button-outline button-compact"
       >
         ⌘K
       </button>
@@ -43,19 +43,19 @@ export function CommandPalette() {
           <Command
             onClick={(e) => e.stopPropagation()}
             label="Command palette"
-            className="h-fit w-full max-w-xl border border-border bg-bg-raised"
+            className="cmdk-shell h-fit w-full max-w-xl overflow-hidden rounded-[18px] border border-border bg-bg-raised"
           >
             <div className="flex items-center gap-3 border-b border-border px-4">
-              <span className="font-mono text-[13px] text-accent">›</span>
+              <span className="text-[13px] text-accent">›</span>
               <Command.Input
                 autoFocus
                 placeholder="jump to a page, service, or case file…"
-                className="flex-1 bg-transparent py-4 font-mono text-[13.5px] text-fg outline-none placeholder:text-fg-muted"
+                className="flex-1 bg-transparent py-4 text-[15px] text-fg outline-none placeholder:text-fg-muted"
               />
-              <span className="font-mono text-[10.5px] text-fg-muted">ESC</span>
+              <span className="text-[12px] text-fg-muted">ESC</span>
             </div>
             <Command.List className="max-h-[48vh] overflow-y-auto">
-              <Command.Empty className="px-4 py-5 font-mono text-xs text-fg-muted">
+              <Command.Empty className="px-4 py-5 text-xs text-fg-muted">
                 no match
               </Command.Empty>
               {SEARCH_INDEX.map((item) => (
@@ -63,13 +63,13 @@ export function CommandPalette() {
                   key={item.path}
                   value={`${item.label} ${item.path} ${item.kind}`}
                   onSelect={() => go(item.path)}
-                  className="flex cursor-pointer items-baseline gap-3.5 border-b border-border px-4 py-3 text-fg data-[selected=true]:bg-[#16181c]"
+                  className="cmdk-item flex cursor-pointer items-baseline gap-3.5 border-b border-border px-4 py-3 text-fg"
                 >
-                  <span className="min-w-[64px] font-mono text-[10px] tracking-wide text-fg-muted">
+                  <span className="min-w-[64px] text-[12px] tracking-wide text-fg-muted">
                     {item.kind}
                   </span>
                   <span className="text-sm">{item.label}</span>
-                  <span className="ml-auto font-mono text-[10.5px] text-fg-muted">
+                  <span className="ml-auto text-[12px] text-fg-muted">
                     {item.path}
                   </span>
                 </Command.Item>

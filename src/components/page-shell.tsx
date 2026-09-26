@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { Block } from "@/lib/site-data";
-import { PageBlocks, BottomCta } from "@/components/page-blocks";
+import { PageBlocks } from "@/components/page-blocks";
+import { AccentText } from "@/components/accent-text";
 
 export function PageShell({
   kicker,
@@ -16,17 +17,14 @@ export function PageShell({
   children?: ReactNode;
 }) {
   return (
-    <section className="pt-8 pb-6">
-      <div className="font-mono text-[11px] tracking-[0.06em] text-fg-muted">{kicker}</div>
-      <h1 className="mt-5 max-w-[1000px] text-[clamp(32px,4.6vw,58px)] leading-[1.04] font-semibold tracking-[-0.034em]">
-        {title}
+    <section className="page-inner">
+      <p className="eyebrow page-kicker">{kicker}</p>
+      <h1 className="page-title">
+        <AccentText text={title} />
       </h1>
-      {subhead && (
-        <p className="mt-6 max-w-[720px] text-lg leading-relaxed text-fg-muted">{subhead}</p>
-      )}
+      {subhead && <p className="page-lead">{subhead}</p>}
       {blocks && <PageBlocks blocks={blocks} />}
       {children}
-      <BottomCta />
     </section>
   );
 }

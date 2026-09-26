@@ -1,80 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { SocialLinks } from "@/components/social-links";
+import { ArrowIcon } from "@/components/arrow-icon";
+import { BUDGET_OPTIONS } from "@/content/pricing";
+import { SERVICES } from "@/content/services";
 import { SITE } from "@/lib/site-data";
+import { sendContact, type ContactState } from "@/app/contact/actions";
 
-const FIELDS = [
-  { name: "name", label: "NAME", placeholder: "Full name" },
-  { name: "company", label: "COMPANY", placeholder: "Company" },
-  { name: "email", label: "EMAIL", placeholder: "you@company.com", type: "email" },
-];
+const INITIAL: ContactState = { ok: false, message: "" };
 
 export function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
-
-  if (submitted) {
-    return (
-      <div className="max-w-[620px] border border-border bg-bg-raised p-7">
-        <p className="m-0 font-mono text-sm text-accent">
-          Sent. We reply within 1 business day.
-        </p>
-      </div>
-    );
-  }
+  const [state, action, pending] = useActionState(sendContact, INITIAL);
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}
-      className="max-w-[620px] border border-border bg-bg-raised p-7"
-    >
-      <div className="grid gap-4.5">
-        {FIELDS.map((field) => (
-          <label key={field.name} className="grid gap-2">
-            <span className="font-mono text-[10.5px] tracking-[0.06em] text-fg-muted">
-              {field.label}
-            </span>
-            <input
-              required
-              name={field.name}
-              type={field.type ?? "text"}
-              placeholder={field.placeholder}
-              className="border border-border bg-bg px-3.25 py-3 text-[15px] text-fg outline-none focus:border-accent"
-            />
-          </label>
-        ))}
-        <label className="grid gap-2">
-          <span className="font-mono text-[10.5px] tracking-[0.06em] text-fg-muted">
-            WHAT SYSTEM OR PROBLEM ARE WE TALKING ABOUT?
-          </span>
-          <textarea
-            required
-            name="problem"
-            rows={4}
-            placeholder="Free text"
-            className="resize-y border border-border bg-bg px-3.25 py-3 text-[15px] text-fg outline-none focus:border-accent"
-          />
-        </label>
-        <div className="flex flex-wrap items-center gap-3.5">
-          <button
-            type="submit"
-            className="bg-accent px-5 py-3.25 font-mono text-xs text-bg hover:bg-fg"
-          >
-            Send →
-          </button>
-          <a href={`mailto:${SITE.email}`} className="font-mono text-[11.5px]">
-            {SITE.email}
-          </a>
+    <form method="post" action={action} className="panel grid max-w-[620px] gap-4" aria-live="polite">
+      <label className="field-label">
+        NAME
+        <input required name="name" autoComplete="name" placeholder="Full name" className="field" />
+      </label>
+      <label className="field-label">
+        COMPANY
+        <input name="organization" autoComplete="organization" placeholder="Company" className="field" />
+      </label>
+      <label className="field-label">
+        EMAIL
+        <input required name="email" type="email" autoComplete="email" placeholder="you@company.com" className="field" />
+      </label>
+      <fieldset className="grid gap-2 border-0 p-0">
+        <legend className="field-label">SERVICE</legend>
+        <div className="chip-row" style={{ marginTop: 0 }}>
+          {SERVICES.map((service) => (
+            <label key={service.slug} className="chip">
+              <input type="checkbox" name="service" value={service.nav} className="sr-only" />
+              {service.nav}
+            </label>
+          ))}
         </div>
-        <div className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
-          <SocialLinks />
-          <span className="font-mono text-[12px] tracking-[0.06em] text-fg-muted">
-            @{SITE.handle}
-          </span>
-        </div>
+      </fieldset>
+      <label className="field-label">
+        BUDGET
+        <select name="budget" className="field" defaultValue={BUDGET_OPTIONS[0]}>
+          {BUDGET_OPTIONS.map((option) => (
+            <option key={option}>{option}</option>
+          ))}
+        </select>
+      </label>
+      <label className="field-label">
+        TIMELINE
+        <select name="timeline" className="field" defaultValue="">
+          <option value="">Select</option>
+          <option>As soon as we can start</option>
+          <option>This quarter</option>
+          <option>Later</option>
+        </select>
+      </label>
+      <label className="field-label">
+        LINK
+        <input name="link" type="url" placeholder="Optional site or file link" className="field" />
+      </label>
+      <label className="field-label">
+        WHAT SYSTEM OR PROBLEM ARE WE TALKING ABOUT?
+        <textarea required name="problem" rows={4} placeholder="Free text" className="field" />
+      </label>
+      <input name="website" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden="true" />
+      <div className="flex flex-wrap items-center gap-4">
+        <button type="submit" className="button button-primary" disabled={pending}>
+          {pending ? "Sending" : "Send"}
+          <ArrowIcon />
+        </button>
+        <span>We reply within 1 business day.</span>
+      </div>
+      {state.message ? <p className={state.ok ? "m-0 text-sm text-accent" : "note"}>{state.message}</p> : null}
+      <div className="footer-social border-t border-border pt-4">
+        <SocialLinks />
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </div>
     </form>
   );

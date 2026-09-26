@@ -1,4 +1,13 @@
 import Link from "next/link";
+import { ArrowIcon } from "@/components/arrow-icon";
+
+const TINT: Record<string, string> = {
+  "01": "tint-web",
+  "02": "tint-ai",
+  "03": "tint-mobile",
+  "04": "tint-iot",
+  "05": "tint-vlsi",
+};
 
 export function NumberedDoorwayCard({
   index,
@@ -18,18 +27,17 @@ export function NumberedDoorwayCard({
   href: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="group flex min-h-[268px] flex-col gap-3.5 border-r border-b border-border px-7 pt-7.5 pb-6.5 text-fg hover:bg-bg-raised"
-    >
-      <span className="font-mono text-[11px] text-accent">{index}</span>
-      <span className="text-[25px] font-semibold tracking-[-0.02em]">{title}</span>
-      <span className="text-[15px] leading-relaxed text-fg-muted">{body}</span>
-      <span className="mt-auto flex flex-wrap gap-2 font-mono text-[10.5px] text-fg-muted">
-        <span className="border border-border px-1.5 py-0.5">{tag1}</span>
-        <span className="border border-border px-1.5 py-0.5">{tag2}</span>
+    <Link href={href} className={`card card-tint card-pad ${TINT[index] ?? "tint-web"}`}>
+      <span className="card-label">{tag1}</span>
+      <h3 className="card-title">{title}</h3>
+      <p className="card-body">{body}</p>
+      <span className="chip" style={{ alignSelf: "flex-start" }}>
+        {tag2}
       </span>
-      <span className="font-mono text-[11.5px] text-accent group-hover:text-fg">{cta}</span>
+      <span className="card-link">
+        {cta.replace(" →", "")}
+        <ArrowIcon />
+      </span>
     </Link>
   );
 }

@@ -56,7 +56,7 @@ export function PlateIndex() {
               active={active === plate.id}
               onHash={() => go(plate.id)}
               className={cn(
-                "flex w-full items-center gap-2.5 px-1 py-1 text-left font-mono text-[10px] tracking-[0.08em] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                "flex w-full items-center gap-2.5 px-1 py-1 text-left text-[10px] tracking-[0.08em] transition-colors duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]",
                 active === plate.id ? "text-accent" : "text-fg-muted hover:text-fg",
               )}
             >
@@ -85,7 +85,7 @@ export function PlateIndex() {
               active={active === plate.id}
               onHash={() => go(plate.id)}
               className={cn(
-                "min-w-8 px-1.5 py-1 font-mono text-[10px] tracking-wide",
+                "min-w-8 px-1.5 py-1 text-[10px] tracking-wide",
                 active === plate.id ? "text-accent" : "text-fg-muted",
               )}
             >

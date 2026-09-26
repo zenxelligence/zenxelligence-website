@@ -1,44 +1,46 @@
 "use client";
 
 import { Html } from "@react-three/drei";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
 
-const ACCENT = "#3ddc84";
-const FG = "#f2f2ef";
-const MUTED = "#8a8d91";
-const RAISED = "#101114";
-const BORDER = "#1e2023";
+const ACCENT = "#ff7a1a";
+const GLOW = "#ffb36b";
+const FG = "#ffffff";
+const MUTED = "#8a8680";
+const RAISED = "#151413";
+const BORDER = "#38302a";
+const ORBIT_SPEED = (Math.PI * 2) / 52;
 
 const CORE_Y = 0.92;
 const STEP = (Math.PI * 2) / 5;
 
 const DOMAINS = [
-  { label: "Web apps", lines: ["Web apps"], href: "#plate-web", radius: 1.9, height: 1.18, speed: 0.1, phase: 0 },
+  { label: "Web apps", lines: ["Web apps"], href: "#web", radius: 1.68, height: 1.18, speed: ORBIT_SPEED, phase: 0 },
   {
     label: "Android/iOS Apps",
     lines: ["Android/iOS", "Apps"],
-    href: "#plate-android",
-    radius: 1.9,
+    href: "#mobile",
+    radius: 1.68,
     height: 1.02,
-    speed: 0.1,
+    speed: ORBIT_SPEED,
     phase: STEP,
   },
   {
     label: "AI Agent Automation",
     lines: ["AI Agent", "Automation"],
-    href: "#plate-agents",
-    radius: 1.9,
+    href: "#ai-agents",
+    radius: 1.68,
     height: 1.26,
-    speed: 0.1,
+    speed: ORBIT_SPEED,
     phase: STEP * 2,
   },
-  { label: "IoT", lines: ["IoT"], href: "#plate-iot", radius: 1.9, height: 0.98, speed: 0.1, phase: STEP * 3 },
-  { label: "VLSI", lines: ["VLSI"], href: "#plate-vlsi", radius: 1.9, height: 1.14, speed: 0.1, phase: STEP * 4 },
+  { label: "IoT", lines: ["IoT"], href: "#iot", radius: 1.68, height: 0.98, speed: ORBIT_SPEED, phase: STEP * 3 },
+  { label: "VLSI", lines: ["VLSI"], href: "#vlsi", radius: 1.68, height: 1.14, speed: ORBIT_SPEED, phase: STEP * 4 },
 ];
 
-const LABEL_SPREAD = 0.56;
+const LABEL_SPREAD = 0.34;
 const CORE_CLEAR = 0.36;
 const _right = new THREE.Vector3();
 const _up = new THREE.Vector3();
@@ -83,6 +85,10 @@ function Platform() {
 
   return (
     <group>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.04, 0]}>
+        <circleGeometry args={[2.7, 48]} />
+        <meshBasicMaterial color={ACCENT} transparent opacity={0.22} />
+      </mesh>
       <mesh receiveShadow>
         <cylinderGeometry args={[2.35, 2.45, 0.16, 48]} />
         <meshStandardMaterial color={RAISED} metalness={0.62} roughness={0.32} />
@@ -125,25 +131,25 @@ function Core({ reduced }: { reduced: boolean }) {
   useFrame((state) => {
     if (reduced) return;
     const t = state.clock.elapsedTime;
-    const y = CORE_Y + Math.sin(t * 1.5) * 0.03;
+    const sway = Math.sin((t * Math.PI * 2) / 8) * ((6 * Math.PI) / 180);
+    const y = CORE_Y + Math.sin(t * 0.8) * 0.02;
     if (inner.current) {
-      inner.current.rotation.y = t * 0.7;
-      inner.current.rotation.x = t * 0.28;
+      inner.current.rotation.y = sway;
+      inner.current.rotation.x = sway * 0.35;
       inner.current.position.y = y;
     }
     if (mid.current) {
-      mid.current.rotation.y = -t * 0.35;
+      mid.current.rotation.y = -sway;
       mid.current.position.y = y;
     }
     if (shell.current) {
-      shell.current.rotation.y = t * 0.18;
-      shell.current.rotation.z = t * 0.08;
+      shell.current.rotation.y = sway * 0.6;
+      shell.current.rotation.z = sway * 0.25;
       shell.current.position.y = y;
     }
     if (glow.current) {
       glow.current.position.y = y;
-      const s = 1 + Math.sin(t * 2.2) * 0.08;
-      glow.current.scale.setScalar(s);
+      glow.current.scale.setScalar(1);
     }
   });
 
@@ -151,14 +157,14 @@ function Core({ reduced }: { reduced: boolean }) {
     <group>
       <mesh ref={glow} position={[0, CORE_Y, 0]}>
         <sphereGeometry args={[0.2, 20, 20]} />
-        <meshBasicMaterial color={ACCENT} transparent opacity={0.05} />
+        <meshBasicMaterial color={GLOW} transparent opacity={0.08} />
       </mesh>
       <mesh ref={inner} position={[0, CORE_Y, 0]}>
         <icosahedronGeometry args={[0.1, 1]} />
         <meshStandardMaterial
-          color={ACCENT}
-          emissive={ACCENT}
-          emissiveIntensity={0.35}
+          color="#ef771c"
+          emissive="#ffae4b"
+          emissiveIntensity={0.45}
           metalness={0.2}
           roughness={0.28}
         />
@@ -272,10 +278,15 @@ function DomainNode({
         />
       </mesh>
       <group ref={labelAnchor}>
-        <Html center zIndexRange={[30, 0]} style={{ pointerEvents: "auto" }}>
+        <Html
+          center
+          zIndexRange={[30, 0]}
+          style={{ pointerEvents: "auto" }}
+          calculatePosition={clampLabel}
+        >
           <a
             href={node.href}
-            className="block w-[11ch] text-center font-mono text-[11px] leading-[1.25] tracking-[0.06em] text-accent no-underline [text-shadow:0_0_10px_#0b0c0e] hover:text-fg"
+            className="orbit-label block w-max max-w-[12ch] text-center text-[11px] leading-[1.25] tracking-[1px] text-[var(--glow)] no-underline [text-shadow:0_0_10px_#0b0b0b] hover:text-fg"
           >
             {node.lines.map((line) => (
               <span key={line} className="block">
@@ -290,13 +301,23 @@ function DomainNode({
 }
 
 function OrbitField({ reduced }: { reduced: boolean }) {
+  const ringA = useRef<THREE.Mesh>(null);
+  const ringB = useRef<THREE.Mesh>(null);
+
+  useFrame((state) => {
+    if (reduced) return;
+    const t = state.clock.elapsedTime;
+    if (ringA.current) ringA.current.rotation.z = (t * Math.PI * 2) / 52;
+    if (ringB.current) ringB.current.rotation.y = (t * Math.PI * 2) / 60;
+  });
+
   return (
     <group>
-      <mesh rotation={[0.7, 0, 0.15]} position={[0, 0.95, 0]}>
+      <mesh ref={ringA} rotation={[0.7, 0, 0.15]} position={[0, 0.95, 0]}>
         <torusGeometry args={[1.48, 0.008, 8, 80]} />
         <meshBasicMaterial color={ACCENT} transparent opacity={0.35} />
       </mesh>
-      <mesh rotation={[1.1, 0.6, -0.2]} position={[0, 0.95, 0]}>
+      <mesh ref={ringB} rotation={[1.1, 0.6, -0.2]} position={[0, 0.95, 0]}>
         <torusGeometry args={[1.82, 0.006, 8, 80]} />
         <meshBasicMaterial color={MUTED} transparent opacity={0.28} />
       </mesh>
@@ -307,6 +328,52 @@ function OrbitField({ reduced }: { reduced: boolean }) {
   );
 }
 
+const _label = new THREE.Vector3();
+
+function clampLabel(
+  el: THREE.Object3D,
+  camera: THREE.Camera,
+  size: { width: number; height: number },
+) {
+  el.getWorldPosition(_label);
+  _label.project(camera);
+  const pad = 12;
+  const halfW = 52;
+  const halfH = 18;
+  const x = (_label.x * 0.5 + 0.5) * size.width;
+  const y = (-_label.y * 0.5 + 0.5) * size.height;
+  return [
+    Math.min(size.width - pad - halfW, Math.max(pad + halfW, x)),
+    Math.min(size.height - pad - halfH, Math.max(pad + halfH, y)),
+  ] as [number, number];
+}
+
+function DemandLoop({ active }: { active: boolean }) {
+  const invalidate = useThree((state) => state.invalidate);
+  useEffect(() => {
+    if (!active) return;
+    let frame = 0;
+    let stopped = false;
+    const tick = () => {
+      if (stopped || document.hidden) return;
+      invalidate();
+      frame = requestAnimationFrame(tick);
+    };
+    const onHide = () => {
+      if (document.hidden) cancelAnimationFrame(frame);
+      else frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    document.addEventListener("visibilitychange", onHide);
+    return () => {
+      stopped = true;
+      cancelAnimationFrame(frame);
+      document.removeEventListener("visibilitychange", onHide);
+    };
+  }, [active, invalidate]);
+  return null;
+}
+
 function Scene({ reduced }: { reduced: boolean }) {
   const rig = useRef<THREE.Group>(null);
 
@@ -314,13 +381,13 @@ function Scene({ reduced }: { reduced: boolean }) {
     if (!rig.current || reduced) return;
     const x = state.pointer.x * 0.16;
     const y = state.pointer.y * 0.08;
-    rig.current.rotation.y = THREE.MathUtils.lerp(rig.current.rotation.y, x, 0.045);
-    rig.current.rotation.x = THREE.MathUtils.lerp(rig.current.rotation.x, -y, 0.045);
+    rig.current.rotation.y = THREE.MathUtils.lerp(rig.current.rotation.y, x, 0.018);
+    rig.current.rotation.x = THREE.MathUtils.lerp(rig.current.rotation.x, -y, 0.018);
   });
 
   return (
     <>
-      <fog attach="fog" args={["#0b0c0e", 7, 14]} />
+      <fog attach="fog" args={["#0b0b0b", 8, 16]} />
       <ambientLight intensity={0.28} color={FG} />
       <directionalLight position={[4, 7, 2]} intensity={0.85} color={FG} />
       <group ref={rig}>
@@ -359,20 +426,23 @@ export function LogicCore() {
   return (
     <div
       ref={host}
-      className="relative h-[280px] w-full overflow-visible sm:h-[320px] lg:h-[420px]"
+      className="logic-core relative overflow-visible"
       aria-label="Five services orbiting the product core"
     >
       <Canvas
-        camera={{ position: [5.4, 3.85, 5.4], fov: 31, near: 0.1, far: 30 }}
+        camera={{ position: [5.85, 4.2, 5.85], fov: 30, near: 0.1, far: 30 }}
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
-        style={{ overflow: "visible" }}
-        frameloop={visible && !reduced ? "always" : "demand"}
-        onCreated={({ gl, camera }) => {
+        style={{ overflow: "hidden" }}
+        frameloop="demand"
+        onCreated={({ gl, camera, invalidate }) => {
           gl.toneMapping = THREE.NoToneMapping;
+          gl.setClearColor(0x000000, 0);
           camera.lookAt(0, 0.62, 0);
+          invalidate();
         }}
       >
+        <DemandLoop active={visible && !reduced} />
         <Scene reduced={reduced} />
       </Canvas>
     </div>
