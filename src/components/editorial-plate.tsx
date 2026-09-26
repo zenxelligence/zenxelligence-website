@@ -50,7 +50,7 @@ export function EditorialPlate({
           </div>
         </div>
       ) : null}
-      <div className={screen || bare ? undefined : "mt-10"}>{children}</div>
+      <div className={screen ? "hero-stack" : bare ? undefined : "mt-10"}>{children}</div>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ZxMark } from "@/components/zx-mark";
 
 const FRAMES = [
   { kicker: "01 / WEB APPS", label: "Web apps" },
@@ -208,6 +209,7 @@ export function HeroShowcase() {
           ))}
         </div>
         <figcaption className="hero-figcap">
+          <ZxMark size={16} className="hero-figmark" />
           <span>{frame.kicker}</span>
           <span className="hero-figrule" aria-hidden="true" />
           {reduced ? (

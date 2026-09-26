@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { getService } from "@/content/services";
+import { ZX_X_PATH, ZX_Z_PATH } from "@/components/zx-mark";
 import { BLOG_POSTS, CASE_FILES, PAGES, ROUTE_PAGE_MAP, SITE } from "@/lib/site-data";
 
 function resolveTitle(segments: string[]): { title: string; subtitle: string } {
@@ -52,8 +53,16 @@ export async function GET(
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <span style={{ color: "#ff7a1a", fontSize: 32 }}>●</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <svg width="56" height="56" viewBox="0 0 32 32">
+            <path fill="#FFFFFF" d={ZX_Z_PATH} />
+            <path fill="#FF7A1A" d={ZX_X_PATH} />
+            <mask id="zx-og">
+              <rect width="32" height="32" fill="#000" />
+              <path fill="#fff" d={ZX_Z_PATH} />
+            </mask>
+            <path fill="#A73D10" d={ZX_X_PATH} mask="url(#zx-og)" />
+          </svg>
           <span style={{ fontSize: 20, letterSpacing: 4, fontWeight: 600 }}>ZEN xELLIGENCE</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 980 }}>

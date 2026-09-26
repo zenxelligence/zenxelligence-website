@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { ZxMark } from "@/components/zx-mark";
 
 export default function Error({
   error,
@@ -16,7 +17,13 @@ export default function Error({
 
   return (
     <section className="page-inner">
-      <p className="eyebrow">Error</p>
+      <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
+        <ZxMark size={36} />
+        <span className="logo-word" style={{ fontSize: 22 }}>
+          ZEN xELLIGENCE
+        </span>
+      </Link>
+      <p className="eyebrow mt-8">Error</p>
       <h1 className="page-title">Something went wrong.</h1>
       <p className="page-lead">The page did not finish loading. You can try again, or write to us.</p>
       <div className="mt-8 flex flex-wrap gap-4">
