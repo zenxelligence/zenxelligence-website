@@ -1,3 +1,4 @@
+import { STUDIO_BLURB } from "@/content/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/schema";
 
 export type TileItem = {
@@ -34,7 +35,7 @@ export type PageContent = {
   blocks: Block[];
 };
 
-export { SITE, SOCIAL, NAV_ITEMS, FOOTER_COLUMNS, SEARCH_INDEX } from "@/content/site";
+export { SITE, SOCIAL, NAV_ITEMS, FOOTER_COLUMNS, SEARCH_INDEX, STUDIO_BLURB } from "@/content/site";
 export type { SearchIndexItem } from "@/content/site";
 
 export const A3_PILLARS = [
@@ -158,7 +159,7 @@ export const FAQ_JSON_LD = {
 
 export const HOME_COPY = {
   headline: ["Your product,", "built end", "to end."],
-  lede: "A two-engineer studio. One team from brief to handover.",
+  lede: STUDIO_BLURB,
   thesisTitle: "You shouldn’t need five vendors to finish one product.",
   thesisBody:
     "Web applications, Android/iOS apps, AI agent automation, IoT electronics, and VLSI — each one runs spec to handover with the same people. We don’t stop at a slide deck, a prototype, or a netlist.",

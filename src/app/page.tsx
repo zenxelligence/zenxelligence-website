@@ -49,10 +49,7 @@ export default function Home() {
             </h1>
           </div>
           <HeroShowcase />
-          <p className="hero-sub">
-            <span className="block">A two-engineer studio.</span>
-            <span className="block">One team from brief to handover.</span>
-          </p>
+          <p className="hero-sub">{HOME_COPY.lede}</p>
           <div className="chip-row">
             {HOME_OFFERS.map((offer) => (
               <Link key={offer.label} href={offer.href} className="chip">

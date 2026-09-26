@@ -9,7 +9,7 @@ import { HashJump } from "@/components/hash-jump";
 import { SectionReveal } from "@/components/section-reveal";
 import { CtaPanel } from "@/components/cta-panel";
 import { JsonLd } from "@/components/json-ld";
-import { SITE } from "@/content/site";
+import { SITE, STUDIO_BLURB } from "@/content/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/schema";
 
 const inter = Inter({
@@ -30,8 +30,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
     template: `%s — ${SITE.name}`,
   },
-  description:
-    "Zen xElligence is a two-engineer studio that builds end-to-end web apps & APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
+  description: STUDIO_BLURB,
   applicationName: SITE.name,
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
@@ -54,15 +53,13 @@ export const metadata: Metadata = {
     url: SITE.url,
     siteName: SITE.name,
     title: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
-    description:
-      "Two-engineer studio. End-to-end web, mobile, AI agents, IoT, and VLSI. You own what ships.",
+    description: STUDIO_BLURB,
     images: [{ url: "/og", width: 1200, height: 630, alt: SITE.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
-    description:
-      "Two-engineer studio. End-to-end web, mobile, AI agents, IoT, and VLSI. You own what ships.",
+    description: STUDIO_BLURB,
     images: ["/og"],
   },
   robots: {

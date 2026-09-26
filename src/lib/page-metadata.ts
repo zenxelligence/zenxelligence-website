@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { PageContent } from "@/lib/site-data";
-import { SITE } from "@/lib/site-data";
+import { SITE, STUDIO_BLURB } from "@/lib/site-data";
 
 /** Search-facing title + description. Display H1 can stay editorial. */
 export const PAGE_SEO: Record<string, { title: string; description: string }> = {
@@ -93,8 +93,7 @@ export function pageMetadata(slug: string, page: PageContent): Metadata {
 
 export function homeMetadata(): Metadata {
   const title = `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`;
-  const description =
-    "Zen xElligence is a two-engineer studio that builds end-to-end web apps & APIs, AI agent automation, Android/iOS (Flutter, React Native), IoT, and VLSI — brief to handover.";
+  const description = STUDIO_BLURB;
   return {
     title: { absolute: title },
     description,

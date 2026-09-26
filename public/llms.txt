@@ -1,6 +1,6 @@
 # Zen xElligence
 
-> Two-engineer studio. End-to-end web apps and APIs, Android/iOS apps, AI agent automation, IoT electronics, and VLSI. The people who scope a build are the people who hand it over. You own what ships.
+> Zen xElligence is a two-engineer studio that builds web apps, Android and iOS apps, AI agents, IoT, and VLSI from brief to handover.
 
 Site: https://www.zenxelligence.com
 Email: hello@zenxelligence.com

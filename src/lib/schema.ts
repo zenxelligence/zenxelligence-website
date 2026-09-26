@@ -1,5 +1,5 @@
 import { TEAM } from "@/content/team";
-import { SITE, SOCIAL } from "@/content/site";
+import { SITE, SOCIAL, STUDIO_BLURB } from "@/content/site";
 
 export function jsonLd(data: unknown) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
@@ -16,8 +16,7 @@ export function organizationJsonLd() {
     url: SITE.url,
     email: SITE.email,
     logo: `${SITE.url}/icon.svg`,
-    description:
-      "Zen xElligence is a two-engineer product studio that builds end-to-end web applications and APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
+    description: STUDIO_BLURB,
     numberOfEmployees: { "@type": "QuantitativeValue", value: 2 },
     ...(sameAs.length ? { sameAs } : {}),
     ...(SITE.location

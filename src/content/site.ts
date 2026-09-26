@@ -9,6 +9,10 @@
  * - bookingUrl (Cal.com / Calendly), only if a real booking page exists
  * - location, timezone, foundingYear
  */
+/** One sentence. Visible on the home hero, and the same string in JSON-LD and meta. */
+export const STUDIO_BLURB =
+  "Zen xElligence is a two-engineer studio that builds web apps, Android and iOS apps, AI agents, IoT, and VLSI from brief to handover.";
+
 export const SITE = {
   name: "Zen xElligence",
   tagline: "End to end. Web to VLSI.",
