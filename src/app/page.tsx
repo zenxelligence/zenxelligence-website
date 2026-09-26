@@ -29,49 +29,47 @@ export default function Home() {
       <JsonLd data={faqJsonLd(HOME_FAQ)} />
       <EditorialPlate id="top" role="" bare screen>
         <div className="hero-grid">
-          <div>
-            <div className="hero-copy">
-              <div className="status-pill">
-                <span className="dot" />
-                <span className="pill-long">Now booking new product builds</span>
-                <span className="pill-short">Booking new builds</span>
-              </div>
-              <h1 className="hero-title">
-                <span className="block">Web and Android/iOS apps.</span>
-                <span className="block">
-                  AI agent <span className="accent">automation</span>.
-                </span>
-                <span className="block">
-                  IoT and VLSI.{" "}
-                  <span className="nowrap">
-                    End to <span className="accent">end</span>
-                    <span className="accent">.</span>
-                  </span>
-                </span>
-              </h1>
-              <p className="hero-sub">{HOME_COPY.lede}</p>
-              <div className="chip-row">
-                {HOME_OFFERS.map((offer) => (
-                  <Link key={offer.label} href={offer.href} className="chip">
-                    {offer.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="hero-actions">
-              <Link href="/contact" className="button button-primary">
-                Start a build
-                <ArrowIcon />
-              </Link>
-              <a href="#services" className="button button-quiet">
-                <span className="quiet-icon">
-                  <ArrowIcon />
-                </span>
-                See what we ship
-              </a>
-            </div>
+          <div className="status-pill hero-kicker">
+            <span className="dot" />
+            <span className="pill-long">Now booking new product builds</span>
+            <span className="pill-short">Booking new builds</span>
           </div>
-          <HeroOrbit />
+          <h1 className="hero-title">
+            <span className="block">Web and Android/iOS apps.</span>
+            <span className="block">
+              AI agent <span className="accent">automation</span>.
+            </span>
+            <span className="block">
+              IoT and VLSI.{" "}
+              <span className="nowrap">
+                End to <span className="accent">end</span>
+                <span className="accent">.</span>
+              </span>
+            </span>
+          </h1>
+          <div className="hero-stage-slot">
+            <HeroOrbit />
+          </div>
+          <p className="hero-sub">{HOME_COPY.lede}</p>
+          <div className="chip-row">
+            {HOME_OFFERS.map((offer) => (
+              <Link key={offer.label} href={offer.href} className="chip">
+                {offer.label}
+              </Link>
+            ))}
+          </div>
+          <div className="hero-actions">
+            <Link href="/contact" className="button button-primary">
+              Start a build
+              <ArrowIcon />
+            </Link>
+            <a href="#services" className="button button-quiet">
+              <span className="quiet-icon">
+                <ArrowIcon />
+              </span>
+              See what we ship
+            </a>
+          </div>
         </div>
         <div className="hero-meta">
           <span>

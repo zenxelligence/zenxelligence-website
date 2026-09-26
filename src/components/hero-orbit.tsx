@@ -7,14 +7,6 @@ const LogicCore = dynamic(() => import("@/components/logic-core").then((mod) => 
   ssr: false,
 });
 
-const LEGEND = [
-  { label: "Web apps", href: "#web" },
-  { label: "Android/iOS", href: "#mobile" },
-  { label: "AI agents", href: "#ai-agents" },
-  { label: "IoT", href: "#iot" },
-  { label: "VLSI", href: "#vlsi" },
-];
-
 function wantsPoster() {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const narrow = window.matchMedia("(max-width: 640px)").matches;
@@ -27,12 +19,16 @@ export function HeroOrbit() {
 
   useEffect(() => {
     if (wantsPoster()) return;
-    const start = () => setLive(true);
+    let cancelled = false;
+    const start = () => {
+      if (!cancelled) setLive(true);
+    };
     const idle = window.requestIdleCallback?.(start, { timeout: 1500 });
-    const timer = idle === undefined ? window.setTimeout(start, 1500) : undefined;
+    const timer = window.setTimeout(start, 1600);
     return () => {
+      cancelled = true;
       if (idle !== undefined) window.cancelIdleCallback?.(idle);
-      if (timer !== undefined) window.clearTimeout(timer);
+      window.clearTimeout(timer);
     };
   }, []);
 
@@ -53,13 +49,6 @@ export function HeroOrbit() {
         }}
       />
       {live ? <LogicCore /> : null}
-      <ul className="orbit-legend">
-        {LEGEND.map((item) => (
-          <li key={item.href}>
-            <a href={item.href}>{item.label}</a>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

@@ -372,9 +372,48 @@
     line-height: 1.8;
   }
 
-  .hero-copy {
-    max-width: 760px;
+  .hero-kicker,
+  .hero-title,
+  .hero-sub,
+  .chip-row {
     animation: hero-arrive var(--dur-arrive) var(--ease-out-expo) both;
+  }
+
+  .hero-kicker {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+    margin-bottom: 18px;
+  }
+
+  .hero-title {
+    grid-column: 1;
+    grid-row: 2;
+    margin-top: 0;
+  }
+
+  .hero-stage-slot {
+    position: relative;
+    grid-column: 2;
+    grid-row: 2;
+    align-self: stretch;
+    min-width: 0;
+    min-height: 1px;
+  }
+
+  .hero-sub {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .chip-row {
+    grid-column: 1;
+    grid-row: 4;
+  }
+
+  .hero-actions {
+    grid-column: 1;
+    grid-row: 5;
   }
 
   .hero-actions {
@@ -394,10 +433,11 @@
   }
 
   .hero-grid {
+    position: relative;
     display: grid;
     grid-template-columns: 1.15fr 1fr;
-    align-items: center;
-    gap: 32px;
+    align-items: start;
+    column-gap: 32px;
   }
 
   .hero-grid > * {
@@ -405,8 +445,13 @@
   }
 
   .hero-stage {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    /* Globe center is 44.2% down the stage. Land that point on the headline center. */
+    translate: 0 -44.2%;
     display: grid;
+    width: 100%;
     min-width: 0;
     overflow: hidden;
     place-items: center;
@@ -444,10 +489,6 @@
     width: 100% !important;
     height: 100% !important;
     mask-image: radial-gradient(closest-side, #000 75%, transparent);
-  }
-
-  .orbit-legend {
-    display: none;
   }
 
   .hero-meta {
@@ -1808,6 +1849,29 @@
     padding-top: 85px;
   }
 
+  .hero-kicker,
+  .hero-title,
+  .hero-stage-slot,
+  .hero-sub,
+  .chip-row,
+  .hero-actions {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .hero-stage-slot {
+    order: 1;
+    min-height: 0;
+  }
+
+  .hero-stage {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    translate: none;
+  }
+
   .plate-hero {
     padding: 12px 0 72px;
   }
@@ -1998,30 +2062,6 @@
     min-height: 44px;
   }
 
-  .orbit-label {
-    display: none !important;
-  }
-
-  .orbit-legend {
-    display: flex;
-    position: relative;
-    z-index: 1;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px 14px;
-    width: 100%;
-    margin: 12px 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .orbit-legend a {
-    display: inline-flex;
-    align-items: center;
-    min-height: 44px;
-    color: var(--glow);
-    font-size: 14px;
-  }
 }
 
 @media (max-width: 520px) {
@@ -2112,7 +2152,10 @@
     transition: none !important;
   }
 
-  .hero-copy,
+  .hero-kicker,
+  .hero-title,
+  .hero-sub,
+  .chip-row,
   .hero-actions,
   section h2,
   .reveal,

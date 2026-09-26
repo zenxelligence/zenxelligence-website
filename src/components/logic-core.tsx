@@ -1,6 +1,5 @@
 "use client";
 
-import { Html } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
@@ -11,50 +10,8 @@ const FG = "#ffffff";
 const MUTED = "#8a8680";
 const RAISED = "#151413";
 const BORDER = "#38302a";
-const ORBIT_SPEED = (Math.PI * 2) / 52;
 
 const CORE_Y = 0.92;
-const STEP = (Math.PI * 2) / 5;
-
-const DOMAINS = [
-  { label: "Web apps", lines: ["Web apps"], href: "#web", radius: 1.68, height: 1.18, speed: ORBIT_SPEED, phase: 0 },
-  {
-    label: "Android/iOS Apps",
-    lines: ["Android/iOS", "Apps"],
-    href: "#mobile",
-    radius: 1.68,
-    height: 1.02,
-    speed: ORBIT_SPEED,
-    phase: STEP,
-  },
-  {
-    label: "AI Agent Automation",
-    lines: ["AI Agent", "Automation"],
-    href: "#ai-agents",
-    radius: 1.68,
-    height: 1.26,
-    speed: ORBIT_SPEED,
-    phase: STEP * 2,
-  },
-  { label: "IoT", lines: ["IoT"], href: "#iot", radius: 1.68, height: 0.98, speed: ORBIT_SPEED, phase: STEP * 3 },
-  { label: "VLSI", lines: ["VLSI"], href: "#vlsi", radius: 1.68, height: 1.14, speed: ORBIT_SPEED, phase: STEP * 4 },
-];
-
-const LABEL_SPREAD = 0.34;
-const CORE_CLEAR = 0.36;
-const _right = new THREE.Vector3();
-const _up = new THREE.Vector3();
-const _world = new THREE.Vector3();
-const _ndc = new THREE.Vector3();
-const _coreNdc = new THREE.Vector3();
-const _coreWorld = new THREE.Vector3(0, CORE_Y, 0);
-const _away = new THREE.Vector2();
-const _delta = new THREE.Vector2();
-const _target = new THREE.Vector3();
-const _start = new THREE.Vector3();
-const _end = new THREE.Vector3();
-const _dir = new THREE.Vector3();
-const _yAxis = new THREE.Vector3(0, 1, 0);
 
 function Platform() {
   const grid = useMemo(() => {
@@ -186,120 +143,6 @@ function Core({ reduced }: { reduced: boolean }) {
   );
 }
 
-function DomainNode({
-  node,
-  reduced,
-}: {
-  node: (typeof DOMAINS)[number];
-  reduced: boolean;
-}) {
-  const group = useRef<THREE.Group>(null);
-  const spoke = useRef<THREE.Mesh>(null);
-  const labelAnchor = useRef<THREE.Group>(null);
-  const leader = useMemo(() => {
-    const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.Float32BufferAttribute(new Float32Array(6), 3));
-    return g;
-  }, []);
-
-  useFrame((state) => {
-    if (!group.current || !spoke.current || !labelAnchor.current) return;
-    const t = reduced ? 0 : state.clock.elapsedTime;
-    const a = t * node.speed + node.phase;
-    const x = Math.cos(a) * node.radius;
-    const y = node.height + (reduced ? 0 : Math.sin(t * 0.85 + node.phase) * 0.035);
-    const z = Math.sin(a) * node.radius;
-    group.current.position.set(x, y, z);
-
-    _start.set(-x, CORE_Y - y, -z);
-    _end.set(0, 0, 0);
-    _dir.copy(_end).sub(_start);
-    const span = _dir.length();
-    _dir.multiplyScalar(1 / (span || 1));
-    _start.addScaledVector(_dir, 0.5);
-    _end.addScaledVector(_dir, -0.06);
-    const length = _end.distanceTo(_start);
-    spoke.current.position.copy(_start).lerp(_end, 0.5);
-    spoke.current.quaternion.setFromUnitVectors(_yAxis, _dir);
-    spoke.current.scale.set(1, length, 1);
-
-    group.current.getWorldPosition(_world);
-    _ndc.copy(_world).project(state.camera);
-    _coreNdc.copy(_coreWorld).project(state.camera);
-    _right.setFromMatrixColumn(state.camera.matrixWorld, 0);
-    _up.setFromMatrixColumn(state.camera.matrixWorld, 1);
-    _away.set(_ndc.x - _coreNdc.x, _ndc.y - _coreNdc.y);
-    if (_away.length() < 0.12) {
-      _away.set(_ndc.x >= _coreNdc.x ? 1 : -1, 0.35);
-    }
-    _away.normalize();
-    let spread = LABEL_SPREAD;
-    for (let i = 0; i < 7; i++) {
-      _target
-        .copy(_world)
-        .addScaledVector(_right, _away.x * spread)
-        .addScaledVector(_up, _away.y * spread * 0.62);
-      _ndc.copy(_target).project(state.camera);
-      _delta.set(_ndc.x - _coreNdc.x, _ndc.y - _coreNdc.y);
-      if (_delta.length() >= CORE_CLEAR) break;
-      spread += 0.1;
-    }
-    group.current.worldToLocal(_target);
-    labelAnchor.current.position.copy(_target);
-
-    const pos = leader.getAttribute("position") as THREE.BufferAttribute;
-    pos.setXYZ(0, 0, 0, 0);
-    pos.setXYZ(1, _target.x, _target.y, _target.z);
-    pos.needsUpdate = true;
-  });
-
-  return (
-    <group
-      ref={group}
-      position={[Math.cos(node.phase) * node.radius, node.height, Math.sin(node.phase) * node.radius]}
-    >
-      <mesh ref={spoke}>
-        <cylinderGeometry args={[0.009, 0.009, 1, 6]} />
-        <meshBasicMaterial color={ACCENT} transparent opacity={0.78} />
-      </mesh>
-      {/* THREE.Line — not SVG; React types map `line` to SVGLineElement */}
-      {/* @ts-expect-error R3F line vs SVG line */}
-      <line geometry={leader}>
-        <lineBasicMaterial color={ACCENT} transparent opacity={0.55} />
-      </line>
-      <mesh>
-        <sphereGeometry args={[0.045, 16, 16]} />
-        <meshStandardMaterial
-          color={FG}
-          emissive={ACCENT}
-          emissiveIntensity={0.7}
-          metalness={0.15}
-          roughness={0.28}
-        />
-      </mesh>
-      <group ref={labelAnchor}>
-        <Html
-          center
-          zIndexRange={[30, 0]}
-          style={{ pointerEvents: "auto" }}
-          calculatePosition={clampLabel}
-        >
-          <a
-            href={node.href}
-            className="orbit-label block w-max max-w-[12ch] text-center text-[11px] leading-[1.25] tracking-[1px] text-[var(--glow)] no-underline [text-shadow:0_0_10px_#0b0b0b] hover:text-fg"
-          >
-            {node.lines.map((line) => (
-              <span key={line} className="block">
-                {line}
-              </span>
-            ))}
-          </a>
-        </Html>
-      </group>
-    </group>
-  );
-}
-
 function OrbitField({ reduced }: { reduced: boolean }) {
   const ringA = useRef<THREE.Mesh>(null);
   const ringB = useRef<THREE.Mesh>(null);
@@ -321,31 +164,8 @@ function OrbitField({ reduced }: { reduced: boolean }) {
         <torusGeometry args={[1.82, 0.006, 8, 80]} />
         <meshBasicMaterial color={MUTED} transparent opacity={0.28} />
       </mesh>
-      {DOMAINS.map((node) => (
-        <DomainNode key={node.label} node={node} reduced={reduced} />
-      ))}
     </group>
   );
-}
-
-const _label = new THREE.Vector3();
-
-function clampLabel(
-  el: THREE.Object3D,
-  camera: THREE.Camera,
-  size: { width: number; height: number },
-) {
-  el.getWorldPosition(_label);
-  _label.project(camera);
-  const pad = 12;
-  const halfW = 52;
-  const halfH = 18;
-  const x = (_label.x * 0.5 + 0.5) * size.width;
-  const y = (-_label.y * 0.5 + 0.5) * size.height;
-  return [
-    Math.min(size.width - pad - halfW, Math.max(pad + halfW, x)),
-    Math.min(size.height - pad - halfH, Math.max(pad + halfH, y)),
-  ] as [number, number];
 }
 
 function DemandLoop({ active }: { active: boolean }) {
@@ -427,7 +247,7 @@ export function LogicCore() {
     <div
       ref={host}
       className="logic-core relative overflow-visible"
-      aria-label="Five services orbiting the product core"
+      aria-hidden="true"
     >
       <Canvas
         camera={{ position: [5.85, 4.2, 5.85], fov: 30, near: 0.1, far: 30 }}

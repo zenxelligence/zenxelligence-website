@@ -58,7 +58,7 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 | C27 | AI page | No published eval, guardrail, or data-privacy practice. | Agent buyers ask before they share data. | Those groups hide until filled. | H | Needs owner input |
 | C28 | Mobile page | Store account ownership was not stated as a fact. | Buyers fear the studio owns the listing. | FAQ says to put the account in the brief so it is scoped. It does not invent a past policy. | M | Fixed in this PR |
 | C29 | Home hero | “End to end.” split across lines in the annotated capture. | The line that defines the studio breaks. | Explicit lines and `white-space: nowrap` on “End to end.” Measured 96.48px at 1440, three lines. | H | Fixed in this PR |
-| C30 | Home hero, 390 | Orbit labels were cut off at the edges. | The five services are unreadable on a phone. | Labels hidden under 640px. A legend row sits under the poster. | H | Fixed in this PR |
+| C30 | Home hero, 390 | Orbit labels were cut off at the edges. | The five services are unreadable on a phone. | Labels, pins, leader lines, and the mobile legend are removed. The globe stands alone. The chips under the headline name the services. | H | Fixed in this PR |
 | C31 | `/products` | “No Pulse” was the memorable sentence. | Pulse is not a product a visitor knows. | Sentence removed. The page talks about handover. | M | Fixed in this PR |
 | C32 | Data file `PAGES.clients` | Invented quotes and logo names (Ridgeline, Corbett, and others). | If that route is ever served, it is a false claim. | Replaced with a refusal to publish unsourced quotes. `/clients` redirects. | H | Fixed in this PR |
 | C33 | `PAGES.partners` | Invented AWS, Salesforce, NetSuite, and Okta badges. | False credentials. | Stub says badges are not published. `/partners` redirects to About. | H | Fixed in this PR |
@@ -89,8 +89,8 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 | D01 | Home H1 | Spec is `clamp(57px, 6.7vw, 100px)` (96px at 1440). An earlier capture measured ~75px and five lines. | The hero is the brand. | Grid `1.15fr 1fr`, max width 760px on the copy. Measured 96.48px and three lines at 1440, 57px at 390. | H | Fixed in this PR |
 | D02 | Home H1 | “End / to end.” split. | Breaks the lockup. | Nowrap span. It stays on one line at 1440 and 390. | H | Fixed in this PR |
 | D03 | Home H1 tracking | Spec asks −0.055em and line-height 1.07. The snapshot used −0.03em and 1.02. | The size was right, the color of the type was tighter than the spec in the wrong way. | Set to the spec values. Still one viewport wide, no horizontal scroll. | M | Fixed in this PR |
-| D04 | Orbit, 1440 | HTML labels collided with the H1 in the annotated shot. | Two messages occupy one point. | Stage is `overflow: hidden`. Labels are clamped inside the canvas. Under 640px they are not shown. | H | Fixed in this PR |
-| D05 | Orbit, 390 | Labels crossed the 390 edge. | Clipped words. | Legend under the stage. Measured overflow 0 at 390 and 768. | H | Fixed in this PR |
+| D04 | Orbit, 1440 | HTML labels collided with the H1 in the annotated shot. | Two messages occupy one point. | Labels, pins, and leader lines are gone. The globe is centered on the three-line headline. | H | Fixed in this PR |
+| D05 | Orbit, 390 | Labels crossed the 390 edge. | Clipped words. | No legend. The poster is the globe only, with no pins or leader lines. | H | Fixed in this PR |
 | D06 | Hero stage | No orange orb, hard canvas crop. | The spec’s §8.3 stage was missing. | `--grad-orb` circle plus a radial mask on the canvas and the poster. | H | Fixed in this PR |
 | D07 | Hero, mobile and reduced motion | `public/hero-orbit.webp` was referenced and missing, so the stage was empty when WebGL did not start. | The phone hero was a blank box. | `public/hero-orbit.svg` is the poster. | H | Fixed in this PR |
 | D08 | Home | Plate numbers “03 / 10 · WEB” and a duplicate side label on each H2. | Hangly leftovers. | Eyebrows are “Services”, “How we work”, “Questions”. | H | Fixed in this PR |
@@ -154,7 +154,7 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 | V10 | CSP | No Content-Security-Policy. | XSS containment. | A strict CSP fights Next inline scripts, JSON-LD, and the WebGL bundle. Not guessed. | M | Deferred — needs a nonce policy tested against the 3D page |
 | V11 | Home JS | three.js on the critical path. Live mobile TBT was 1.6s on the old site. | The phone cannot use the page. | Dynamic import, idle mount, poster under 640px, reduced motion, and saveData. `dpr` capped at 1.5. `frameloop="demand"`. Pauses when hidden or offscreen. Production mobile TBT 40ms. | H | Fixed in this PR |
 | V12 | Desktop hero | The 3D chunk still downloads after idle on wide screens. | Extra JS for a decoration. | Accepted on desktop. Mobile does not mount it. | M | Deferred — further three.js tree-shaking is a separate pass |
-| V13 | `logic-core.tsx` | Labels are projected HTML and can escape a small stage. | Overflow. | Clamped, and CSS hides `.orbit-label` under 640px. Scroll width equals the viewport at 390 and 768. | H | Fixed in this PR |
+| V13 | `logic-core.tsx` | Labels are projected HTML and can escape a small stage. | Overflow. | The label anchors, pins, and leader lines are removed from the scene. The poster SVG has none either. | H | Fixed in this PR |
 | V14 | JSON-LD | `JSON.stringify` without escaping `<`. | The Next docs flag this for XSS. | `jsonLd()` replaces `<`. | M | Fixed in this PR |
 | V15 | Organization `sameAs` | LinkedIn, Instagram, WhatsApp, and a 404 GitHub org. | Structured data cited dead URLs. | `sameAs` only lists non-empty `content/site.ts` social URLs. Currently omitted. | H | Fixed in this PR |
 | V16 | Root layout canonical | Every route, including 404, inherited `https://www.zenxelligence.com/`. | The 404 canonicalized to home. | Canonical is set per page. 404 has no canonical. Confirmed in the rendered HTML. | H | Fixed in this PR |
@@ -328,7 +328,7 @@ Ten or more for each line. Tools that are not already published on the site were
 | S47 | Heading text | Home H1 contains the five services in plain text. | The query terms are in the H1, not only in images. | Kept. | M | Fixed in this PR |
 | S48 | Alt text | Poster is decorative (`alt=""`). The canvas has an accessible name. | No keyword stuffing in alt. | Kept. | L | Fixed in this PR |
 | S49 | Pagination | None. | N/A. | Not added. | L | Deferred — no lists long enough |
-| S50 | Mobile friendliness | No horizontal overflow at 390 on the routes measured. | Mobile-first indexing. | Orbit legend and grids. | H | Fixed in this PR |
+| S50 | Mobile friendliness | No horizontal overflow at 390 on the routes measured. | Mobile-first indexing. | Orbit labels removed. Grids stay inside the viewport. | H | Fixed in this PR |
 | S51 | Structured data errors | Lighthouse structured-data audit did not fail on the home page. | Validity. | Sanitized JSON-LD. | M | Fixed in this PR |
 
 ## 6. AEO (being cited by answer engines)
