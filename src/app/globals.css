@@ -334,7 +334,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding-right: 68px;
+    padding-right: 128px;
   }
 
   button.menu-button {
@@ -3140,25 +3140,25 @@ html[data-theme="light"] ::selection {
 .lamp {
   position: fixed;
   top: 0;
-  right: 16px;
+  right: 52px;
   z-index: 80;
-  width: 52px;
-  height: 146px;
+  width: 80px;
+  height: 178px;
   pointer-events: none;
 }
 
 .lamp-cup {
   display: block;
-  width: 52px;
-  height: 10px;
+  width: 80px;
+  height: 18px;
 }
 
 .lamp-button {
   position: absolute;
-  top: 8px;
+  top: 13px;
   left: 0;
-  width: 52px;
-  height: 132px;
+  width: 80px;
+  height: 164px;
   padding: 0;
   border: 0;
   background: none;
@@ -3177,13 +3177,13 @@ html[data-theme="light"] ::selection {
 .lamp-button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 16px;
+  border-radius: 18px;
 }
 
 .lamp-svg {
   display: block;
-  width: 52px;
-  height: 132px;
+  width: 80px;
+  height: 164px;
   overflow: visible;
 }
 
@@ -3193,46 +3193,71 @@ html[data-theme="light"] ::selection {
   animation: lamp-sway 5.2s ease-in-out infinite;
 }
 
+.lamp-rope,
+.lamp-twist {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .lamp-rope {
-  fill: none;
-  stroke: #8d6744;
-  stroke-width: 2.6;
-  stroke-linecap: round;
+  stroke: #7a5130;
+  stroke-width: 5.2;
 }
 
-.lamp-rope-lite {
-  fill: none;
-  stroke: #e2c39a;
-  stroke-width: 1;
-  stroke-linecap: round;
-}
-
-.lamp-knot {
-  fill: #6b4e34;
+.lamp-twist {
+  stroke-width: 5.6;
 }
 
 .lamp-fray {
   fill: none;
-  stroke: #c9a27a;
-  stroke-width: 0.9;
+  stroke: #c9a36e;
+  stroke-width: 1.25;
   stroke-linecap: round;
 }
 
+.lamp-fray path:nth-child(odd) {
+  stroke: #8d6240;
+  stroke-width: 1.05;
+}
+
+.lamp-socket rect:first-child {
+  fill: #3e3934;
+}
+
+.lamp-socket rect:last-child {
+  fill: #8a8178;
+}
+
+.lamp-socket path {
+  fill: none;
+  stroke: #241f1b;
+  stroke-width: 0.7;
+}
+
 .lamp-bulb {
-  filter: drop-shadow(0 0 7px rgba(255, 150, 50, 0.7));
+  filter: drop-shadow(0 0 10px rgba(255, 150, 50, 0.72));
 }
 
 .bulb-glass {
-  fill: #ffe6c2;
-  stroke: #f0c48a;
-  stroke-width: 0.7;
+  fill: rgba(255, 214, 166, 0.38);
+  stroke: rgba(255, 196, 130, 0.9);
+  stroke-width: 0.85;
+}
+
+.bulb-sheen {
+  fill: none;
+  stroke: rgba(255, 248, 236, 0.55);
+  stroke-width: 1.3;
+  stroke-linecap: round;
 }
 
 .filament {
   fill: none;
-  stroke: #ff7a1a;
+  stroke: #ffb15a;
   stroke-width: 1.15;
   stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 html[data-theme="light"] .lamp-bulb {
@@ -3240,12 +3265,16 @@ html[data-theme="light"] .lamp-bulb {
 }
 
 html[data-theme="light"] .bulb-glass {
-  fill: #d9d4cc;
+  fill: rgba(236, 232, 226, 0.82);
   stroke: #b7b1a8;
 }
 
+html[data-theme="light"] .bulb-sheen {
+  stroke: rgba(255, 255, 255, 0.9);
+}
+
 html[data-theme="light"] .filament {
-  stroke: #8d877f;
+  stroke: #7a746c;
 }
 
 html[data-theme="light"] .bulb-glow {
@@ -3267,28 +3296,61 @@ html[data-theme="light"] .lamp-label-light {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 1023px) {
   .header-end {
-    padding-right: 46px;
+    padding-right: 0;
   }
 
   .lamp {
-    right: 8px;
-    width: 40px;
-    height: 76px;
+    right: auto;
+    left: 170px;
+    width: 64px;
+    height: 136px;
   }
 
-  .lamp-cup,
-  .lamp-svg {
-    width: 40px;
+  .lamp-cup {
+    width: 64px;
+    height: 15px;
   }
 
   .lamp-button {
-    width: 40px;
-    height: 64px;
+    top: 10px;
+    width: 64px;
+    height: 126px;
   }
 
   .lamp-svg {
-    height: 64px;
+    width: 64px;
+    height: 126px;
+  }
+}
+
+@media (max-width: 800px) {
+  .lamp {
+    left: 168px;
+    width: 52px;
+    height: 110px;
+  }
+
+  .lamp-cup {
+    width: 52px;
+    height: 12px;
+  }
+
+  .lamp-button {
+    top: 8px;
+    width: 52px;
+    height: 102px;
+  }
+
+  .lamp-svg {
+    width: 52px;
+    height: 102px;
+  }
+}
+
+@media (max-width: 640px) {
+  .lamp {
+    left: 156px;
   }
 }

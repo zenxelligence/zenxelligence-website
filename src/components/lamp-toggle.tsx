@@ -15,8 +15,14 @@ function applyTheme(theme: "light" | "dark") {
   if (meta) meta.setAttribute("content", theme === "light" ? "#F7F4EF" : "#0B0B0B");
 }
 
+const ROPE_UNDER = "M40 0 V100";
+const ROPE_KNOT =
+  "M40 52 C22 54 16 72 22 84 C28 96 46 96 52 84 C56 74 48 62 36 66 C28 70 30 84 40 88 C48 92 40 98 40 100";
+
 export function LampToggle() {
-  const glowId = `lamp${useId().replace(/:/g, "")}`;
+  const uid = useId().replace(/:/g, "");
+  const jute = `jute${uid}`;
+  const glowId = `glow${uid}`;
   const [pull, setPull] = useState(0);
   const [pulling, setPulling] = useState(false);
   const [lit, setLit] = useState(true);
@@ -37,9 +43,13 @@ export function LampToggle() {
 
   return (
     <div className="lamp">
-      <svg className="lamp-cup" viewBox="0 0 80 14" aria-hidden="true">
-        <rect x="26" y="0" width="28" height="8" rx="1.5" fill="#17120d" />
-        <ellipse cx="40" cy="8" rx="18" ry="3.2" fill="#3a3128" />
+      <svg className="lamp-cup" viewBox="0 0 80 20" aria-hidden="true">
+        <path d="M23 0h34v3.2c0 1.2-2.2 2.2-5 2.2H28c-2.8 0-5-1-5-2.2Z" fill="#100e0c" />
+        <ellipse cx="40" cy="5.2" rx="17" ry="5.2" fill="#1a1714" />
+        <ellipse cx="40" cy="4.4" rx="10.5" ry="2.1" fill="#2e2925" />
+        <rect x="37.3" y="7.6" width="5.4" height="7.2" rx="1" fill="#8f867c" />
+        <rect x="38.5" y="8.1" width="1.15" height="6" fill="#e4dcd3" opacity="0.8" />
+        <rect x="34.6" y="14.2" width="10.8" height="3.4" rx="1" fill="#5e564e" />
       </svg>
       <button
         type="button"
@@ -82,23 +92,52 @@ export function LampToggle() {
           setPull(0);
         }}
       >
-        <svg className="lamp-svg" viewBox="0 0 80 150" aria-hidden="true">
+        <svg className="lamp-svg" viewBox="0 0 80 164" aria-hidden="true">
           <defs>
-            <radialGradient id={glowId} cx="50%" cy="42%" r="58%">
-              <stop offset="0" stopColor="#ffe7bf" />
-              <stop offset="48%" stopColor="#ffb15a" stopOpacity="0.55" />
+            <pattern id={jute} width="7" height="6" patternUnits="userSpaceOnUse">
+              <rect width="7" height="6" fill="#c4a36e" />
+              <path d="M-1 6 L4 0 M2 6 L7 0" stroke="#6a4328" strokeWidth="1.45" />
+              <path d="M0.4 5.2 L3 1.2" stroke="#f3ddc2" strokeWidth="0.55" />
+            </pattern>
+            <radialGradient id={glowId} cx="50%" cy="46%" r="50%">
+              <stop offset="0" stopColor="#ffe7c2" />
+              <stop offset="42%" stopColor="#ffb15a" stopOpacity="0.55" />
               <stop offset="100%" stopColor="#ff7a1a" stopOpacity="0" />
             </radialGradient>
           </defs>
           <g className="lamp-sway">
-            <path className="lamp-rope" d="M40 0c3 16-4 32 0 48 4 16-3 28 0 44" />
-            <path className="lamp-rope-lite" d="M41 2c2 14-3 28 0 42" />
-            <ellipse className="lamp-knot" cx="40" cy="96" rx="5.2" ry="3.4" />
-            <path className="lamp-fray" d="M35 98l-4 8M38 99l-1 9M42 98l2 9M46 98l4 7" />
+            <path className="lamp-rope" d={ROPE_UNDER} />
+            <path className="lamp-twist" d="M40 0 V54" stroke={`url(#${jute})`} />
             <g className="lamp-bulb">
-              <ellipse className="bulb-glow" cx="40" cy="124" rx="20" ry="22" fill={`url(#${glowId})`} />
-              <path className="bulb-glass" d="M40 104c-10 0-15 8-15 17 0 9 6 16 11 19 1 2 2 5 4 5s3-3 4-5c5-3 11-10 11-19 0-9-5-17-15-17z" />
-              <path className="filament" d="M33 120h14M34 125h12M35 116c4 4 4 10 0 14M45 116c-4 4-4 10 0 14" />
+              <ellipse className="bulb-glow" cx="40" cy="142" rx="26" ry="22" fill={`url(#${glowId})`} />
+              <path
+                className="bulb-glass"
+                d="M36.6 108 H43.4 V118 C43.6 124 55.5 128 59 139 A19 19 0 1 1 21 139 C24.5 128 36.4 124 36.6 118 Z"
+              />
+              <path className="bulb-sheen" d="M28 146 c1.2-9 5.5-16 9-19" />
+              <g className="filament">
+                <path d="M40 116 v10" />
+                <path d="M31 130 h18" />
+                <path d="M33.2 130 v11 c0 2.6 2.3 2.6 2.3 0 v-11" />
+                <path d="M37.4 130 v14 c0 2.8 2.5 2.8 2.5 0 v-14" />
+                <path d="M42 130 v11 c0 2.6 2.3 2.6 2.3 0 v-11" />
+              </g>
+            </g>
+            <path className="lamp-twist" d={ROPE_KNOT} stroke={`url(#${jute})`} />
+            <g className="lamp-socket">
+              <rect x="34.2" y="102" width="11.6" height="8" rx="1" />
+              <path d="M34.6 104.6 h10.8 M34.6 107.2 h10.8" />
+              <rect x="33" y="109.2" width="14" height="2.4" rx="0.6" />
+            </g>
+            <g className="lamp-fray">
+              <path d="M33 98 c-4 6-9 9-13 11" />
+              <path d="M36 98 c-3 6-5 10-7 14" />
+              <path d="M39 97 c-1 7 0 11 0 15" />
+              <path d="M41 97 c1 7 0 11 0 15" />
+              <path d="M44 98 c3 6 5 10 7 14" />
+              <path d="M47 98 c4 6 9 9 13 11" />
+              <path d="M34 100 c-6 4-11 6-14 6" />
+              <path d="M46 100 c6 4 11 6 14 6" />
             </g>
           </g>
         </svg>
