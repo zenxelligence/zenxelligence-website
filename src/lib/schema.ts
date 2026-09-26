@@ -1,5 +1,5 @@
 import { TEAM } from "@/content/team";
-import { SITE, SOCIAL, STUDIO_BLURB } from "@/content/site";
+import { SITE, SOCIAL, STUDIO_BLURB, STUDIO_TAGLINE } from "@/content/site";
 
 export function jsonLd(data: unknown) {
   return JSON.stringify(data).replace(/</g, "\\u003c");
@@ -17,6 +17,7 @@ export function organizationJsonLd() {
     email: SITE.email,
     logo: `${SITE.url}/icon.svg`,
     description: STUDIO_BLURB,
+    slogan: STUDIO_TAGLINE,
     numberOfEmployees: { "@type": "QuantitativeValue", value: 2 },
     ...(sameAs.length ? { sameAs } : {}),
     ...(SITE.location

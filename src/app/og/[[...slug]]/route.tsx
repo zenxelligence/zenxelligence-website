@@ -5,7 +5,7 @@ import { BLOG_POSTS, CASE_FILES, PAGES, ROUTE_PAGE_MAP, SITE } from "@/lib/site-
 function resolveTitle(segments: string[]): { title: string; subtitle: string } {
   const path = segments.join("/");
 
-  if (path === "") return { title: "Web to VLSI.", subtitle: "End to end. Two engineers." };
+  if (path === "") return { title: `${SITE.tagline}.`, subtitle: "Web, mobile, AI agents, IoT, and VLSI." };
 
   if (segments[0] === "services" && segments[1]) {
     const service = getService(segments[1]);

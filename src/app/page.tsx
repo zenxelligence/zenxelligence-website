@@ -39,12 +39,12 @@ export default function Home() {
           </p>
           <div className="hero-title-wrap">
             <h1 className="hero-title">
-              <span className="block">Your product,</span>
+              <span className="block">Intelligence</span>
               <span className="block">
-                <span className="accent">built</span> end
+                in <span className="accent">every</span>
               </span>
               <span className="block">
-                to end<span className="accent">.</span>
+                layer<span className="accent">.</span>
               </span>
             </h1>
           </div>

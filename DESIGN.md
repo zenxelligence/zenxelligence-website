@@ -13,7 +13,7 @@ Source of truth for color, type, layout, motion, and UI. Tokens live in `src/app
 | Name | Zen xElligence |
 | Mark | Temporary `Zx` (JetBrains Mono, accent). Final mark: see `LOGO.md` |
 | Wordmark | `ZEN xELLIGENCE` (Archivo semibold, 13px, tracking `0.14em`) |
-| Tagline | End to end. Web to VLSI. |
+| Tagline | Intelligence in every layer |
 | Framework | ZX A³ Innovation™ |
 | Email | hello@zenxelligence.com |
 | Site | https://zenxelligence.com |

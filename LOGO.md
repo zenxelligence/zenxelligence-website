@@ -32,7 +32,7 @@ Not five icons glued together. One studio.
 | Do not write | ZenXelligence, Zen-xElligence, ZX Elligence, Zen Intelligence |
 | x | lowercase in the name; it is the join, not a multiplication joke |
 
-Tagline (optional, never inside the mark): **End to end. Web to VLSI.**
+Tagline (optional, never inside the mark): **Intelligence in every layer**
 
 ---
 

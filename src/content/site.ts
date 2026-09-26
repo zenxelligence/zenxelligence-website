@@ -9,13 +9,18 @@
  * - bookingUrl (Cal.com / Calendly), only if a real booking page exists
  * - location, timezone, foundingYear
  */
-/** One sentence. Visible on the home hero, and the same string in JSON-LD and meta. */
+/** One sentence. Visible under the home headline, and the JSON-LD description. */
 export const STUDIO_BLURB =
   "Zen xElligence is a two-engineer studio that builds web apps, Android and iOS apps, AI agents, IoT, and VLSI from brief to handover.";
 
+export const STUDIO_TAGLINE = "Intelligence in every layer";
+
+/** Default meta description: tagline, then the service sentence. */
+export const DEFAULT_DESCRIPTION = `${STUDIO_TAGLINE}. ${STUDIO_BLURB}`;
+
 export const SITE = {
   name: "Zen xElligence",
-  tagline: "End to end. Web to VLSI.",
+  tagline: STUDIO_TAGLINE,
   framework: "ZX A³ Innovation™",
   email: "hello@zenxelligence.com",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.zenxelligence.com",

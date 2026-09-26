@@ -35,7 +35,7 @@ export type PageContent = {
   blocks: Block[];
 };
 
-export { SITE, SOCIAL, NAV_ITEMS, FOOTER_COLUMNS, SEARCH_INDEX, STUDIO_BLURB } from "@/content/site";
+export { SITE, SOCIAL, NAV_ITEMS, FOOTER_COLUMNS, SEARCH_INDEX, STUDIO_BLURB, STUDIO_TAGLINE, DEFAULT_DESCRIPTION } from "@/content/site";
 export type { SearchIndexItem } from "@/content/site";
 
 export const A3_PILLARS = [
@@ -158,7 +158,7 @@ export const FAQ_JSON_LD = {
 // ---- Home page specific data ----
 
 export const HOME_COPY = {
-  headline: ["Your product,", "built end", "to end."],
+  headline: ["Intelligence", "in every", "layer."],
   lede: STUDIO_BLURB,
   thesisTitle: "You shouldn’t need five vendors to finish one product.",
   thesisBody:

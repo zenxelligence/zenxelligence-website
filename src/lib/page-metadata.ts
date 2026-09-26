@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { PageContent } from "@/lib/site-data";
-import { SITE, STUDIO_BLURB } from "@/lib/site-data";
+import { DEFAULT_DESCRIPTION, SITE } from "@/lib/site-data";
 
 /** Search-facing title + description. Display H1 can stay editorial. */
 export const PAGE_SEO: Record<string, { title: string; description: string }> = {
@@ -93,7 +93,7 @@ export function pageMetadata(slug: string, page: PageContent): Metadata {
 
 export function homeMetadata(): Metadata {
   const title = `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`;
-  const description = STUDIO_BLURB;
+  const description = DEFAULT_DESCRIPTION;
   return {
     title: { absolute: title },
     description,
