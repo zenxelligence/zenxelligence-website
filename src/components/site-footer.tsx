@@ -18,7 +18,7 @@ export function SiteFooter() {
         <div className="footer-top">
           <div>
             <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-              <BrandLockup height={32} className="brand-footer" />
+              <BrandLockup height={44} className="brand-footer" />
             </Link>
             <p className="footer-tagline">{SITE.tagline}</p>
           </div>

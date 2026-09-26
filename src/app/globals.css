@@ -251,15 +251,15 @@
   }
 
   .header-bar > .logo-lockup .brand-slot svg {
-    height: 28px;
+    height: 40px;
   }
 
   .mobile-menu .brand-slot svg {
-    height: 24px;
+    height: 32px;
   }
 
   .site-footer .brand-slot svg {
-    height: 32px;
+    height: 44px;
   }
 
   .page-inner .brand-slot svg {
@@ -2617,7 +2617,7 @@
 
 @media (max-width: 1023px) {
   .header-bar > .logo-lockup .brand-slot svg {
-    height: 24px;
+    height: 34px;
   }
 
   .desktop-nav {
@@ -2690,6 +2690,12 @@
     min-height: 44px;
   }
 
+}
+
+@media (max-width: 767px) {
+  .header-bar > .logo-lockup .brand-slot svg {
+    height: 30px;
+  }
 }
 
 @media (min-width: 801px) {
@@ -3281,7 +3287,7 @@ html[data-theme="light"] .lamp-label-light {
 
   .lamp {
     right: auto;
-    left: 168px;
+    left: 220px;
     width: 58px;
     height: 108px;
   }
@@ -3295,7 +3301,7 @@ html[data-theme="light"] .lamp-label-light {
 
 @media (max-width: 800px) {
   .lamp {
-    left: 172px;
+    left: 220px;
     width: 48px;
     height: 92px;
   }
@@ -3309,6 +3315,6 @@ html[data-theme="light"] .lamp-label-light {
 
 @media (max-width: 640px) {
   .lamp {
-    left: 168px;
+    left: 188px;
   }
 }
