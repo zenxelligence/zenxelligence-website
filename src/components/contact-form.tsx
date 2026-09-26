@@ -121,6 +121,8 @@ export function ContactForm() {
       ) : null}
       <div className="footer-social border-t border-border pt-4">
         <SocialLinks />
+        <a href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a>
+        <span aria-hidden="true"> · </span>
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </div>
     </form>

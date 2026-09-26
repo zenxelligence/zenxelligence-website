@@ -28,6 +28,8 @@ export function StartAside({ showFounders = false }: { showFounders?: boolean })
         <ArrowIcon />
       </Link>
       <p className="note">
+        <a href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a>
+        <span aria-hidden="true"> · </span>
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </p>
       {showFounders && people.length > 0 ? (

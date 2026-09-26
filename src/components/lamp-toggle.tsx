@@ -15,13 +15,8 @@ function applyTheme(theme: "light" | "dark") {
   if (meta) meta.setAttribute("content", theme === "light" ? "#F7F4EF" : "#0B0B0B");
 }
 
-const ROPE_UNDER = "M40 0 V100";
-const ROPE_KNOT =
-  "M40 52 C22 54 16 72 22 84 C28 96 46 96 52 84 C56 74 48 62 36 66 C28 70 30 84 40 88 C48 92 40 98 40 100";
-
 export function LampToggle() {
   const uid = useId().replace(/:/g, "");
-  const jute = `jute${uid}`;
   const glowId = `glow${uid}`;
   const [pull, setPull] = useState(0);
   const [pulling, setPulling] = useState(false);
@@ -43,18 +38,9 @@ export function LampToggle() {
 
   return (
     <div className="lamp">
-      <svg className="lamp-cup" viewBox="0 0 80 20" aria-hidden="true">
-        <path d="M23 0h34v3.2c0 1.2-2.2 2.2-5 2.2H28c-2.8 0-5-1-5-2.2Z" fill="#100e0c" />
-        <ellipse cx="40" cy="5.2" rx="17" ry="5.2" fill="#1a1714" />
-        <ellipse cx="40" cy="4.4" rx="10.5" ry="2.1" fill="#2e2925" />
-        <rect x="37.3" y="7.6" width="5.4" height="7.2" rx="1" fill="#8f867c" />
-        <rect x="38.5" y="8.1" width="1.15" height="6" fill="#e4dcd3" opacity="0.8" />
-        <rect x="34.6" y="14.2" width="10.8" height="3.4" rx="1" fill="#5e564e" />
-      </svg>
       <button
         type="button"
         className={pulling ? "lamp-button is-pulling" : "lamp-button"}
-        style={{ transform: `translateY(${pull}px)` }}
         aria-pressed={lit}
         onClick={() => {
           if (skipClick.current) {
@@ -74,7 +60,7 @@ export function LampToggle() {
           if (!pulling) return;
           const dy = Math.max(0, event.clientY - startY.current);
           if (dy > 8) pulled.current = true;
-          pullRef.current = Math.min(dy, 36);
+          pullRef.current = Math.min(dy, 28);
           setPull(pullRef.current);
         }}
         onPointerUp={() => {
@@ -92,52 +78,25 @@ export function LampToggle() {
           setPull(0);
         }}
       >
-        <svg className="lamp-svg" viewBox="0 0 80 164" aria-hidden="true">
+        <svg className="lamp-svg" viewBox="0 0 78 146" aria-hidden="true">
           <defs>
-            <pattern id={jute} width="7" height="6" patternUnits="userSpaceOnUse">
-              <rect width="7" height="6" fill="#c4a36e" />
-              <path d="M-1 6 L4 0 M2 6 L7 0" stroke="#6a4328" strokeWidth="1.45" />
-              <path d="M0.4 5.2 L3 1.2" stroke="#f3ddc2" strokeWidth="0.55" />
-            </pattern>
-            <radialGradient id={glowId} cx="50%" cy="46%" r="50%">
-              <stop offset="0" stopColor="#ffe7c2" />
-              <stop offset="42%" stopColor="#ffb15a" stopOpacity="0.55" />
-              <stop offset="100%" stopColor="#ff7a1a" stopOpacity="0" />
-            </radialGradient>
+            <linearGradient id={glowId} x1="39" y1="54" x2="39" y2="128" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stopColor="#ffb15a" stopOpacity="0.55" />
+              <stop offset="0.45" stopColor="#ff7a1a" stopOpacity="0.18" />
+              <stop offset="1" stopColor="#ff7a1a" stopOpacity="0" />
+            </linearGradient>
           </defs>
           <g className="lamp-sway">
-            <path className="lamp-rope" d={ROPE_UNDER} />
-            <path className="lamp-twist" d="M40 0 V54" stroke={`url(#${jute})`} />
-            <g className="lamp-bulb">
-              <ellipse className="bulb-glow" cx="40" cy="142" rx="26" ry="22" fill={`url(#${glowId})`} />
-              <path
-                className="bulb-glass"
-                d="M36.6 108 H43.4 V118 C43.6 124 55.5 128 59 139 A19 19 0 1 1 21 139 C24.5 128 36.4 124 36.6 118 Z"
-              />
-              <path className="bulb-sheen" d="M28 146 c1.2-9 5.5-16 9-19" />
-              <g className="filament">
-                <path d="M40 116 v10" />
-                <path d="M31 130 h18" />
-                <path d="M33.2 130 v11 c0 2.6 2.3 2.6 2.3 0 v-11" />
-                <path d="M37.4 130 v14 c0 2.8 2.5 2.8 2.5 0 v-14" />
-                <path d="M42 130 v11 c0 2.6 2.3 2.6 2.3 0 v-11" />
-              </g>
-            </g>
-            <path className="lamp-twist" d={ROPE_KNOT} stroke={`url(#${jute})`} />
-            <g className="lamp-socket">
-              <rect x="34.2" y="102" width="11.6" height="8" rx="1" />
-              <path d="M34.6 104.6 h10.8 M34.6 107.2 h10.8" />
-              <rect x="33" y="109.2" width="14" height="2.4" rx="0.6" />
-            </g>
-            <g className="lamp-fray">
-              <path d="M33 98 c-4 6-9 9-13 11" />
-              <path d="M36 98 c-3 6-5 10-7 14" />
-              <path d="M39 97 c-1 7 0 11 0 15" />
-              <path d="M41 97 c1 7 0 11 0 15" />
-              <path d="M44 98 c3 6 5 10 7 14" />
-              <path d="M47 98 c4 6 9 9 13 11" />
-              <path d="M34 100 c-6 4-11 6-14 6" />
-              <path d="M46 100 c6 4 11 6 14 6" />
+            <path className="lamp-cord" d="M28 0 V18" />
+            <path className="lamp-glow" d="M8 54 H46 L56 124 H2 Z" fill={`url(#${glowId})`} />
+            <path className="lamp-shade" d="M16 26 C16 14 40 14 40 26 C46 36 52 46 52 52 H4 C4 46 10 36 16 26Z" />
+            <path className="lamp-shade-edge" d="M18 20 C22 16 34 16 38 20" />
+            <ellipse className="lamp-rim-well" cx="28" cy="51.2" rx="22" ry="3.4" />
+            <path className="lamp-rim" d="M8 51.4 C14 55 22 56.4 28 56.4 C34 56.4 42 55 48 51.4" />
+            <g className="lamp-pull" style={{ transform: `translateY(${pull}px)` }}>
+              <path className="lamp-cord" d="M50 44 V104" />
+              <circle className="lamp-bead" cx="50" cy="112" r="5.4" />
+              <circle className="lamp-bead-lite" cx="48.4" cy="110.2" r="1.5" />
             </g>
           </g>
         </svg>

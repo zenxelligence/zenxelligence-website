@@ -15,6 +15,7 @@ export function organizationJsonLd() {
     name: SITE.name,
     url: SITE.url,
     email: SITE.email,
+    telephone: SITE.phoneSchema,
     logo: `${SITE.url}/brand/zx-monogram-flat-on-dark.svg`,
     description: STUDIO_BLURB,
     slogan: STUDIO_TAGLINE,
@@ -43,6 +44,7 @@ export function organizationJsonLd() {
       {
         "@type": "ContactPoint",
         contactType: "sales",
+        telephone: SITE.phoneSchema,
         email: SITE.email,
         availableLanguage: ["English"],
       },

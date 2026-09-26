@@ -48,6 +48,8 @@ export function SiteFooter() {
             {SITE.framework} · Two engineers · @{SITE.handle}
           </p>
           <p className="footer-bottom-end m-0">
+            <a href={`tel:${SITE.phoneTel}`}>{SITE.phoneDisplay}</a>
+            <span> · </span>
             <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
             <span> · </span>
             <a href="#main">Back to top ↑</a>

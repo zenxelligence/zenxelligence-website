@@ -23,6 +23,9 @@ export const SITE = {
   tagline: STUDIO_TAGLINE,
   framework: "ZX A³ Innovation™",
   email: "hello@zenxelligence.com",
+  phoneDisplay: "+91 9025054142",
+  phoneTel: "+919025054142",
+  phoneSchema: "+91-9025054142",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.zenxelligence.com",
   handle: "zenxelligence",
   social: {
