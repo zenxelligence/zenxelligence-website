@@ -56,6 +56,8 @@ export async function GET(
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+          {/* Satori renders this Open Graph image and only accepts img. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={`data:image/png;base64,${mark.toString("base64")}`} width={70} height={56} alt="" />
           <span style={{ fontSize: 28, fontWeight: 600, display: "flex" }}>
             Zen <span style={{ color: "#ff7a1a" }}>x</span>Elligence

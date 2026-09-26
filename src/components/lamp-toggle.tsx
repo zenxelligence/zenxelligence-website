@@ -1,8 +1,22 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useId, useRef, useState, useSyncExternalStore } from "react";
 
 const STORAGE_KEY = "zx-theme";
+const themeListeners = new Set<() => void>();
+
+function emitTheme() {
+  themeListeners.forEach((listener) => listener());
+}
+
+function subscribeTheme(listener: () => void) {
+  themeListeners.add(listener);
+  return () => themeListeners.delete(listener);
+}
+
+function themeIsDark() {
+  return document.documentElement.getAttribute("data-theme") !== "light";
+}
 
 function applyTheme(theme: "light" | "dark") {
   document.documentElement.setAttribute("data-theme", theme);
@@ -13,6 +27,7 @@ function applyTheme(theme: "light" | "dark") {
   }
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.setAttribute("content", theme === "light" ? "#F7F4EF" : "#0B0B0B");
+  emitTheme();
 }
 
 export function LampToggle() {
@@ -20,20 +35,15 @@ export function LampToggle() {
   const glowId = `glow${uid}`;
   const [pull, setPull] = useState(0);
   const [pulling, setPulling] = useState(false);
-  const [lit, setLit] = useState(true);
+  const lit = useSyncExternalStore(subscribeTheme, themeIsDark, () => true);
   const startY = useRef(0);
   const pullRef = useRef(0);
   const pulled = useRef(false);
   const skipClick = useRef(false);
 
-  useEffect(() => {
-    setLit(document.documentElement.getAttribute("data-theme") !== "light");
-  }, []);
-
   function toggle() {
     const next = document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light";
     applyTheme(next);
-    setLit(next === "dark");
   }
 
   return (

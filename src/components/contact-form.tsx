@@ -16,7 +16,7 @@ export function ContactForm() {
   const err = state.fieldErrors ?? {};
 
   return (
-    <form method="post" action={action} className="panel grid max-w-[640px] gap-4" noValidate>
+    <form action={action} className="panel grid max-w-[640px] gap-4" noValidate>
       <Field label="Name" name="name" error={err.name} required>
         <input
           required
