@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { PageContent } from "@/lib/site-data";
-import { SITE } from "@/lib/site-data";
+import { DEFAULT_DESCRIPTION, SITE } from "@/lib/site-data";
 
 /** Search-facing title + description. Display H1 can stay editorial. */
 export const PAGE_SEO: Record<string, { title: string; description: string }> = {
@@ -20,9 +20,9 @@ export const PAGE_SEO: Record<string, { title: string; description: string }> = 
       "Zen xElligence does not sell seats. You own the live app, agent workflows, firmware, and VLSI pack we ship. No SaaS subscription.",
   },
   industries: {
-    title: "ZX A³ Innovation™ — Autonomous, Adaptive, Architected",
+    title: "Our approach",
     description:
-      "Industry frame for Zen xElligence: Autonomous Intelligence (AI/ML, data, cloud), Adaptive Silicon (VLSI), Architected Determinism and Architect Training.",
+      "ZX A³ Innovation™ groups the work: Autonomous Intelligence, Adaptive Silicon, and Architected electronics and training. Not a list of invented industries.",
   },
   "case-studies": {
     title: "Case studies — named files only when the client says yes",
@@ -93,8 +93,7 @@ export function pageMetadata(slug: string, page: PageContent): Metadata {
 
 export function homeMetadata(): Metadata {
   const title = `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`;
-  const description =
-    "Zen xElligence is a two-engineer studio that builds end-to-end web apps & APIs, AI agent automation, Android/iOS (Flutter, React Native), IoT, and VLSI — brief to handover.";
+  const description = DEFAULT_DESCRIPTION;
   return {
     title: { absolute: title },
     description,

@@ -1,23 +1,27 @@
-import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import type { ReactNode } from "react";
+import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SkipLink } from "@/components/skip-link";
-import { SiteField } from "@/components/site-field";
 import { HashJump } from "@/components/hash-jump";
-import { ORGANIZATION_JSON_LD, SITE, WEBSITE_JSON_LD } from "@/lib/site-data";
+import { SectionReveal } from "@/components/section-reveal";
+import { CtaPanel } from "@/components/cta-panel";
+import { JsonLd } from "@/components/json-ld";
+import { DEFAULT_DESCRIPTION, SITE } from "@/content/site";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/schema";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   weight: ["400", "500", "600"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const interTight = Inter_Tight({
+  variable: "--font-inter-tight",
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -26,8 +30,7 @@ export const metadata: Metadata = {
     default: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
     template: `%s — ${SITE.name}`,
   },
-  description:
-    "Zen xElligence is a two-engineer studio that builds end-to-end web apps & APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
+  description: DEFAULT_DESCRIPTION,
   applicationName: SITE.name,
   authors: [{ name: SITE.name, url: SITE.url }],
   creator: SITE.name,
@@ -44,24 +47,19 @@ export const metadata: Metadata = {
     "VLSI",
     "ZX A3 Innovation",
   ],
-  alternates: {
-    canonical: SITE.url,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
     url: SITE.url,
     siteName: SITE.name,
     title: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
-    description:
-      "Two-engineer studio. End-to-end web, mobile, AI agents, IoT, and VLSI. You own what ships.",
+    description: DEFAULT_DESCRIPTION,
     images: [{ url: "/og", width: 1200, height: 630, alt: SITE.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: `${SITE.name} — Web, mobile, AI agents, IoT & VLSI`,
-    description:
-      "Two-engineer studio. End-to-end web, mobile, AI agents, IoT, and VLSI. You own what ships.",
+    description: DEFAULT_DESCRIPTION,
     images: ["/og"],
   },
   robots: {
@@ -69,28 +67,35 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true },
   },
+  manifest: "/site.webmanifest",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export const viewport: Viewport = {
+  themeColor: "#0B0B0B",
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrainsMono.variable} h-full`}>
-      <body className="grain flex min-h-full flex-col bg-bg text-fg antialiased">
+    <html lang="en" className={`${inter.variable} ${interTight.variable} h-full`} suppressHydrationWarning>
+      <head>
         <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k="zx-theme",s=localStorage.getItem(k),t=s==="light"||s==="dark"?s:(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");var d=document.documentElement;d.setAttribute("data-theme",t);var c=t==="light"?"#F7F4EF":"#0B0B0B";var m=document.querySelector('meta[name="theme-color"]');if(!m){m=document.createElement("meta");m.setAttribute("name","theme-color");(document.head||d).appendChild(m);}m.setAttribute("content",c);}catch(e){}})();`,
+          }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
-        />
-        <SiteField />
+      </head>
+      <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          <SectionReveal />
           <HashJump />
           <SkipLink />
           <SiteHeader />
-          <main id="main" className="mx-auto w-full max-w-[1280px] flex-1 px-4 sm:px-6.5">
+          <main id="main" className="site-container flex-1">
             {children}
           </main>
+          <CtaPanel />
           <SiteFooter />
         </div>
       </body>

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Block } from "@/lib/site-data";
 import { CASE_FILES } from "@/lib/site-data";
 import { CapabilityTile } from "@/components/capability-tile";
@@ -9,14 +8,23 @@ import { FaqAccordion } from "@/components/faq-accordion";
 import { FadeInSection } from "@/components/fade-in-section";
 import { ContactForm } from "@/components/contact-form";
 
+function sentenceCase(label: string) {
+  const lower = label.toLowerCase();
+  return lower.charAt(0).toUpperCase() + lower.slice(1);
+}
+
+const HIDDEN_COPY = /Pulse|NetSuite|\bTBD\b|FILE TEMPLATE|PLATE INDEX/;
+
 export function PageBlocks({ blocks }: { blocks: Block[] }) {
+  const visible = blocks.filter((block) => !HIDDEN_COPY.test(JSON.stringify(block)));
   return (
     <>
-      {blocks.map((block, i) => (
+      {visible.map((block, i) => (
         <FadeInSection
           key={i}
           id={block.type === "label" ? block.id : undefined}
-          className="mt-13"
+          className="mt-12"
+          delay={i * 70}
         >
           <BlockRenderer block={block} />
         </FadeInSection>
@@ -29,42 +37,31 @@ function BlockRenderer({ block }: { block: Block }) {
   switch (block.type) {
     case "label":
       return (
-        <div className="border-b border-border pb-4.5 font-mono text-[11px] tracking-[0.06em] text-fg-muted">
-          {block.label}
-        </div>
+        <>
+          <p className="block-label">{block.label}</p>
+          <h2 className="inner-h2">{sentenceCase(block.label)}</h2>
+        </>
       );
 
     case "prose":
-      return <p className="m-0 max-w-[760px] text-[17px] leading-relaxed">{block.text}</p>;
+      return <p className="page-body">{block.text}</p>;
 
     case "quote":
       return (
-        <div className="max-w-[820px] border-l border-accent pl-6">
-          <p className="m-0 text-[21px] leading-snug font-medium tracking-[-0.015em]">
-            {block.text}
-          </p>
+        <div className="quote">
+          <p>{block.text}</p>
         </div>
       );
 
     case "note":
-      return (
-        <p className="m-0 max-w-[760px] font-mono text-[11.5px] leading-relaxed text-fg-muted">
-          {block.text}
-        </p>
-      );
+      return <p className="note">{block.text}</p>;
 
     case "stats":
       return <StatStrip stats={block.items} />;
 
     case "tiles":
       return (
-        <div
-          className={
-            block.items.length <= 2
-              ? "grid grid-cols-1 border-t border-border sm:grid-cols-2"
-              : "grid grid-cols-1 border-t border-border sm:grid-cols-2 xl:grid-cols-3"
-          }
-        >
+        <div className="tile-grid">
           {block.items.map((item) => (
             <CapabilityTile key={`${item.index}-${item.title}-${item.meta}`} {...item} />
           ))}
@@ -73,24 +70,18 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "bullets":
       return (
-        <ul className="m-0 grid max-w-[800px] list-none gap-3.5 border-t border-border pt-6 p-0">
-          {block.items.map((text, i) => (
-            <li key={i} className="grid grid-cols-[20px_minmax(0,1fr)] gap-3.5 text-base leading-relaxed">
-              <span className="font-mono text-xs text-accent">—</span>
-              <span>{text}</span>
-            </li>
+        <ul className="bullet-list">
+          {block.items.map((text) => (
+            <li key={text}>{text}</li>
           ))}
         </ul>
       );
 
     case "pills":
       return (
-        <div className="flex flex-wrap gap-2.5">
+        <div className="chip-row" style={{ marginTop: 0 }}>
           {block.items.map((text) => (
-            <span
-              key={text}
-              className="border border-border px-3.5 py-2 font-mono text-[11.5px]"
-            >
+            <span key={text} className="chip">
               {text}
             </span>
           ))}
@@ -99,13 +90,12 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "logos":
       return (
-        <div className="grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3">
+        <div className="logo-wall">
           {block.items.map((text) => (
-            <div
-              key={text}
-              className="grid min-h-[112px] place-items-center bg-bg p-4.5 text-center"
-            >
-              <span className="text-[13px] font-semibold tracking-[0.06em]">{text}</span>
+            <div key={text} className="card card-pad" style={{ minHeight: 112, placeItems: "center" }}>
+              <span className="card-title" style={{ fontSize: 18, textAlign: "center" }}>
+                {text}
+              </span>
             </div>
           ))}
         </div>
@@ -113,15 +103,10 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "gallery":
       return (
-        <div className="grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-3">
+        <div className="logo-wall">
           {block.items.map((caption) => (
-            <div
-              key={caption}
-              className="flex min-h-[180px] items-end bg-bg-raised p-4.5"
-            >
-              <span className="font-mono text-[11px] leading-relaxed text-fg-muted">
-                {caption}
-              </span>
+            <div key={caption} className="card card-pad" style={{ minHeight: 180, justifyContent: "flex-end" }}>
+              <span className="card-label">{caption}</span>
             </div>
           ))}
         </div>
@@ -129,17 +114,12 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "table":
       return (
-        <div className="overflow-x-auto border-t border-border">
-          <table className="w-full min-w-[560px] border-collapse">
+        <div className="overflow-x-auto">
+          <table className="data-table">
             <thead>
               <tr>
                 {block.head.map((h) => (
-                  <th
-                    key={h}
-                    className="border-b border-border py-3.5 pr-4.5 text-left font-mono text-[10.5px] font-normal tracking-[0.06em] text-fg-muted"
-                  >
-                    {h}
-                  </th>
+                  <th key={h}>{h}</th>
                 ))}
               </tr>
             </thead>
@@ -147,14 +127,7 @@ function BlockRenderer({ block }: { block: Block }) {
               {block.rows.map((row, ri) => (
                 <tr key={ri}>
                   {row.map((cell, ci) => (
-                    <td
-                      key={ci}
-                      className={`border-b border-border py-4 pr-4.5 align-top text-[14.5px] leading-relaxed ${
-                        block.monoCols?.includes(ci) ? "font-mono" : "font-sans"
-                      } ${ci === 0 ? "text-fg" : "text-fg-muted"}`}
-                    >
-                      {cell}
-                    </td>
+                    <td key={ci}>{cell}</td>
                   ))}
                 </tr>
               ))}
@@ -168,11 +141,13 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "quotes":
       return (
-        <div className="grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-3">
+        <div className="quote-grid">
           {block.items.map((q, i) => (
-            <div key={i} className="flex flex-col gap-5 bg-bg p-6.5">
-              <p className="m-0 text-[17px] leading-snug tracking-[-0.012em]">{q.text}</p>
-              <span className="mt-auto font-mono text-[11px] text-fg-muted">{q.who}</span>
+            <div key={i} className="card card-pad">
+              <p className="card-body" style={{ color: "var(--text)", fontSize: 16 }}>
+                {q.text}
+              </p>
+              <span className="card-label">{q.who}</span>
             </div>
           ))}
         </div>
@@ -180,13 +155,11 @@ function BlockRenderer({ block }: { block: Block }) {
 
     case "code":
       return (
-        <div className="border border-border bg-bg-raised">
-          <div className="border-b border-border px-5 py-3 font-mono text-[10.5px] tracking-[0.06em] text-fg-muted">
+        <div className="panel" style={{ padding: 0 }}>
+          <div className="block-label" style={{ padding: "14px 20px", borderBottom: "1px solid var(--border)" }}>
             {block.label}
           </div>
-          <pre className="m-0 overflow-x-auto px-5 py-5.5 font-mono text-xs leading-loose text-fg">
-            {block.text}
-          </pre>
+          <pre className="m-0 overflow-x-auto px-5 py-5 text-xs leading-loose text-fg">{block.text}</pre>
         </div>
       );
 
@@ -199,10 +172,7 @@ function BlockRenderer({ block }: { block: Block }) {
     case "cases":
       if (CASE_FILES.length === 0) {
         return (
-          <p className="m-0 max-w-[760px] border border-border px-5 py-6 font-mono text-[12.5px] leading-relaxed text-fg-muted">
-            No public files yet. The first one will use the template below. Until then this list stays empty on
-            purpose.
-          </p>
+          <p className="note">Selected work available on request — ask us on a call.</p>
         );
       }
       return (
@@ -216,23 +186,4 @@ function BlockRenderer({ block }: { block: Block }) {
     default:
       return null;
   }
-}
-
-export function BottomCta() {
-  return (
-    <div className="mt-14 flex flex-wrap items-center gap-3.5 border-t border-border py-7">
-      <Link
-        href="/contact"
-        className="bg-accent px-5 py-3.25 font-mono text-xs text-bg hover:bg-fg"
-      >
-        Start a build →
-      </Link>
-      <Link
-        href="/"
-        className="border border-border px-5 py-3.25 font-mono text-xs text-fg hover:border-accent"
-      >
-        ← Home
-      </Link>
-    </div>
-  );
 }

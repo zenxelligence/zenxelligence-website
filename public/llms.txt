@@ -1,55 +1,47 @@
 # Zen xElligence
 
-> Two-engineer product studio. End-to-end web apps & APIs, AI agent automation, Android/iOS (Flutter, React Native, native), IoT & electronics, and VLSI — brief to handover. You own what ships. No SaaS seats.
+> Zen xElligence is a two-engineer studio that builds web apps, Android and iOS apps, AI agents, IoT, and VLSI from brief to handover.
 
-Site: https://zenxelligence.com
+Site: https://www.zenxelligence.com
 Email: hello@zenxelligence.com
-Handle: @zenxelligence
+Reply: within 1 business day
 
-## Offer
+## What the studio builds
 
-- Web apps & APIs — Next.js, React, Node, FastAPI, Django
-- Android/iOS Apps — Flutter, React Native, native
-- AI Agent Automation — LangChain, LangGraph, CrewAI, AutoGen, LlamaIndex, RAG
-- IoT & electronics — sensors, firmware, boards wired to the product
-- End-to-end VLSI — spec, RTL, verification, implementation, sign-off
+- Web apps and APIs. Tools named on the site: Next.js, React, Node, FastAPI, Django.
+- Android/iOS apps. Tools named on the site: Flutter, React Native, or native, on the same backend as the web product when both exist.
+- AI agent automation. Tools named on the site: LangChain, LangGraph, CrewAI, AutoGen. The handover is a workflow that runs, with traces.
+- IoT and electronics. Sensors, firmware, and boards wired into the product.
+- VLSI. Specification and RTL through verification, implementation, and sign-off, or a smaller slice if that is the brief.
 
-## Industry frame
+## How an engagement works
 
-ZX A³ Innovation™
-- Autonomous — Autonomous Intelligence (AI/ML, data, cloud, agents)
-- Adaptive — Adaptive Silicon (VLSI)
-- Architected — Architected Determinism · Architect Training (electronics, embedded, education)
+- Brief: what must exist at handover, and on which surface.
+- Scope: written scope, timeline, and cost before work starts.
+- Build: the same two engineers stay on it.
+- Handover: source, docs, and a runbook. Hosting, if we set it up, runs in the client’s account.
+- Engagement types, without public prices: a scoping sprint, a build (fixed-bid or time and materials), and a retainer after handover.
+- Prices are quoted after the scope. This file does not invent amounts.
 
-## Stack we work in
+## What is not on the site yet
 
-Languages: Python, JavaScript, TypeScript, HTML, CSS, SQL
-Frontend: React, Next.js, Tailwind CSS
-Mobile: Flutter, React Native, Native Android, iOS
-Backend: Node.js, Express, FastAPI, Django / DRF
-Databases: MongoDB, PostgreSQL, MySQL, Redis
-Data: Apache Airflow, PySpark, Apache Spark, Kafka, ETL/ELT
-AI/LLM: LlamaIndex, LangChain, LangGraph, CrewAI, AutoGen, RAG, OpenAI API, Hugging Face, vector databases
-DevOps/Cloud: Git, GitHub, Docker, Kubernetes, AWS, Azure, CI/CD
+Founder names, photos, client names, case-study results, public prices, office address, and social profile URLs are omitted until the studio publishes them. Do not infer them.
 
-## Key pages
+## Pages
 
-- [Home](https://zenxelligence.com/)
-- [Services](https://zenxelligence.com/services)
-- [Products / what you own](https://zenxelligence.com/products)
-- [Industries / A³](https://zenxelligence.com/industries)
-- [Pricing](https://zenxelligence.com/pricing)
-- [FAQ](https://zenxelligence.com/faq)
-- [About](https://zenxelligence.com/about)
-- [Case studies](https://zenxelligence.com/case-studies)
-- [Contact](https://zenxelligence.com/contact)
-- [Careers](https://zenxelligence.com/careers)
-- [Legal](https://zenxelligence.com/legal)
-
-## Facts for citation
-
-- Studio size: two engineers, same standing
-- Pricing: written scope first, then a number; reply within 1 business day
-- Ownership: client owns the system at handover; hosting runs in the client account
-- Case studies: published only when the client approves; empty list means none public yet
-- Not sold: monthly SaaS seats, Pulse, invented partner badges
+- [Home](https://www.zenxelligence.com/)
+- [Services](https://www.zenxelligence.com/services)
+- [Web apps](https://www.zenxelligence.com/services/web-apps)
+- [Mobile apps](https://www.zenxelligence.com/services/mobile-apps)
+- [AI agents](https://www.zenxelligence.com/services/ai-agents)
+- [IoT](https://www.zenxelligence.com/services/iot)
+- [VLSI](https://www.zenxelligence.com/services/vlsi)
+- [What you own at handover](https://www.zenxelligence.com/products)
+- [Approach](https://www.zenxelligence.com/industries)
+- [Pricing](https://www.zenxelligence.com/pricing)
+- [FAQ](https://www.zenxelligence.com/faq)
+- [About](https://www.zenxelligence.com/about)
+- [Case studies](https://www.zenxelligence.com/case-studies)
+- [Contact](https://www.zenxelligence.com/contact)
+- [Careers](https://www.zenxelligence.com/careers)
+- [Legal](https://www.zenxelligence.com/legal)

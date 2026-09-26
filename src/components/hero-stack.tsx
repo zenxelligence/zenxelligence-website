@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "motion/react";
+import { AccentText } from "@/components/accent-text";
 
 export type HeroLine = {
   text: string;
@@ -16,30 +14,13 @@ export function HeroStack({
   lines: HeroLine[];
   className?: string;
 }) {
+  const last = lines.length - 1;
   return (
-    <h1
-      className={
-        className ??
-        "m-0 text-[clamp(40px,6.6vw,92px)] leading-[0.95] font-semibold tracking-[-0.038em]"
-      }
-    >
+    <h1 className={className ?? "hero-title"}>
       {lines.map((line, i) => (
-        <motion.span
-          key={i}
-          className="block"
-          style={{
-            fontSize: line.fontSize,
-            opacity: line.opacity ?? 1,
-            fontStyle: line.italic ? "italic" : "normal",
-            fontWeight: line.italic ? 500 : undefined,
-            color: line.italic ? "var(--accent)" : undefined,
-          }}
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: line.opacity ?? 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut", delay: 0.1 + i * 0.24 }}
-        >
-          {line.text}
-        </motion.span>
+        <span key={line.text} className="block">
+          {i === last ? <AccentText text={line.text} /> : line.text}
+        </span>
       ))}
     </h1>
   );

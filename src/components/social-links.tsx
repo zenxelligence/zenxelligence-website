@@ -1,4 +1,4 @@
-import { SOCIAL } from "@/lib/site-data";
+import { SOCIAL } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 type IconProps = { className?: string };
@@ -45,8 +45,9 @@ const ICONS = {
 };
 
 export function SocialLinks({ className }: { className?: string }) {
+  if (SOCIAL.length === 0) return null;
   return (
-    <nav aria-label="Social" className={cn("flex items-center gap-2", className)}>
+    <nav aria-label="Social" className={cn("flex items-center gap-3", className)}>
       {SOCIAL.map((item) => {
         const Icon = ICONS[item.id];
         return (
@@ -57,9 +58,9 @@ export function SocialLinks({ className }: { className?: string }) {
             rel="noreferrer noopener"
             aria-label={item.label}
             title={item.label}
-            className="flex size-9 items-center justify-center border border-border bg-bg-raised text-fg hover:border-accent hover:text-accent"
+            className="text-[var(--sand)] hover:text-accent"
           >
-            <Icon className="size-[17px]" />
+            <Icon className="size-[18px]" />
           </a>
         );
       })}

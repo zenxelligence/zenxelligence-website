@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { CaseStudyCard } from "@/components/case-study-card";
-import { BottomCta } from "@/components/page-blocks";
+import { AccentText } from "@/components/accent-text";
 import { CASE_FILES } from "@/lib/site-data";
 import type { Metadata } from "next";
 
@@ -28,15 +28,14 @@ export default async function CaseStudyPage({
   if (!caseFile) notFound();
 
   return (
-    <section className="pt-8 pb-6">
-      <div className="font-mono text-[11px] tracking-[0.06em] text-fg-muted">CASE STUDIES</div>
-      <h1 className="mt-5 max-w-[1000px] text-[clamp(32px,4.6vw,58px)] leading-[1.04] font-semibold tracking-[-0.034em]">
-        {caseFile.title}
+    <section className="page-inner">
+      <p className="eyebrow page-kicker">CASE STUDIES</p>
+      <h1 className="page-title">
+        <AccentText text={caseFile.title} />
       </h1>
-      <div className="mt-13">
+      <div className="mt-12">
         <CaseStudyCard caseFile={caseFile} />
       </div>
-      <BottomCta />
     </section>
   );
 }
