@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SocialLinks } from "@/components/social-links";
-import { ZxMark } from "@/components/zx-mark";
+import { BrandLockup } from "@/components/brand-mark";
 import { POSTS } from "@/content/posts";
 import { FOOTER_COLUMNS, SITE } from "@/content/site";
 
@@ -18,10 +18,7 @@ export function SiteFooter() {
         <div className="footer-top">
           <div>
             <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-              <ZxMark size={34} />
-              <span className="logo-word" style={{ fontSize: 22 }}>
-                ZEN xELLIGENCE
-              </span>
+              <BrandLockup height={32} className="brand-footer" />
             </Link>
             <p className="footer-tagline">{SITE.tagline}</p>
           </div>

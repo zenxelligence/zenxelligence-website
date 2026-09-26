@@ -15,7 +15,7 @@ export function organizationJsonLd() {
     name: SITE.name,
     url: SITE.url,
     email: SITE.email,
-    logo: `${SITE.url}/icon.svg`,
+    logo: `${SITE.url}/brand/zx-monogram-flat-on-dark.svg`,
     description: STUDIO_BLURB,
     slogan: STUDIO_TAGLINE,
     numberOfEmployees: { "@type": "QuantitativeValue", value: 2 },

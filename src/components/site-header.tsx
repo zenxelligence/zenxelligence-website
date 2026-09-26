@@ -6,7 +6,7 @@ import { useState } from "react";
 import { NAV_ITEMS } from "@/content/site";
 import { CommandPalette } from "@/components/command-palette";
 import { ArrowIcon } from "@/components/arrow-icon";
-import { ZxMark } from "@/components/zx-mark";
+import { BrandLockup } from "@/components/brand-mark";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -18,8 +18,7 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="site-container header-bar">
         <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-          <ZxMark size={30} />
-          <span className="logo-word">ZEN xELLIGENCE</span>
+          <BrandLockup height={30} />
         </Link>
         <nav className="desktop-nav" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
@@ -56,8 +55,7 @@ export function SiteHeader() {
         </div>
         <nav id="mobile-nav" className="mobile-menu" hidden={!open} inert={!open} aria-label="Mobile">
           <Link href="/" className="logo-lockup" aria-label="Zen xElligence" onClick={() => setOpenPath(null)}>
-            <ZxMark size={28} />
-            <span className="logo-word">ZEN xELLIGENCE</span>
+            <BrandLockup height={28} />
           </Link>
           <Link href="/contact" className="button button-primary">
             Start a build

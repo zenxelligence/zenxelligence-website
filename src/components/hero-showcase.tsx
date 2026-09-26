@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ZxMark } from "@/components/zx-mark";
+import { BrandMark } from "@/components/brand-mark";
 
 const FRAMES = [
   { kicker: "01 / WEB APPS", label: "Web apps" },
@@ -39,11 +39,7 @@ function WebMock() {
         </div>
       </div>
       <svg className="mock-chart" viewBox="0 0 320 100" preserveAspectRatio="none" aria-hidden="true">
-        <g stroke="rgba(255,255,255,0.08)" strokeWidth="1">
-          <line x1="0" x2="320" y1="25" y2="25" />
-          <line x1="0" x2="320" y1="50" y2="50" />
-          <line x1="0" x2="320" y1="75" y2="75" />
-        </g>
+        <path d="M0 25H320M0 50H320M0 75H320" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
         <path
           d="M0 72 C28 68 40 48 62 52 C90 58 104 28 132 34 C160 40 176 58 204 50 C232 42 250 22 278 28 C298 32 308 40 320 36 V100 H0 Z"
           fill="rgba(255,122,26,0.16)"
@@ -195,15 +191,27 @@ function IotMock() {
             <i className="mock-dot" /> Battery <em>—</em>
           </li>
         </ul>
-        <div className="mock-map" aria-hidden="true">
-          {Array.from({ length: 16 }, (_, i) => (
-            <i key={i} className={i === 5 || i === 10 ? "is-on" : undefined} />
-          ))}
-        </div>
+        <svg className="mock-map" viewBox="0 0 76 76" aria-hidden="true">
+          <path
+            fill="rgba(255,255,255,0.06)"
+            d="M0 0h16v16H0zM20 0h16v16H20zM40 0h16v16H40zM60 0h16v16H60zM0 20h16v16H0zM40 20h16v16H40zM60 20h16v16H60zM0 40h16v16H0zM20 40h16v16H20zM60 40h16v16H60zM0 60h16v16H0zM20 60h16v16H20zM40 60h16v16H40zM60 60h16v16H60z"
+          />
+          <path fill="rgba(255,122,26,0.55)" d="M20 20h16v16H20zM40 40h16v16H40z" />
+        </svg>
       </div>
     </div>
   );
 }
+
+const DIE_PADS = [
+  ...Array.from({ length: 10 }, (_, i) => `M6 ${16 + i * 12}h6v3h-6zM228 ${16 + i * 12}h6v3h-6z`),
+  ...Array.from({ length: 8 }, (_, i) => `M${28 + i * 24} 3h8v4h-8zM${28 + i * 24} 141h8v4h-8z`),
+].join("");
+const DIE_GRID = [
+  ...Array.from({ length: 8 }, (_, i) => `M22 ${24 + i * 14}H218`),
+  ...Array.from({ length: 9 }, (_, i) => `M${32 + i * 22} 16V132`),
+].join("");
+const DIE_ROWS = Array.from({ length: 6 }, (_, i) => `M24 ${26 + i * 14}h92v4h-92z`).join("");
 
 function VlsiMock() {
   return (
@@ -215,36 +223,9 @@ function VlsiMock() {
       <div className="mock-vlsi-split">
         <svg viewBox="0 0 240 148" className="mock-die" preserveAspectRatio="none" aria-hidden="true">
           <rect x="16" y="10" width="208" height="128" fill="none" stroke="rgba(255,122,26,0.75)" strokeWidth="1" />
-          {Array.from({ length: 10 }, (_, i) => (
-            <rect key={`l${i}`} x="6" y={16 + i * 12} width="6" height="3" fill="#ffb36b" />
-          ))}
-          {Array.from({ length: 10 }, (_, i) => (
-            <rect key={`r${i}`} x="228" y={16 + i * 12} width="6" height="3" fill="#ffb36b" />
-          ))}
-          {Array.from({ length: 8 }, (_, i) => (
-            <rect key={`t${i}`} x={28 + i * 24} y="3" width="8" height="4" fill="#ffb36b" />
-          ))}
-          {Array.from({ length: 8 }, (_, i) => (
-            <rect key={`b${i}`} x={28 + i * 24} y="141" width="8" height="4" fill="#ffb36b" />
-          ))}
-          <g stroke="rgba(255,255,255,0.1)" strokeWidth="0.6">
-            {Array.from({ length: 8 }, (_, i) => (
-              <line key={`h${i}`} x1="22" x2="218" y1={24 + i * 14} y2={24 + i * 14} />
-            ))}
-            {Array.from({ length: 9 }, (_, i) => (
-              <line key={`v${i}`} y1="16" y2="132" x1={32 + i * 22} x2={32 + i * 22} />
-            ))}
-          </g>
-          {Array.from({ length: 6 }, (_, i) => (
-            <rect
-              key={`row${i}`}
-              x="24"
-              y={26 + i * 14}
-              width="92"
-              height="4"
-              fill="rgba(255,179,107,0.28)"
-            />
-          ))}
+          <path fill="#ffb36b" d={DIE_PADS} />
+          <path d={DIE_GRID} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.6" />
+          <path fill="rgba(255,179,107,0.28)" d={DIE_ROWS} />
           <rect x="132" y="26" width="72" height="40" fill="rgba(255,122,26,0.16)" stroke="#ff7a1a" strokeWidth="0.8" />
           <rect x="132" y="78" width="40" height="28" fill="rgba(255,179,107,0.12)" stroke="rgba(255,179,107,0.75)" strokeWidth="0.8" />
           <rect x="178" y="86" width="28" height="18" fill="rgba(255,179,107,0.1)" stroke="rgba(255,179,107,0.55)" strokeWidth="0.8" />
@@ -323,7 +304,7 @@ export function HeroShowcase() {
           ))}
         </div>
         <figcaption className="hero-figcap">
-          <ZxMark size={16} className="hero-figmark" />
+          <BrandMark height={16} className="hero-figmark" />
           <span>{frame.kicker}</span>
           <span className="hero-figrule" aria-hidden="true" />
           {reduced ? (

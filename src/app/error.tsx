@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import { ZxMark } from "@/components/zx-mark";
+import { BrandMark } from "@/components/brand-mark";
 
 export default function Error({
   error,
@@ -18,10 +18,7 @@ export default function Error({
   return (
     <section className="page-inner">
       <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
-        <ZxMark size={36} />
-        <span className="logo-word" style={{ fontSize: 22 }}>
-          ZEN xELLIGENCE
-        </span>
+        <BrandMark height={40} />
       </Link>
       <p className="eyebrow mt-8">Error</p>
       <h1 className="page-title">Something went wrong.</h1>

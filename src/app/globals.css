@@ -229,9 +229,27 @@
     color: var(--text);
   }
 
-  .zx-mark {
+  .brand-slot {
     display: block;
-    flex-shrink: 0;
+    line-height: 0;
+  }
+
+  .brand-slot svg {
+    display: block;
+    height: 30px;
+    width: auto;
+  }
+
+  .site-footer .brand-slot svg {
+    height: 32px;
+  }
+
+  .page-inner .brand-slot svg {
+    height: 40px;
+  }
+
+  .hero-figcap .brand-slot svg {
+    height: 16px;
   }
 
   .logo-word {
@@ -534,7 +552,7 @@
     z-index: 0;
     top: 42%;
     left: 46%;
-    width: min(720px, calc(100% - 8px));
+    width: min(590px, calc(100% - 8px));
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     background: radial-gradient(circle, rgba(255, 122, 26, 0.32) 0%, rgba(255, 140, 50, 0.1) 20%, rgba(255, 122, 26, 0) 46%);
@@ -546,7 +564,7 @@
     top: 40%;
     left: 42%;
     z-index: 0;
-    width: clamp(330px, 32vw, 450px);
+    width: clamp(270px, 26vw, 370px);
     aspect-ratio: 1;
     border-radius: 50%;
     background: var(--grad-orb);
@@ -558,7 +576,7 @@
     top: 42%;
     left: 46%;
     z-index: 1;
-    width: min(640px, calc(100% - 96px));
+    width: min(525px, calc(100% - 170px));
     aspect-ratio: 1;
     border: 1px solid rgba(255, 179, 107, 0.55);
     border-radius: 50%;
@@ -592,7 +610,7 @@
     z-index: 2;
     top: 40%;
     left: 12px;
-    width: min(520px, calc(100% - 96px));
+    width: min(440px, calc(100% - 146px));
     transform: translateY(-48%);
   }
 
@@ -644,7 +662,7 @@
     align-items: center;
     gap: 10px;
     width: 100%;
-    margin: 42px 0 0;
+    margin: 36px 0 0;
     color: var(--text-dim);
     font-size: 12px;
     letter-spacing: 0.12em;
@@ -958,20 +976,9 @@
   }
 
   .mock-map {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 3px;
-  }
-
-  .mock-map i {
-    min-height: 12px;
-    border-radius: 2px;
-    background: rgba(255, 255, 255, 0.06);
-    aspect-ratio: 1;
-  }
-
-  .mock-map i.is-on {
-    background: rgba(255, 122, 26, 0.55);
+    width: 100%;
+    height: 100%;
+    min-height: 0;
   }
 
   .mock-dot {
@@ -2399,22 +2406,22 @@
   }
 
   .hero-stage {
-    width: min(230px, calc(100% - 64px));
+    width: min(190px, calc(100% - 72px));
   }
 
   .hero-sphere {
     left: 40%;
-    width: min(200px, 54%);
+    width: min(164px, 46%);
   }
 
   .hero-ring {
     left: 40%;
-    width: min(240px, 64%);
+    width: min(200px, 54%);
   }
 
   .hero-glow {
     left: 40%;
-    width: min(400px, 120%);
+    width: min(320px, 100%);
   }
 
   .hero-window {
