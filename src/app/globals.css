@@ -386,9 +386,14 @@
     margin-bottom: 18px;
   }
 
-  .hero-title {
+  .hero-title-wrap {
     grid-column: 1;
     grid-row: 2;
+    min-width: 0;
+    container-type: inline-size;
+  }
+
+  .hero-title {
     margin-top: 0;
   }
 
@@ -435,9 +440,19 @@
   .hero-grid {
     position: relative;
     display: grid;
-    grid-template-columns: 1.15fr 1fr;
+    /* Text takes about 70% so each headline sentence fits on one line. */
+    grid-template-columns: minmax(0, 2.45fr) minmax(168px, 1fr);
     align-items: start;
-    column-gap: 32px;
+    column-gap: 28px;
+  }
+
+  .hero-kicker,
+  .hero-title-wrap,
+  .hero-sub,
+  .chip-row,
+  .hero-actions {
+    position: relative;
+    z-index: 2;
   }
 
   .hero-grid > * {
@@ -1850,7 +1865,7 @@
   }
 
   .hero-kicker,
-  .hero-title,
+  .hero-title-wrap,
   .hero-stage-slot,
   .hero-sub,
   .chip-row,
@@ -2062,6 +2077,36 @@
     min-height: 44px;
   }
 
+}
+
+@media (min-width: 801px) {
+  .hero-title {
+    /* 8.7cqw of the text column keeps the longest sentence on one line, capped at the spec size. */
+    font-size: clamp(48px, 8.7cqw, 96px);
+  }
+}
+
+@media (min-width: 801px) and (max-height: 800px) {
+  .plate-hero {
+    padding-top: 8px;
+    padding-bottom: 72px;
+  }
+
+  .hero-kicker {
+    margin-bottom: 8px;
+  }
+
+  .hero-sub {
+    margin-top: 12px;
+  }
+
+  .chip-row {
+    margin-top: 10px;
+  }
+
+  .hero-actions {
+    margin-top: 12px;
+  }
 }
 
 @media (max-width: 520px) {

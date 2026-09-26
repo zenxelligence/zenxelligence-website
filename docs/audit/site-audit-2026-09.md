@@ -86,7 +86,7 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 
 | ID | Page / area | Finding | Why it matters | Fix | Priority | Status |
 |---|---|---|---|---|---|---|
-| D01 | Home H1 | Spec is `clamp(57px, 6.7vw, 100px)` (96px at 1440). An earlier capture measured ~75px and five lines. | The hero is the brand. | Grid `1.15fr 1fr`, max width 760px on the copy. Measured 96.48px and three lines at 1440, 57px at 390. | H | Fixed in this PR |
+| D01 | Home H1 | Spec is `clamp(57px, 6.7vw, 100px)` (96px at 1440). An earlier capture measured ~75px and five lines. On a 1024–1100px laptop the three sentences wrapped to about seven lines, so the buttons sat below the fold. | The hero is the brand, and the next step has to be on the first screen. | From 801px up the type is `clamp(48px, 8.7cqw, 96px)` of the text column, and that column is about 70% of the hero. Playwright: 3 lines at 1024×640, 1280×720, 1366×768, and 1440×900, with the eyebrow, subcopy, and both buttons inside the viewport and a gap before the globe. 57px at 390. | H | Fixed in this PR |
 | D02 | Home H1 | “End / to end.” split. | Breaks the lockup. | Nowrap span. It stays on one line at 1440 and 390. | H | Fixed in this PR |
 | D03 | Home H1 tracking | Spec asks −0.055em and line-height 1.07. The snapshot used −0.03em and 1.02. | The size was right, the color of the type was tighter than the spec in the wrong way. | Set to the spec values. Still one viewport wide, no horizontal scroll. | M | Fixed in this PR |
 | D04 | Orbit, 1440 | HTML labels collided with the H1 in the annotated shot. | Two messages occupy one point. | Labels, pins, and leader lines are gone. The globe is centered on the three-line headline. | H | Fixed in this PR |

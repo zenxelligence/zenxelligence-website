@@ -34,19 +34,21 @@ export default function Home() {
             <span className="pill-long">Now booking new product builds</span>
             <span className="pill-short">Booking new builds</span>
           </div>
-          <h1 className="hero-title">
-            <span className="block">Web and Android/iOS apps.</span>
-            <span className="block">
-              AI agent <span className="accent">automation</span>.
-            </span>
-            <span className="block">
-              IoT and VLSI.{" "}
-              <span className="nowrap">
-                End to <span className="accent">end</span>
-                <span className="accent">.</span>
+          <div className="hero-title-wrap">
+            <h1 className="hero-title">
+              <span className="block">Web and Android/iOS apps.</span>
+              <span className="block">
+                AI agent <span className="accent">automation</span>.
               </span>
-            </span>
-          </h1>
+              <span className="block">
+                IoT and VLSI.{" "}
+                <span className="nowrap">
+                  End to <span className="accent">end</span>
+                  <span className="accent">.</span>
+                </span>
+              </span>
+            </h1>
+          </div>
           <div className="hero-stage-slot">
             <HeroOrbit />
           </div>
