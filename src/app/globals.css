@@ -495,6 +495,11 @@
     margin-top: 22px;
   }
 
+  .hero-grid .chip {
+    padding: 6px 11px;
+    font-size: 12px;
+  }
+
   .hero-grid {
     position: relative;
     display: grid;
@@ -611,8 +616,9 @@
 
   .hero-side {
     position: absolute;
-    top: 34%;
-    left: calc(100% + 12px);
+    top: 50%;
+    right: 0;
+    left: auto;
     z-index: 3;
     margin: 0;
     color: var(--text-dim);

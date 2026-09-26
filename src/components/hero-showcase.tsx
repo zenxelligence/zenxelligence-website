@@ -223,10 +223,10 @@ export function HeroShowcase() {
             </button>
           )}
         </figcaption>
-        <p className="hero-side" aria-hidden="true">
-          Brief · Build · Handover
-        </p>
       </div>
+      <p className="hero-side" aria-hidden="true">
+        Brief · Build · Handover
+      </p>
     </figure>
   );
 }

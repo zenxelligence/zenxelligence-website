@@ -56,7 +56,7 @@ export default function Home() {
           <div className="chip-row">
             {HOME_OFFERS.map((offer) => (
               <Link key={offer.label} href={offer.href} className="chip">
-                {offer.label}
+                {offer.chip}
               </Link>
             ))}
           </div>

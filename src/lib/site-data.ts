@@ -167,11 +167,11 @@ export const HOME_COPY = {
 };
 
 export const HOME_OFFERS = [
-  { label: "Web apps & APIs", href: "/services/web-apps" },
-  { label: "Android/iOS Apps", href: "/services/mobile-apps" },
-  { label: "AI Agent Automation", href: "/services/ai-agents" },
-  { label: "IoT & electronics", href: "/services/iot" },
-  { label: "End-to-end VLSI", href: "/services/vlsi" },
+  { label: "Web apps & APIs", chip: "Web apps", href: "/services/web-apps" },
+  { label: "Android/iOS Apps", chip: "Android/iOS", href: "/services/mobile-apps" },
+  { label: "AI Agent Automation", chip: "AI agents", href: "/services/ai-agents" },
+  { label: "IoT & electronics", chip: "IoT", href: "/services/iot" },
+  { label: "End-to-end VLSI", chip: "VLSI", href: "/services/vlsi" },
 ];
 
 export const HOME_PLATES = [
