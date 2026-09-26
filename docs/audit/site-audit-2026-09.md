@@ -86,13 +86,13 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 
 | ID | Page / area | Finding | Why it matters | Fix | Priority | Status |
 |---|---|---|---|---|---|---|
-| D01 | Home H1 | Spec is `clamp(57px, 6.7vw, 100px)` (96px at 1440). An earlier capture measured ~75px and five lines. On a 1024–1100px laptop the three sentences wrapped to about seven lines, so the buttons sat below the fold. | The hero is the brand, and the next step has to be on the first screen. | From 801px up the type is `clamp(48px, 8.7cqw, 96px)` of the text column, and that column is about 70% of the hero. Playwright: 3 lines at 1024×640, 1280×720, 1366×768, and 1440×900, with the eyebrow, subcopy, and both buttons inside the viewport and a gap before the globe. 57px at 390. | H | Fixed in this PR |
-| D02 | Home H1 | “End / to end.” split. | Breaks the lockup. | Nowrap span. It stays on one line at 1440 and 390. | H | Fixed in this PR |
+| D01 | Home H1 | Spec is `clamp(57px, 6.7vw, 100px)` (96px at 1440). An earlier capture measured ~75px and five lines. On a 1024–1100px laptop the three sentences wrapped to about seven lines, so the buttons sat below the fold. | The hero is the brand, and the next step has to be on the first screen. | The lockup is three short lines (“Your product,” / “built end” / “to end.”), with “built” and the period in orange. From 801px up the type is `clamp(46px, 7.2cqw, 72px)`. Playwright: 3 lines at 1024×640, 1280×720, 1366×768, and 1440×900, and the eyebrow through the facts row stays inside the viewport with a gap before the sphere and the product window. 57px and 3 lines at 390. | H | Fixed in this PR |
+| D02 | Home H1 | “End / to end.” split across a long sentence. | A broken lockup on the old headline. | The headline is three short lines on purpose, and the last line is “to end.” with an orange period. | H | Fixed in this PR |
 | D03 | Home H1 tracking | Spec asks −0.055em and line-height 1.07. The snapshot used −0.03em and 1.02. | The size was right, the color of the type was tighter than the spec in the wrong way. | Set to the spec values. Still one viewport wide, no horizontal scroll. | M | Fixed in this PR |
-| D04 | Orbit, 1440 | HTML labels collided with the H1 in the annotated shot. | Two messages occupy one point. | Labels, pins, and leader lines are gone. The globe is centered on the three-line headline. | H | Fixed in this PR |
-| D05 | Orbit, 390 | Labels crossed the 390 edge. | Clipped words. | No legend. The poster is the globe only, with no pins or leader lines. | H | Fixed in this PR |
-| D06 | Hero stage | No orange orb, hard canvas crop. | The spec’s §8.3 stage was missing. | `--grad-orb` circle plus a radial mask on the canvas and the poster. | H | Fixed in this PR |
-| D07 | Hero, mobile and reduced motion | `public/hero-orbit.webp` was referenced and missing, so the stage was empty when WebGL did not start. | The phone hero was a blank box. | `public/hero-orbit.svg` is the poster. | H | Fixed in this PR |
+| D04 | Orbit, 1440 | HTML labels collided with the H1 in the annotated shot. | Two messages occupy one point. | Labels, pins, and leader lines are gone. The home stage is a CSS sphere, a thin orbit ring, and a tilted product window. No canvas. | H | Fixed in this PR |
+| D05 | Orbit, 390 | Labels crossed the 390 edge. | Clipped words. | No legend and no canvas. The product window sits under the buttons. | H | Fixed in this PR |
+| D06 | Hero stage | No orange orb, hard canvas crop. | The spec’s §8.3 stage was missing. | `--grad-orb` sphere in CSS. The home page does not mount the wireframe. | H | Fixed in this PR |
+| D07 | Hero, mobile and reduced motion | `public/hero-orbit.webp` was referenced and missing, so the stage was empty when WebGL did not start. | The phone hero was a blank box. | The product window is HTML. Reduced motion keeps the first frame and skips the cycle. | H | Fixed in this PR |
 | D08 | Home | Plate numbers “03 / 10 · WEB” and a duplicate side label on each H2. | Hangly leftovers. | Eyebrows are “Services”, “How we work”, “Questions”. | H | Fixed in this PR |
 | D09 | Home cards | Five cards in two columns left a hole at 1024. | Broken grid. | Six-column grid: first three span 2, last two span 3. At 640–1023 the fifth card spans the row. | H | Fixed in this PR |
 | D10 | Inner `.tile-grid` | Odd counts left a hole (services, products). | Same problem on inner pages. | Last odd item spans the row. Three items at ≥1150px use three columns. | M | Fixed in this PR |
@@ -152,9 +152,9 @@ Do not invent these. The UI hides the section, or shows only a true sentence, un
 | V08 | `CONTACT_FROM` | The default from-address may be unverified in Resend. | The API will 403. | Override with `CONTACT_FROM`. | M | Needs owner input |
 | V09 | `next.config.ts` | No security headers. `X-Powered-By` on. | Baseline hardening. | nosniff, Referrer-Policy, SAMEORIGIN, Permissions-Policy, HSTS, `poweredByHeader: false`. | H | Fixed in this PR |
 | V10 | CSP | No Content-Security-Policy. | XSS containment. | A strict CSP fights Next inline scripts, JSON-LD, and the WebGL bundle. Not guessed. | M | Deferred — needs a nonce policy tested against the 3D page |
-| V11 | Home JS | three.js on the critical path. Live mobile TBT was 1.6s on the old site. | The phone cannot use the page. | Dynamic import, idle mount, poster under 640px, reduced motion, and saveData. `dpr` capped at 1.5. `frameloop="demand"`. Pauses when hidden or offscreen. Production mobile TBT 40ms. | H | Fixed in this PR |
-| V12 | Desktop hero | The 3D chunk still downloads after idle on wide screens. | Extra JS for a decoration. | Accepted on desktop. Mobile does not mount it. | M | Deferred — further three.js tree-shaking is a separate pass |
-| V13 | `logic-core.tsx` | Labels are projected HTML and can escape a small stage. | Overflow. | The label anchors, pins, and leader lines are removed from the scene. The poster SVG has none either. | H | Fixed in this PR |
+| V11 | Home JS | three.js on the critical path. Live mobile TBT was 1.6s on the old site. | The phone cannot use the page. | The home hero is CSS and HTML. The page does not import the 3D scene. Production mobile performance 95, TBT 30ms, LCP 3.0s. | H | Fixed in this PR |
+| V12 | Desktop hero | The 3D chunk still downloads after idle on wide screens. | Extra JS for a decoration. | Home no longer loads it. The scene file remains unused by the page. | M | Fixed in this PR |
+| V13 | `logic-core.tsx` | Labels are projected HTML and can escape a small stage. | Overflow. | The home page does not mount the scene. | H | Fixed in this PR |
 | V14 | JSON-LD | `JSON.stringify` without escaping `<`. | The Next docs flag this for XSS. | `jsonLd()` replaces `<`. | M | Fixed in this PR |
 | V15 | Organization `sameAs` | LinkedIn, Instagram, WhatsApp, and a 404 GitHub org. | Structured data cited dead URLs. | `sameAs` only lists non-empty `content/site.ts` social URLs. Currently omitted. | H | Fixed in this PR |
 | V16 | Root layout canonical | Every route, including 404, inherited `https://www.zenxelligence.com/`. | The 404 canonicalized to home. | Canonical is set per page. 404 has no canonical. Confirmed in the rendered HTML. | H | Fixed in this PR |
@@ -209,7 +209,7 @@ Ten or more for each line. Tools that are not already published on the site were
 | I04 | CWV widget | On the web page, session-only, INP waits for input. | Shows you measure the thing you sell. It is not a fake benchmark. | Placed here, not on the AI page. | M | Fixed in this PR |
 | I05 | Handover row | “Live application, auth, and API docs.” | Thin for a production handover (envs, runbook, repo ownership). | `handover` array is empty and hidden. | H | Needs owner input |
 | I06 | Security | No mention of OWASP, headers, or dependency review on the web page. | Security buyers ask. | Not invented. Legal says you do not claim SOC 2 or ISO. | H | Needs owner input |
-| I07 | Performance | The marketing site itself now keeps the 3D scene off phones. | You cannot sell fast web apps on a slow site. | Mobile TBT 40ms on the production home page. | H | Fixed in this PR |
+| I07 | Performance | The marketing site itself now keeps the 3D scene off phones. | You cannot sell fast web apps on a slow site. | Home has no canvas. Mobile performance 95, TBT 30ms, LCP 3.0s, accessibility 100. | H | Fixed in this PR |
 | I08 | API story | FastAPI and Django are both listed. | A buyer does not know which one they will get. | The page says you choose. The scope names it. | M | Fixed in this PR |
 | I09 | Accessibility of the marketing site | Was failing contrast. | You sell interfaces. | Home accessibility 100 after the type fix. | H | Fixed in this PR |
 | I10 | Ownership | “Credentials stay in your name” is on the web FAQ. | The right default. | Kept. | M | Fixed in this PR |
@@ -307,8 +307,8 @@ Ten or more for each line. Tools that are not already published on the site were
 | S26 | Keywords meta | Layout still lists a keyword string. | Ignored by Google, harmless. | Left. | L | Deferred — removing it does not change ranking |
 | S27 | Hreflang | English only, no alternates. | Correct if you only publish English. | Not invented. | L | Fixed in this PR |
 | S28 | Image sitemap | No content images. | Nothing to list. | Not added. | L | Deferred — no real photos |
-| S29 | Core Web Vitals of this site | Old mobile home was performance 59, TBT 1.6s. | Ranking input. | Production mobile home: performance 98, TBT 40ms, LCP 2.4s, CLS 0. | H | Fixed in this PR |
-| S30 | LCP element | Was delayed by the 3D boot. | LCP. | Poster is in the HTML. 3D waits for idle and only on large screens. | H | Fixed in this PR |
+| S29 | Core Web Vitals of this site | Old mobile home was performance 59, TBT 1.6s. | Ranking input. | Production mobile home after the product-window hero: performance 95, accessibility 100, best practices 100, SEO 100. TBT 30ms, LCP 3.0s, CLS 0. | H | Fixed in this PR |
+| S30 | LCP element | Was delayed by the 3D boot. | LCP. | The hero is HTML. The headline stays opaque. Mobile backdrop-filter is off. No canvas. | H | Fixed in this PR |
 | S31 | Canonical on service pages | Confirmed `https://www.zenxelligence.com/services/vlsi`. | Right host. | Kept. | H | Fixed in this PR |
 | S32 | Trailing slash and host | Sitemap locs have no trailing slash. Home is the bare origin. | Consistent. | Kept. | L | Fixed in this PR |
 | S33 | Duplicate stack text | Same tool list on four URLs. | Thin duplication. | One table, on Services. | M | Fixed in this PR |
@@ -418,7 +418,7 @@ Ten or more for each line. Tools that are not already published on the site were
 | B25 | Email | The only reliable channel. | It has to work. | Form falls back to the mailbox in production until Resend is set. | H | Needs owner input |
 | B26 | Analytics | You cannot see which service page starts a build. | Pricing and copy decisions stay blind. | Not installed. | M | Needs owner input |
 | B27 | Home order | Hero, four facts, five services, four steps, questions, orange close. | A short path to the form. | Replaced the plate index and the repeated studies. | H | Fixed in this PR |
-| B28 | Mobile performance | A slow phone home page loses the brief. | Revenue. | 3D stays off small screens. TBT 40ms. | H | Fixed in this PR |
+| B28 | Mobile performance | A slow phone home page loses the brief. | Revenue. | Home has no 3D. Performance 95, TBT 30ms, LCP 3.0s. | H | Fixed in this PR |
 | B29 | 404 | Sends people to Services or Contact. | Recovers a bad link. | Branded page. | M | Fixed in this PR |
 | B30 | Ownership | Stated as the commercial difference versus a seat license. | The reason to hire you instead of a SaaS. | On products, FAQ, legal, llms. | H | Fixed in this PR |
 | B31 | Hosting | “In your account” is the commercial boundary. | Avoids a surprise retainer for hosting you do not sell. | Kept. | M | Fixed in this PR |

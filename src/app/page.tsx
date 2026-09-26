@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeroOrbit } from "@/components/hero-orbit";
+import { HeroShowcase } from "@/components/hero-showcase";
 import { NumberedDoorwayCard } from "@/components/numbered-doorway-card";
 import { StatStrip } from "@/components/stat-strip";
 import { FaqAccordion } from "@/components/faq-accordion";
@@ -10,7 +10,7 @@ import { ArrowIcon } from "@/components/arrow-icon";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { homeMetadata } from "@/lib/page-metadata";
 import { faqJsonLd } from "@/lib/schema";
-import { FAQ_ITEMS, HOME_COPY, HOME_DOORWAYS, HOME_OFFERS, SITE } from "@/lib/site-data";
+import { FAQ_ITEMS, HOME_COPY, HOME_DOORWAYS, HOME_OFFERS } from "@/lib/site-data";
 
 export const metadata = homeMetadata();
 
@@ -29,30 +29,30 @@ export default function Home() {
       <JsonLd data={faqJsonLd(HOME_FAQ)} />
       <EditorialPlate id="top" role="" bare screen>
         <div className="hero-grid">
-          <div className="status-pill hero-kicker">
-            <span className="dot" />
-            <span className="pill-long">Now booking new product builds</span>
-            <span className="pill-short">Booking new builds</span>
-          </div>
+          <p className="hero-eyebrow">
+            <span className="hero-rule" aria-hidden="true" />
+            One team. Brief to handover.
+            <span className="hero-booking">
+              <span className="dot" />
+              Booking new builds
+            </span>
+          </p>
           <div className="hero-title-wrap">
             <h1 className="hero-title">
-              <span className="block">Web and Android/iOS apps.</span>
+              <span className="block">Your product,</span>
               <span className="block">
-                AI agent <span className="accent">automation</span>.
+                <span className="accent">built</span> end
               </span>
               <span className="block">
-                IoT and VLSI.{" "}
-                <span className="nowrap">
-                  End to <span className="accent">end</span>
-                  <span className="accent">.</span>
-                </span>
+                to end<span className="accent">.</span>
               </span>
             </h1>
           </div>
-          <div className="hero-stage-slot">
-            <HeroOrbit />
-          </div>
-          <p className="hero-sub">{HOME_COPY.lede}</p>
+          <HeroShowcase />
+          <p className="hero-sub">
+            <span className="block">A two-engineer studio.</span>
+            <span className="block">One team from brief to handover.</span>
+          </p>
           <div className="chip-row">
             {HOME_OFFERS.map((offer) => (
               <Link key={offer.label} href={offer.href} className="chip">
@@ -72,12 +72,9 @@ export default function Home() {
               See what we ship
             </a>
           </div>
-        </div>
-        <div className="hero-meta">
-          <span>
-            {SITE.email} · we reply within 1 business day
-          </span>
-          <a href="#services">See what we ship ↓</a>
+          <p className="hero-facts">
+            Reply within 1 business day · Written scope first · You own the handover
+          </p>
         </div>
       </EditorialPlate>
 

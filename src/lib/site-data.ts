@@ -157,12 +157,8 @@ export const FAQ_JSON_LD = {
 // ---- Home page specific data ----
 
 export const HOME_COPY = {
-  headline: [
-    "Web and Android/iOS apps.",
-    "AI agent automation.",
-    "IoT and VLSI. End to end.",
-  ],
-  lede: "Zen xElligence is a two-engineer studio. One team takes each build from brief to handover. You don’t need to know the tools.",
+  headline: ["Your product,", "built end", "to end."],
+  lede: "A two-engineer studio. One team from brief to handover.",
   thesisTitle: "You shouldn’t need five vendors to finish one product.",
   thesisBody:
     "Web applications, Android/iOS apps, AI agent automation, IoT electronics, and VLSI — each one runs spec to handover with the same people. We don’t stop at a slide deck, a prototype, or a netlist.",
