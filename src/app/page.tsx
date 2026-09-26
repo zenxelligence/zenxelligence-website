@@ -31,8 +31,11 @@ export default function Home() {
         <div className="hero-grid">
           <p className="hero-eyebrow">
             <span className="hero-rule" aria-hidden="true" />
-            One team. Brief to handover.
+            <span>One team. Brief to handover.</span>
             <span className="hero-booking">
+              <span className="hero-book-sep" aria-hidden="true">
+                ·
+              </span>
               <span className="dot" />
               Booking new builds
             </span>
@@ -75,7 +78,7 @@ export default function Home() {
         </div>
       </EditorialPlate>
 
-      <section className="plate" aria-label="Studio facts">
+      <section className="plate plate-stats" aria-label="Studio facts">
         <StatStrip stats={HOME_STATS} />
       </section>
 

@@ -194,36 +194,39 @@ export function HeroShowcase() {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
     >
+      <div className="hero-glow" aria-hidden="true" />
       <div className="hero-sphere" aria-hidden="true" />
       <div className="hero-ring" aria-hidden="true" />
       <Spark className="hero-spark hero-spark-a" />
       <Spark className="hero-spark hero-spark-b" />
-      <div className="hero-window" aria-hidden="true">
-        {MOCKS.map((Mock, i) => (
-          <div key={FRAMES[i].kicker} className={i === index ? "hero-frame is-on" : "hero-frame"}>
-            <Mock />
-          </div>
-        ))}
+      <div className="hero-stage">
+        <div className="hero-window" aria-hidden="true">
+          {MOCKS.map((Mock, i) => (
+            <div key={FRAMES[i].kicker} className={i === index ? "hero-frame is-on" : "hero-frame"}>
+              <Mock />
+            </div>
+          ))}
+        </div>
+        <figcaption className="hero-figcap">
+          <span>{frame.kicker}</span>
+          <span className="hero-figrule" aria-hidden="true" />
+          {reduced ? (
+            <span className="hero-pause">Still</span>
+          ) : (
+            <button
+              type="button"
+              className="hero-pause"
+              aria-pressed={held}
+              onClick={() => setHeld((value) => !value)}
+            >
+              {held ? "Play" : "Pause"}
+            </button>
+          )}
+        </figcaption>
+        <p className="hero-side" aria-hidden="true">
+          Brief · Build · Handover
+        </p>
       </div>
-      <p className="hero-side" aria-hidden="true">
-        Brief · Build · Handover
-      </p>
-      <figcaption className="hero-figcap">
-        <span>{frame.kicker}</span>
-        <span className="hero-figrule" aria-hidden="true" />
-        {reduced ? (
-          <span className="hero-pause">Still</span>
-        ) : (
-          <button
-            type="button"
-            className="hero-pause"
-            aria-pressed={held}
-            onClick={() => setHeld((value) => !value)}
-          >
-            {held ? "Play" : "Pause"}
-          </button>
-        )}
-      </figcaption>
     </figure>
   );
 }
