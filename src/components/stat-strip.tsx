@@ -12,7 +12,9 @@ export function StatStrip({
       {stats.map((s) => (
         <div key={s.label} className="stat">
           <span className="stat-icon" aria-hidden="true" />
-          <div className="stat-value">{s.value}</div>
+          <div className="stat-value" aria-label={s.value}>
+            {s.value}
+          </div>
           <div className="stat-label">{s.label}</div>
         </div>
       ))}
