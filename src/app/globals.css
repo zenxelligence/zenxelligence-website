@@ -469,6 +469,16 @@
     line-height: 1.5;
   }
 
+  .hero-facts a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .hero-facts a:hover {
+    color: var(--text);
+    text-decoration: underline;
+  }
+
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
@@ -592,7 +602,7 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
   }
 
   .hero-frame.is-on {
@@ -901,18 +911,17 @@
     overflow: clip;
   }
 
-  .plate-stats {
-    border: 0;
+  .hero-stats {
+    margin-top: 22px;
+    border-top: 1px solid var(--border);
     background: transparent;
-    padding-top: 12px;
-    padding-bottom: 8px;
+    padding-top: 16px;
   }
 
-  .plate-stats .stat-strip {
-    border-bottom: 0;
+  .hero-stats .stat-strip {
+    border: 0;
     background: transparent;
-    padding-top: 4px;
-    padding-bottom: 28px;
+    padding: 0;
   }
 
   .section-head {
@@ -2252,8 +2261,9 @@
     padding: 8px 0 4px;
   }
 
-  .plate-stats {
-    padding-top: 8px;
+  .hero-stats {
+    margin-top: 18px;
+    padding-top: 14px;
   }
 
   .plate-hero .hero-meta {

@@ -181,7 +181,7 @@ export function HeroShowcase() {
     if (reduced || hovering || held) return;
     const timer = window.setInterval(() => {
       setIndex((current) => (current + 1) % FRAMES.length);
-    }, 4000);
+    }, 2500);
     return () => window.clearInterval(timer);
   }, [reduced, hovering, held]);
 

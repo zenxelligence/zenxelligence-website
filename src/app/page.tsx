@@ -10,7 +10,7 @@ import { ArrowIcon } from "@/components/arrow-icon";
 import { CASE_STUDIES } from "@/content/case-studies";
 import { homeMetadata } from "@/lib/page-metadata";
 import { faqJsonLd } from "@/lib/schema";
-import { FAQ_ITEMS, HOME_COPY, HOME_DOORWAYS, HOME_OFFERS } from "@/lib/site-data";
+import { FAQ_ITEMS, HOME_COPY, HOME_DOORWAYS, HOME_OFFERS, SITE } from "@/lib/site-data";
 
 export const metadata = homeMetadata();
 
@@ -73,14 +73,15 @@ export default function Home() {
             </a>
           </div>
           <p className="hero-facts">
-            Reply within 1 business day · Written scope first · You own the handover
+            <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            <span aria-hidden="true"> · </span>
+            Reply within 1 business day · Written scope first
           </p>
         </div>
+        <div className="hero-stats">
+          <StatStrip stats={HOME_STATS} />
+        </div>
       </EditorialPlate>
-
-      <section className="plate plate-stats" aria-label="Studio facts">
-        <StatStrip stats={HOME_STATS} />
-      </section>
 
       <EditorialPlate id="services" role="Services" title={HOME_COPY.thesisTitle} quiet>
         <p className="prose">{HOME_COPY.thesisBody}</p>
