@@ -39,8 +39,10 @@ export function HeroOrbit() {
   return (
     <div className="hero-stage">
       <div className="hero-orb" aria-hidden="true" />
+      {/* Poster is a static SVG stand-in for the canvas, swapped out after idle. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/hero-orbit.webp"
+        src="/hero-orbit.svg"
         alt=""
         className="hero-poster"
         width={1120}

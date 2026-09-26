@@ -8,7 +8,9 @@ import { SkipLink } from "@/components/skip-link";
 import { HashJump } from "@/components/hash-jump";
 import { SectionReveal } from "@/components/section-reveal";
 import { CtaPanel } from "@/components/cta-panel";
-import { ORGANIZATION_JSON_LD, SITE, WEBSITE_JSON_LD } from "@/lib/site-data";
+import { JsonLd } from "@/components/json-ld";
+import { SITE } from "@/content/site";
+import { organizationJsonLd, websiteJsonLd } from "@/lib/schema";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,9 +48,6 @@ export const metadata: Metadata = {
     "VLSI",
     "ZX A3 Innovation",
   ],
-  alternates: {
-    canonical: SITE.url,
-  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -77,14 +76,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${interTight.variable} h-full`}>
       <body className="flex min-h-full flex-col bg-bg text-fg antialiased">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
-        />
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
           <SectionReveal />
           <HashJump />

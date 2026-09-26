@@ -1,0 +1,4 @@
+Contact: mailto:hello@zenxelligence.com
+Preferred-Languages: en
+Canonical: https://www.zenxelligence.com/.well-known/security.txt
+Policy: https://www.zenxelligence.com/legal#security

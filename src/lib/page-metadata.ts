@@ -20,9 +20,9 @@ export const PAGE_SEO: Record<string, { title: string; description: string }> = 
       "Zen xElligence does not sell seats. You own the live app, agent workflows, firmware, and VLSI pack we ship. No SaaS subscription.",
   },
   industries: {
-    title: "ZX A³ Innovation™ — Autonomous, Adaptive, Architected",
+    title: "Our approach",
     description:
-      "Industry frame for Zen xElligence: Autonomous Intelligence (AI/ML, data, cloud), Adaptive Silicon (VLSI), Architected Determinism and Architect Training.",
+      "ZX A³ Innovation™ groups the work: Autonomous Intelligence, Adaptive Silicon, and Architected electronics and training. Not a list of invented industries.",
   },
   "case-studies": {
     title: "Case studies — named files only when the client says yes",

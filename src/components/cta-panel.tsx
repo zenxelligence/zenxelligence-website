@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ArrowIcon } from "@/components/arrow-icon";
-import { SITE } from "@/lib/site-data";
+import { SITE } from "@/content/site";
 
 export function CtaPanel() {
   const path = usePathname();

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { NAV_ITEMS } from "@/lib/site-data";
+import { NAV_ITEMS } from "@/content/site";
 import { CommandPalette } from "@/components/command-palette";
 import { ArrowIcon } from "@/components/arrow-icon";
 import { cn } from "@/lib/utils";
@@ -53,7 +53,7 @@ export function SiteHeader() {
             {open ? "Close" : "Menu"}
           </button>
         </div>
-        <nav id="mobile-nav" className="mobile-menu" hidden={!open} aria-label="Mobile">
+        <nav id="mobile-nav" className="mobile-menu" hidden={!open} inert={!open} aria-label="Mobile">
           <Link href="/contact" className="button button-primary">
             Start a build
             <ArrowIcon />

@@ -1,4 +1,4 @@
-import { SOCIAL } from "@/lib/site-data";
+import { SOCIAL } from "@/content/site";
 import { cn } from "@/lib/utils";
 
 type IconProps = { className?: string };
@@ -45,6 +45,7 @@ const ICONS = {
 };
 
 export function SocialLinks({ className }: { className?: string }) {
+  if (SOCIAL.length === 0) return null;
   return (
     <nav aria-label="Social" className={cn("flex items-center gap-3", className)}>
       {SOCIAL.map((item) => {

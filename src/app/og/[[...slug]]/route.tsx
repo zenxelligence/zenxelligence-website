@@ -1,10 +1,16 @@
 import { ImageResponse } from "next/og";
+import { getService } from "@/content/services";
 import { BLOG_POSTS, CASE_FILES, PAGES, ROUTE_PAGE_MAP, SITE } from "@/lib/site-data";
 
 function resolveTitle(segments: string[]): { title: string; subtitle: string } {
   const path = segments.join("/");
 
-  if (path === "") return { title: SITE.name, subtitle: SITE.tagline };
+  if (path === "") return { title: "Web to VLSI.", subtitle: "End to end. Two engineers." };
+
+  if (segments[0] === "services" && segments[1]) {
+    const service = getService(segments[1]);
+    if (service) return { title: service.title, subtitle: service.lead };
+  }
 
   if (segments[0] === "case-studies" && segments[1]) {
     const c = CASE_FILES.find((c) => c.slug === segments[1]);
@@ -51,8 +57,9 @@ export async function GET(
           <span style={{ fontSize: 20, letterSpacing: 4, fontWeight: 600 }}>ZEN xELLIGENCE</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: 980 }}>
-          <div style={{ fontSize: 60, fontWeight: 600, lineHeight: 1.05, letterSpacing: -2 }}>
-            {title}
+          <div style={{ fontSize: 64, fontWeight: 600, lineHeight: 1.05, letterSpacing: -2, display: "flex" }}>
+            {/[.!?]$/.test(title) ? title.slice(0, -1) : title}
+            <span style={{ color: "#ff7a1a" }}>{/[.!?]$/.test(title) ? title.slice(-1) : "."}</span>
           </div>
           <div style={{ fontSize: 26, color: "#a8a8a8", lineHeight: 1.4 }}>{subtitle}</div>
         </div>

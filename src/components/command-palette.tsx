@@ -3,7 +3,7 @@
 import { Command } from "cmdk";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SEARCH_INDEX } from "@/lib/site-data";
+import { SEARCH_INDEX } from "@/content/site";
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ export function CommandPalette() {
               <span className="text-[13px] text-accent">›</span>
               <Command.Input
                 autoFocus
-                placeholder="jump to a page, service, or case file…"
+                placeholder="Jump to a page or service"
                 className="flex-1 bg-transparent py-4 text-[15px] text-fg outline-none placeholder:text-fg-muted"
               />
               <span className="text-[12px] text-fg-muted">ESC</span>

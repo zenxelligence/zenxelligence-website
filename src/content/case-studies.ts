@@ -13,4 +13,5 @@ export type CaseStudy = {
   image?: string;
 };
 
+/** TODO(owner): add studies only when the client has agreed. Empty list hides the rail and shows the on-request line. */
 export const CASE_STUDIES: CaseStudy[] = [];

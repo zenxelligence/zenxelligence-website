@@ -32,4 +32,5 @@ export const ENGAGEMENTS: Engagement[] = [
   },
 ];
 
+/** TODO(owner): add real budget ranges. Do not invent amounts. "Not sure yet" stays until then. */
 export const BUDGET_OPTIONS = ["Not sure yet"];

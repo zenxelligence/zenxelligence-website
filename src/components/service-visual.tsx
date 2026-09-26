@@ -1,5 +1,4 @@
-const KINDS = ["web", "agents", "mobile", "iot", "vlsi"] as const;
-export type ServiceVisualKind = (typeof KINDS)[number];
+export type ServiceVisualKind = "web" | "agents" | "mobile" | "iot" | "vlsi";
 
 function parts(stack: string) {
   return stack.split(" · ").map((part) => part.trim());

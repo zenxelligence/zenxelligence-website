@@ -1,10 +1,15 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { SocialLinks } from "@/components/social-links";
-import { FOOTER_COLUMNS, SITE } from "@/lib/site-data";
+import { POSTS } from "@/content/posts";
+import { FOOTER_COLUMNS, SITE } from "@/content/site";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const columns = FOOTER_COLUMNS.map((column) => ({
+    ...column,
+    items: column.items.filter((item) => item.href !== "/resources" || POSTS.length >= 2),
+  })).filter((column) => column.items.length > 0);
 
   return (
     <footer className="site-footer">
@@ -20,7 +25,7 @@ export function SiteFooter() {
             <p className="footer-tagline">{SITE.tagline}</p>
           </div>
           <div className="footer-columns">
-            {FOOTER_COLUMNS.map((col) => (
+            {columns.map((col) => (
               <div key={col.heading}>
                 <p className="footer-heading">{col.heading}</p>
                 <ul className="footer-links">

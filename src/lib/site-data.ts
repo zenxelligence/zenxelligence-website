@@ -1,3 +1,5 @@
+import { organizationJsonLd, websiteJsonLd } from "@/lib/schema";
+
 export type TileItem = {
   index: string;
   title: string;
@@ -32,26 +34,8 @@ export type PageContent = {
   blocks: Block[];
 };
 
-export const SITE = {
-  name: "Zen xElligence",
-  tagline: "End to end. Web to VLSI.",
-  framework: "ZX A³ Innovation™",
-  email: "hello@zenxelligence.com",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.zenxelligence.com",
-  handle: "zenxelligence",
-  social: {
-    linkedin: "https://www.linkedin.com/company/zenxelligence",
-    instagram: "https://www.instagram.com/zenxelligence",
-    // Replace with https://wa.me/91XXXXXXXXXX when the Business number is set.
-    whatsapp: "https://wa.me/zenxelligence",
-  },
-};
-
-export const SOCIAL = [
-  { id: "linkedin" as const, label: "LinkedIn", href: SITE.social.linkedin },
-  { id: "instagram" as const, label: "Instagram", href: SITE.social.instagram },
-  { id: "whatsapp" as const, label: "WhatsApp", href: SITE.social.whatsapp },
-];
+export { SITE, SOCIAL, NAV_ITEMS, FOOTER_COLUMNS, SEARCH_INDEX } from "@/content/site";
+export type { SearchIndexItem } from "@/content/site";
 
 export const A3_PILLARS = [
   {
@@ -77,66 +61,7 @@ export const A3_PILLARS = [
   },
 ] as const;
 
-export const NAV_ITEMS: { label: string; href: string }[] = [
-  { label: "Services", href: "/services" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
-
 export const AUDIENCE_TAGS = ["For founders.", "For product teams.", "For hardware teams."];
-
-export const FOOTER_COLUMNS: {
-  heading: string;
-  items: { label: string; href: string; mono?: boolean }[];
-}[] = [
-  {
-    heading: "COMPANY",
-    items: [
-      { label: "About", href: "/about" },
-      { label: "Contact", href: "/contact" },
-      { label: "Pricing", href: "/pricing" },
-      { label: "Careers", href: "/careers" },
-      { label: "What you get", href: "/products" },
-      { label: "Our approach", href: "/industries" },
-    ],
-  },
-  {
-    heading: "SERVICES",
-    items: [
-      { label: "Web app development", href: "/services/web-apps" },
-      { label: "Mobile app development", href: "/services/mobile-apps" },
-      { label: "AI agent development", href: "/services/ai-agents" },
-      { label: "IoT development", href: "/services/iot" },
-      { label: "VLSI development", href: "/services/vlsi" },
-    ],
-  },
-  {
-    heading: "PRODUCTS",
-    items: [
-      { label: "What we ship", href: "/products" },
-      { label: "Start a build", href: "/contact" },
-    ],
-  },
-  {
-    heading: "RESOURCES",
-    items: [
-      { label: "Case Studies", href: "/case-studies" },
-      { label: "FAQ", href: "/faq" },
-    ],
-  },
-  {
-    heading: "LEGAL",
-    items: [
-      { label: "Privacy", href: "/legal#privacy" },
-      { label: "Terms", href: "/legal#terms" },
-      { label: "Cookies", href: "/legal#cookies" },
-      { label: "Accessibility", href: "/legal#accessibility" },
-      { label: "Security", href: "/legal#security" },
-      { label: "Editorial", href: "/legal#editorial" },
-    ],
-  },
-];
 
 export type CaseFile = {
   slug: string;
@@ -157,27 +82,6 @@ export type BlogPost = {
 
 export const BLOG_POSTS: BlogPost[] = [];
 
-export type SearchIndexItem = { kind: string; label: string; path: string };
-
-export const SEARCH_INDEX: SearchIndexItem[] = [
-  { kind: "page", label: "Home", path: "/" },
-  { kind: "page", label: "About", path: "/about" },
-  { kind: "page", label: "Services", path: "/services" },
-  { kind: "service", label: "Web apps & APIs", path: "/services" },
-  { kind: "service", label: "Android/iOS Apps", path: "/services" },
-  { kind: "service", label: "AI Agent Automation", path: "/products" },
-  { kind: "service", label: "IoT & electronics", path: "/services" },
-  { kind: "service", label: "End-to-end VLSI", path: "/services" },
-  { kind: "page", label: "Products", path: "/products" },
-  { kind: "page", label: "Industries — ZX A³ Innovation™", path: "/industries" },
-  { kind: "page", label: "Case Studies", path: "/case-studies" },
-  { kind: "page", label: "Pricing", path: "/pricing" },
-  { kind: "page", label: "Resources / Field Notes", path: "/resources" },
-  { kind: "page", label: "FAQ", path: "/faq" },
-  { kind: "page", label: "Legal", path: "/legal" },
-  { kind: "page", label: "Contact", path: "/contact" },
-  { kind: "page", label: "Careers", path: "/careers" },
-];
 
 /** Live pages still rendered (OG + metadata). Redirected paths are not listed. */
 export const ROUTE_PAGE_MAP: Record<string, string> = {
@@ -194,43 +98,9 @@ export const ROUTE_PAGE_MAP: Record<string, string> = {
   legal: "legal",
 };
 
-export const ORGANIZATION_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": `${SITE.url}/#organization`,
-  name: "Zen xElligence",
-  url: SITE.url,
-  email: SITE.email,
-  description:
-    "Zen xElligence is a two-engineer product studio that builds end-to-end web applications and APIs, AI agent automation, Android/iOS apps, IoT electronics, and VLSI — brief to handover.",
-  numberOfEmployees: { "@type": "QuantitativeValue", value: 2 },
-  sameAs: [SITE.social.linkedin, SITE.social.instagram, SITE.social.whatsapp],
-  contactPoint: [
-    {
-      "@type": "ContactPoint",
-      contactType: "sales",
-      email: SITE.email,
-      availableLanguage: ["English"],
-    },
-  ],
-  makesOffer: [
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Web Application and API Development" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Agent Automation" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "Android and iOS App Development" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "IoT and Electronics Projects" } },
-    { "@type": "Offer", itemOffered: { "@type": "Service", name: "End-to-end VLSI" } },
-  ],
-};
+export const ORGANIZATION_JSON_LD = organizationJsonLd();
 
-export const WEBSITE_JSON_LD = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "@id": `${SITE.url}/#website`,
-  name: "Zen xElligence",
-  url: SITE.url,
-  description: ORGANIZATION_JSON_LD.description,
-  publisher: { "@id": `${SITE.url}/#organization` },
-};
+export const WEBSITE_JSON_LD = websiteJsonLd();
 
 /** @deprecated use ORGANIZATION_JSON_LD — kept for machine-lens / markdown mirrors */
 export const JSON_LD = ORGANIZATION_JSON_LD;
@@ -263,6 +133,14 @@ export const FAQ_ITEMS = [
   {
     q: "Where are the case studies?",
     a: "A file goes up when the client says yes. We will not publish a made-up logo wall.",
+  },
+  {
+    q: "Who owns the work?",
+    a: "What we make for you is yours at handover, except tools we did not write. Source, docs, and a runbook are part of that handover.",
+  },
+  {
+    q: "What happens after handover?",
+    a: "You own the system. If you want us to stay for changes, that is a separate retainer, quoted after the build.",
   },
 ] as const;
 
@@ -467,23 +345,8 @@ export const PAGES: Record<string, PageContent> = {
       },
       { type: "label", label: "THE TWO OF US" },
       {
-        type: "tiles",
-        items: [
-          t(
-            "01",
-            "Us",
-            "On the call, the build, and the handover. There is no other bench.",
-            "same standing",
-            "/contact",
-          ),
-          t(
-            "02",
-            "Us",
-            "Same age. Same seat. Same brief. Same repo.",
-            "same standing",
-            "/contact",
-          ),
-        ],
+        type: "prose",
+        text: "Names, photos, and bios go on this page when we add them. Until then the fact that is true: two engineers, same standing, on the brief and the build. Write hello@zenxelligence.com.",
       },
       { type: "label", label: "HOW THAT WORKS" },
       {
@@ -507,16 +370,9 @@ export const PAGES: Record<string, PageContent> = {
           "Architect Training",
         ],
       },
-      { type: "label", label: "WE WORK IN" },
-      {
-        type: "table",
-        head: ["LANE", "STACK"],
-        rows: STUDIO_STACK_ROWS,
-        monoCols: [1],
-      },
       {
         type: "note",
-        text: "You do not pick the tools. Android/iOS, IoT, and VLSI stay on the surfaces above — this is the software, data, and cloud stack we use when the build needs it.",
+        text: "The working stack is listed once, on the services page.",
       },
       { type: "label", label: "WHAT WE ARE NOT" },
       {
@@ -524,13 +380,9 @@ export const PAGES: Record<string, PageContent> = {
         head: ["NOT", "INSTEAD"],
         rows: [
           ["An agency with a senior on the call and a junior on the build", "Two engineers, same standing, brief to handover"],
-          ["A SaaS company with Pulse seats", "You own the system we leave you"],
+          ["A company that rents you a seat in our software", "You own the system we leave you"],
           ["A partner logo wall", "Tools we use when they fit — no invented certifications"],
         ],
-      },
-      {
-        type: "note",
-        text: "Names and photos go here when we put them on the page. Until then: two engineers, hello@zenxelligence.com.",
       },
       {
         type: "tiles",
@@ -654,8 +506,7 @@ export const PAGES: Record<string, PageContent> = {
 
   consulting: {
     kicker: "SERVICES / CONSULTING",
-    title:
-      "Before you buy a platform or rebuild one, get a second opinion from people who’ve shipped 300+ of them.",
+    title: "This path now lives under Services.",
     blocks: [
       { type: "label", label: "WHAT’S INCLUDED" },
       {
@@ -677,7 +528,7 @@ export const PAGES: Record<string, PageContent> = {
           t(
             "REF",
             "Case File 014 — Manufacturing ERP Vendor Selection",
-            "Reconciliation time 22 hrs/week → 1.5 hrs/week.",
+            "Named work is published only with the client’s permission.",
             "read case file →",
             "/case-studies/014",
           ),
@@ -694,10 +545,7 @@ export const PAGES: Record<string, PageContent> = {
       {
         type: "bullets",
         items: [
-          "ERP implementation (NetSuite, Dynamics 365, SAP Business One)",
-          "CRM implementation (Salesforce, HubSpot)",
-          "Custom platform builds (internal tools, customer portals, data pipelines)",
-          "Data migration and legacy system decommissioning",
+          "Custom platform builds scoped in writing",
         ],
       },
       { type: "label", label: "DELIVERY MODEL" },
@@ -707,11 +555,7 @@ export const PAGES: Record<string, PageContent> = {
       },
       {
         type: "stats",
-        items: [
-          { value: "312", label: "production deployments since 2011" },
-          { value: "94%", label: "delivered on original timeline (±5 business days)" },
-          { value: "8", label: "average team size per mid-size implementation" },
-        ],
+        items: [],
       },
     ],
   },
@@ -768,7 +612,7 @@ export const PAGES: Record<string, PageContent> = {
 
   products: {
     kicker: "PRODUCTS",
-    title: "You own the system. We don’t rent you a seat.",
+    title: "What you own at handover.",
     subhead:
       "This is a studio, not a SaaS catalog. Product here means what ships: the app, the workflow, the board, the chip.",
     blocks: [
@@ -785,35 +629,35 @@ export const PAGES: Record<string, PageContent> = {
             "Live web application",
             "Auth, data, and a documented API running in an environment you control.",
             "yours at handover",
-            "/services",
+            "/services/web-apps",
           ),
           t(
             "02",
             "Mobile apps",
             "Flutter, React Native, or native Android/iOS against that same API. One product, two clients.",
             "yours at handover",
-            "/services",
+            "/services/mobile-apps",
           ),
           t(
             "03",
             "Agent workflows",
             "LangChain, LangGraph, CrewAI, and AutoGen systems with tools, memory, and run traces you can replay.",
             "yours at handover",
-            "/contact",
+            "/services/ai-agents",
           ),
           t(
             "04",
             "Connected hardware",
             "Firmware and electronics that talk to the same product the website uses.",
             "yours at handover",
-            "/services",
+            "/services/iot",
           ),
           t(
             "05",
             "Signed-off VLSI",
             "Spec, RTL, verification, implementation, and a handover pack — not a netlist in an email.",
             "yours at handover",
-            "/services",
+            "/services/vlsi",
           ),
         ],
       },
@@ -844,7 +688,7 @@ we_keep: nothing you paid to have built`,
       },
       {
         type: "note",
-        text: "No Pulse. No seat license. If you need hosting, we set it up as part of the build — it still runs in your account.",
+        text: "There is no seat to subscribe to. If you need hosting, we set it up as part of the build — it still runs in your account.",
       },
       { type: "label", label: "FAQ" },
       {
@@ -868,60 +712,19 @@ we_keep: nothing you paid to have built`,
   },
 
   pulse: {
-    kicker: "PRODUCTS / PULSE",
-    title: "Pulse",
-    subhead: "Every metric on this landing page is Pulse, running on our own site.",
+    kicker: "PRODUCTS",
+    title: "This page has moved.",
+    subhead: "Zen xElligence does not sell a hosted monitoring product.",
     blocks: [
-      { type: "label", label: "FEATURES" },
-      {
-        type: "table",
-        head: ["FEATURE", "DESCRIPTION"],
-        rows: [
-          ["Uptime monitoring", "HTTP, TCP, and custom health-check endpoints, 30-second intervals"],
-          ["Core Web Vitals capture", "Real-user TTFB, LCP, INP, CLS — not synthetic, not sampled"],
-          ["Workflow telemetry", "Track internal process completion times (e.g., ticket resolution, deploy pipelines)"],
-          ["Status pages", "Public or private, auto-generated from live data, no manual updates"],
-          ["Alerting", "Slack, PagerDuty, email, webhook"],
-          ["API-first", "Full REST API; every dashboard value is also a queryable endpoint"],
-        ],
-      },
-      { type: "label", label: "SCREENSHOTS" },
-      {
-        type: "note",
-        text: "Placeholder captions for design — drop real product captures here. I can generate diagrams and wireframes, but not photographic screenshots.",
-      },
-      {
-        type: "gallery",
-        items: [
-          "Dashboard — org-wide uptime heatmap, 90-day view",
-          "Incident timeline — P1 alert, detection to resolution",
-          "Public status page — client-facing, white-labelable",
-        ],
-      },
-      { type: "label", label: "DEMO" },
-      {
-        type: "prose",
-        text: "Interactive read-only sandbox at pulse.zenxelligence.com/demo — pre-loaded with 90 days of synthetic-but-realistic traffic data, no signup required.",
-      },
-      {
-        type: "stats",
-        items: [
-          { value: "340", label: "active Pulse workspaces" },
-          { value: "2.1B", label: "data points ingested per month" },
-          { value: "41ms", label: "median API response time (Pulse’s own dashboard, at p50)" },
-        ],
-      },
-      {
-        type: "tiles",
-        items: [t("→", "Pulse plans", "Starter, Team, Business, Enterprise.", "see pricing →", "/pricing")],
-      },
+      { type: "prose", text: "See what you own at handover, then start a build." },
+      { type: "tiles", items: [t("→", "What you get", "The handover, not a subscription.", "products →", "/products")] },
     ],
   },
 
   industries: {
-    kicker: "INDUSTRIES · ZX A³ INNOVATION™",
-    title: "ZX A³ Innovation™",
-    subhead: "Autonomous. Adaptive. Architected. Three practices. One studio.",
+    kicker: "APPROACH",
+    title: "Our approach.",
+    subhead: "ZX A³ Innovation™ is the name we use for how the work is grouped: Autonomous, Adaptive, and Architected. It is not a list of industries.",
     blocks: [
       {
         type: "quote",
@@ -965,16 +768,9 @@ we_keep: nothing you paid to have built`,
           ["Architected", "Architect Training", "Education for the team that has to run and extend the build"],
         ],
       },
-      { type: "label", label: "WE WORK IN" },
-      {
-        type: "table",
-        head: ["LANE", "STACK"],
-        rows: STUDIO_STACK_ROWS,
-        monoCols: [1],
-      },
       {
         type: "prose",
-        text: "Web apps, APIs, and Android/iOS still ship under Services. They sit with Autonomous when the product is cloud-backed intelligence — they are not a fourth A.",
+        text: "Web apps, APIs, and Android/iOS still ship under Services. They sit with Autonomous when the product is cloud-backed intelligence — they are not a fourth A. The tool list lives on the services page.",
       },
       {
         type: "note",
@@ -1007,52 +803,12 @@ we_keep: nothing you paid to have built`,
         rows: [
           ["Symptom", "The state before we started, in their words", "A problem we invented to look busy"],
           ["Finding", "What was actually wrong, after we looked", "A vendor we “selected” for a brand we don’t run"],
-          ["Fix", "What we built, on which surface", "A Pulse dashboard or an ERP we never shipped"],
+          ["Fix", "What we built, on which surface", "Work we did not do"],
           ["Result", "What changed, only if we can show it", "A percentage with no source"],
-        ],
-      },
-      { type: "label", label: "OPEN SLOTS — ZX A³ INNOVATION™" },
-      {
-        type: "tiles",
-        items: [
-          t(
-            "A¹",
-            "Autonomous",
-            "AI/ML, data, cloud, agent workflows. First named file TBD.",
-            "slot open",
-            "/industries",
-          ),
-          t(
-            "A²",
-            "Adaptive",
-            "End-to-end VLSI. First named file TBD.",
-            "slot open",
-            "/industries",
-          ),
-          t(
-            "A³",
-            "Architected",
-            "Electronics, embedded, and training. First named file TBD.",
-            "slot open",
-            "/industries",
-          ),
         ],
       },
       { type: "label", label: "FILES" },
       { type: "cases" },
-      {
-        type: "code",
-        label: "FILE TEMPLATE",
-        text: `CASE FILE  —  unpublished
-pillar:    Autonomous | Adaptive | Architected
-surface:   web | mobile | agents | iot | vlsi
-client:    named only with written permission
-
-SYMPTOM    what was broken
-FINDING    what we found
-FIX        what we built
-RESULT     what changed — sourced, or omitted`,
-      },
       { type: "label", label: "FAQ" },
       {
         type: "faq",
@@ -1083,7 +839,7 @@ RESULT     what changed — sourced, or omitted`,
 
   pricing: {
     kicker: "PRICING",
-    title: "A number after a written scope. Not a price grid for a product we don’t sell.",
+    title: "A number after a written scope.",
     subhead:
       "Every build is quoted. You get a plan, a first date, and a cost before a line ships. We reply within one business day.",
     blocks: [
@@ -1101,18 +857,6 @@ RESULT     what changed — sourced, or omitted`,
           "Fixed-bid when the edge is clear. Time-and-materials when it isn’t. You pick after you see both.",
         ],
       },
-      { type: "label", label: "WHAT WE QUOTE" },
-      {
-        type: "table",
-        head: ["PILLAR", "SURFACE", "YOU PAY FOR"],
-        rows: [
-          ["Autonomous", "AI/ML, data, cloud, agent workflows", "A running system and traces you own"],
-          ["Autonomous", "Web apps & APIs, Android/iOS", "A live product on a backend you control"],
-          ["Adaptive", "End-to-end VLSI", "Spec through sign-off, then the handover pack"],
-          ["Architected", "Electronics / embedded", "Firmware and boards wired into the product"],
-          ["Architected", "Architect Training", "Time with the team that has to keep it"],
-        ],
-      },
       { type: "label", label: "WHAT MOVES THE NUMBER" },
       {
         type: "table",
@@ -1123,19 +867,9 @@ RESULT     what changed — sourced, or omitted`,
           ["Ownership", "We hand over and step off", "Training, a second environment, a longer stay"],
         ],
       },
-      { type: "label", label: "WHAT THIS PAGE WILL NOT LIST" },
-      {
-        type: "pills",
-        items: [
-          "No monthly seats",
-          "No Pulse plans",
-          "No SLA grid for a NOC we don’t run",
-          "No starter / team / business SKU",
-        ],
-      },
       {
         type: "note",
-        text: "Hosting, if you want it set up, is part of the build. It still runs in your account. That is not a subscription to us.",
+        text: "Starting prices stay off this page until we publish numbers we will stand behind. Hosting, if you want it set up, is part of the build and still runs in your account.",
       },
       { type: "label", label: "FAQ" },
       {
@@ -1166,60 +900,18 @@ RESULT     what changed — sourced, or omitted`,
   },
 
   clients: {
-    kicker: "TESTIMONIALS / CLIENTS",
-    title: "What changed, in their words.",
+    kicker: "CASE STUDIES",
+    title: "Selected work is shared when a client agrees.",
     blocks: [
-      {
-        type: "quotes",
-        items: [
-          {
-            text: "“They scoped it in a week and the same engineer was still on the call eight months later when we hit an edge case.”",
-            who: "VP Operations, mid-market logistics client",
-          },
-          {
-            text: "“Pulse replaced a spreadsheet three people were updating by hand every morning.”",
-            who: "IT Director, distribution client",
-          },
-          {
-            text: "“We’ve used four different implementation partners over ten years. This is the first one where the SOW matched what actually got delivered.”",
-            who: "CFO, financial services client",
-          },
-        ],
-      },
-      {
-        type: "note",
-        text: "Attribution kept to title/industry per client preference; named quotes available on request for prospects who ask.",
-      },
-      { type: "label", label: "CLIENT LOGO WALL" },
-      {
-        type: "logos",
-        items: [
-          "Ridgeline Manufacturing",
-          "Corbett Logistics",
-          "Harlow Health Administrative Group",
-          "Fen & Vale Financial Partners",
-          "Meadowbrook Distribution",
-          "Additional logos — clients without public case studies",
-        ],
-      },
+      { type: "prose", text: "We do not publish a logo wall or quotes we cannot source." },
     ],
   },
 
   partners: {
-    kicker: "PARTNERS / TECHNOLOGY ALLIANCES",
-    title: "We build on platforms we’re certified on.",
+    kicker: "ABOUT",
+    title: "No partner badges on this site.",
     blocks: [
-      {
-        type: "table",
-        head: ["PARTNER", "RELATIONSHIP"],
-        rows: [
-          ["AWS", "Advanced Tier Partner"],
-          ["Microsoft", "Solutions Partner — Modern Work"],
-          ["Salesforce", "Consulting Partner"],
-          ["NetSuite", "Solution Provider"],
-          ["Okta", "Technology Partner (Pulse SSO integration)"],
-        ],
-      },
+      { type: "prose", text: "We do not list certifications or alliances we have not published with proof." },
     ],
   },
 
@@ -1236,12 +928,12 @@ RESULT     what changed — sourced, or omitted`,
       { type: "label", label: "RECENT" },
       {
         type: "note",
-        text: "No posts yet. When we publish, entries appear here and in the RSS feed. We will not keep ERP or Pulse articles that do not describe this studio.",
+        text: "No posts yet. When we publish, entries appear here and in the RSS feed.",
       },
       {
         type: "code",
         label: "FEEDS",
-        text: "RSS   zenxelligence.com/resources/feed.xml\nllms  zenxelligence.com/llms.txt",
+        text: "RSS   https://www.zenxelligence.com/resources/feed.xml\nllms  https://www.zenxelligence.com/llms.txt",
       },
       {
         type: "tiles",
@@ -1256,8 +948,9 @@ RESULT     what changed — sourced, or omitted`,
   faq: {
     kicker: "FAQ",
     title: "Questions before the first note.",
-    subhead: "Two engineers. ZX A³ Innovation™. Five surfaces. No SaaS seats.",
+    subhead: "Two engineers. Five surfaces. You own what ships.",
     blocks: [
+      { type: "label", label: "COMMON QUESTIONS" },
       {
         type: "faq",
         items: FAQ_ITEMS.map((item) => ({ q: item.q, a: item.a })),
@@ -1273,7 +966,7 @@ RESULT     what changed — sourced, or omitted`,
       { type: "label", label: "PRIVACY", id: "privacy" },
       {
         type: "prose",
-        text: "If you write to us or use the contact form, we read the name, email, and brief you send so we can reply. We do not sell that. We do not run an ad network. We do not operate a Pulse workspace or any other product that stores your users’ data as a service.",
+        text: "If you write to us or use the contact form, we read the name, email, company, services, budget, timeline, and brief you send so we can reply. We do not sell that information. We do not run an ad network, and we do not operate a hosted product that stores your users’ data as a service.",
       },
       {
         type: "note",
@@ -1308,41 +1001,10 @@ RESULT     what changed — sourced, or omitted`,
   },
 
   "machine-lens": {
-    kicker: "THE MACHINE LENS",
-    title: "This page is built to be read by machines too.",
-    subhead:
-      "JSON-LD on every route. Markdown mirrors. An MCP server, if you want to query us programmatically.",
+    kicker: "ABOUT",
+    title: "This page has moved.",
     blocks: [
-      { type: "label", label: "JSON-LD ORGANIZATION / SERVICE SCHEMA" },
-      { type: "code", label: "rendered inline on every route", text: JSON.stringify(JSON_LD, null, 2) },
-      { type: "label", label: "MARKDOWN MIRROR — CONTENT NEGOTIATION" },
-      {
-        type: "code",
-        label: "shell",
-        text: 'curl -H "Accept: text/markdown" https://zenxelligence.com/products/pulse\n\n→ returns products/pulse.md instead of rendered HTML',
-      },
-      { type: "label", label: "REAL API / STATUS ENDPOINT" },
-      {
-        type: "code",
-        label: "GET https://status.zenxelligence.com/api/v1/summary",
-        text: '{\n  "status": "operational",\n  "uptime_30d": "99.982%",\n  "open_incidents": 0,\n  "last_incident": "2026-07-14T03:22:00Z",\n  "measured_by": "pulse"\n}',
-      },
-      { type: "label", label: "MCP TOOL SERVER" },
-      {
-        type: "code",
-        label: "mcp.zenxelligence.com",
-        text: "search_site_map    returns page list with descriptions\nfaq_concierge      answers questions against the published FAQ corpus\nrun_page_audit     returns live TTFB/LCP/INP/CLS for any Zen xElligence-owned URL",
-      },
-      { type: "label", label: "DYNAMIC OG IMAGE GENERATION" },
-      {
-        type: "prose",
-        text: "Every page’s Open Graph image is generated at request time from the page’s title/subtitle pair — not a static asset. Example: /og/products/pulse renders “Pulse” + “Uptime, latency, and workflow telemetry” onto the dark-theme template at request time.",
-      },
-      { type: "label", label: "LIVE SELF-MEASURING WIDGET" },
-      {
-        type: "note",
-        text: "Same widget as the homepage, embedded again here with a link to raw JSON output. Four of these interfaces run live in this build; the MCP server, markdown mirror, status endpoint and OG generation are specified and require a server to deploy.",
-      },
+      { type: "prose", text: "Facts for people and for answer engines live on the public pages and in llms.txt." },
     ],
   },
 
@@ -1353,7 +1015,7 @@ RESULT     what changed — sourced, or omitted`,
       { type: "form" },
       {
         type: "prose",
-        text: "hello@zenxelligence.com — or LinkedIn, Instagram, WhatsApp at @zenxelligence. We reply within 1 business day.",
+        text: "Prefer email? hello@zenxelligence.com. We reply within 1 business day.",
       },
       { type: "note", text: "No phone tree, no calendar-link-only flow — a human reads every submission before routing it." },
     ],
@@ -1372,13 +1034,7 @@ RESULT     what changed — sourced, or omitted`,
       { type: "label", label: "OPEN ROLES" },
       {
         type: "note",
-        text: "None listed. This list is empty on purpose — same rule as case studies. No Pulse seats. No NetSuite requisitions. No city we don’t sit in.",
-      },
-      {
-        type: "table",
-        head: ["ROLE", "SURFACE", "STATUS"],
-        rows: [["—", "—", "No opening"]],
-        monoCols: [2],
+        text: "No open roles. Send work you have already built to hello@zenxelligence.com if you want to be considered when a seat exists.",
       },
       { type: "label", label: "IF WE HIRE" },
       {
