@@ -7,6 +7,7 @@ import { NAV_ITEMS } from "@/content/site";
 import { CommandPalette } from "@/components/command-palette";
 import { ArrowIcon } from "@/components/arrow-icon";
 import { BrandLockup } from "@/components/brand-mark";
+import { LampToggle } from "@/components/lamp-toggle";
 import { cn } from "@/lib/utils";
 
 export function SiteHeader() {
@@ -16,6 +17,7 @@ export function SiteHeader() {
 
   return (
     <header className="site-header">
+      <LampToggle />
       <div className="site-container header-bar">
         <Link href="/" className="logo-lockup" aria-label="Zen xElligence">
           <BrandLockup height={30} />

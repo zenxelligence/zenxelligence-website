@@ -39,7 +39,7 @@ function WebMock() {
         </div>
       </div>
       <svg className="mock-chart" viewBox="0 0 320 100" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0 25H320M0 50H320M0 75H320" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+        <path className="mock-line" d="M0 25H320M0 50H320M0 75H320" fill="none" stroke="currentColor" strokeWidth="1" />
         <path
           d="M0 72 C28 68 40 48 62 52 C90 58 104 28 132 34 C160 40 176 58 204 50 C232 42 250 22 278 28 C298 32 308 40 320 36 V100 H0 Z"
           fill="rgba(255,122,26,0.16)"
@@ -116,7 +116,7 @@ function AgentMock() {
         <path d="M202 36 H242" fill="none" stroke="#ffb36b" strokeWidth="1.2" />
         <path d="M160 52 V78" fill="none" stroke="#ff7a1a" strokeWidth="1.2" />
         <rect x="16" y="20" width="62" height="32" rx="16" fill="#12100e" stroke="rgba(255,179,107,0.7)" />
-        <text x="47" y="40" textAnchor="middle" fill="#ffd7b0" fontSize="11">
+        <text className="mock-node-label" x="47" y="40" textAnchor="middle" fill="currentColor" fontSize="11">
           Input
         </text>
         <rect x="118" y="16" width="84" height="36" rx="18" fill="rgba(255,122,26,0.22)" stroke="#ff7a1a" />
@@ -124,11 +124,11 @@ function AgentMock() {
           Agent
         </text>
         <rect x="242" y="20" width="62" height="32" rx="16" fill="#12100e" stroke="rgba(255,179,107,0.7)" />
-        <text x="273" y="40" textAnchor="middle" fill="#ffd7b0" fontSize="11">
+        <text className="mock-node-label" x="273" y="40" textAnchor="middle" fill="currentColor" fontSize="11">
           Tools
         </text>
         <rect x="118" y="78" width="84" height="32" rx="16" fill="#12100e" stroke="rgba(255,179,107,0.7)" />
-        <text x="160" y="98" textAnchor="middle" fill="#ffd7b0" fontSize="11">
+        <text className="mock-node-label" x="160" y="98" textAnchor="middle" fill="currentColor" fontSize="11">
           Reply
         </text>
       </svg>
@@ -193,7 +193,8 @@ function IotMock() {
         </ul>
         <svg className="mock-map" viewBox="0 0 76 76" aria-hidden="true">
           <path
-            fill="rgba(255,255,255,0.06)"
+            className="mock-cell"
+            fill="currentColor"
             d="M0 0h16v16H0zM20 0h16v16H20zM40 0h16v16H40zM60 0h16v16H60zM0 20h16v16H0zM40 20h16v16H40zM60 20h16v16H60zM0 40h16v16H0zM20 40h16v16H20zM60 40h16v16H60zM0 60h16v16H0zM20 60h16v16H20zM40 60h16v16H40zM60 60h16v16H60z"
           />
           <path fill="rgba(255,122,26,0.55)" d="M20 20h16v16H20zM40 40h16v16H40z" />
@@ -224,22 +225,22 @@ function VlsiMock() {
         <svg viewBox="0 0 240 148" className="mock-die" preserveAspectRatio="none" aria-hidden="true">
           <rect x="16" y="10" width="208" height="128" fill="none" stroke="rgba(255,122,26,0.75)" strokeWidth="1" />
           <path fill="#ffb36b" d={DIE_PADS} />
-          <path d={DIE_GRID} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.6" />
+          <path className="mock-line" d={DIE_GRID} fill="none" stroke="currentColor" strokeWidth="0.6" />
           <path fill="rgba(255,179,107,0.28)" d={DIE_ROWS} />
           <rect x="132" y="26" width="72" height="40" fill="rgba(255,122,26,0.16)" stroke="#ff7a1a" strokeWidth="0.8" />
           <rect x="132" y="78" width="40" height="28" fill="rgba(255,179,107,0.12)" stroke="rgba(255,179,107,0.75)" strokeWidth="0.8" />
           <rect x="178" y="86" width="28" height="18" fill="rgba(255,179,107,0.1)" stroke="rgba(255,179,107,0.55)" strokeWidth="0.8" />
         </svg>
         <svg viewBox="0 0 200 72" className="mock-wave" aria-hidden="true">
-          <text x="2" y="14" fill="#d5d0c8" fontSize="9">
+          <text className="mock-ink" x="2" y="14" fill="currentColor" fontSize="9">
             clk
           </text>
           <polyline fill="none" stroke="#ffb36b" strokeWidth="1.3" points="28,8 40,8 40,18 58,18 58,8 76,8 76,18 94,18 94,8 112,8 112,18 130,18 130,8 148,8 148,18 166,18 166,8 190,8" />
-          <text x="2" y="36" fill="#d5d0c8" fontSize="9">
+          <text className="mock-ink" x="2" y="36" fill="currentColor" fontSize="9">
             d
           </text>
           <polyline fill="none" stroke="#ff7a1a" strokeWidth="1.3" points="28,28 52,28 52,40 88,40 88,28 120,28 120,40 154,40 154,28 190,28" />
-          <text x="2" y="58" fill="#d5d0c8" fontSize="9">
+          <text className="mock-ink" x="2" y="58" fill="currentColor" fontSize="9">
             q
           </text>
           <polyline fill="none" stroke="#ffd7b0" strokeWidth="1.3" points="28,52 64,52 64,64 100,64 100,52 132,52 132,64 168,64 168,52 190,52" />
